@@ -6,33 +6,44 @@ This repo is the source of truth for all exercises in this course.
 
 ## Folder Structure
 
-This repo contains one folder for each module and each module folder contains subdirectories for exercises:
+This repo contains one folder for each Implementation (Apply) module in the course. Each module folder holds a `demo/` and an `exercise/` subdirectory, and each `exercise/` is split into `starter/` and `solution/`:
 
 ```bash
-module-#-name/
-├── exercise-name-starter/
-│   └── INSTRUCTIONS.md
-└── solution/
-    └── .gitkeep
+module-#-<module-slug>/
+├── demo/
+│   └── .gitkeep
+└── exercise/
+    ├── starter/
+    │   └── INSTRUCTIONS.md
+    └── solution/
+        └── .gitkeep
 ```
 
-- `exercise-name-starter/` - Contains the starter files and instructions for the exercise (INSTRUCTIONS.md template provided)
-- `solution/` - Contains the solution files for the exercise.
+- `demo/` - Contains the instructor-led demo materials for the module.
+- `exercise/starter/` - Contains the starter files and instructions for the exercise (INSTRUCTIONS.md template provided).
+- `exercise/solution/` - Contains the solution files for the exercise.
 
-> **Note:** The `.gitkeep` file in the solution folder preserves the directory structure in the repository when the folder is empty. It should be removed when one or more solution files have been added to this folder.
+> **Note:** The `.gitkeep` files preserve empty directory structure in the repository. Remove a `.gitkeep` once real content is added to its folder.
 
-Eight module folders have been provided as a template; However, you may need to add more or possibly use less than eight depending on what is needed. If you require an additional module folder, you can make a copy of an existing folder and paste it into the root directory.
+Only Implementation (Apply) modules live in this repo — Conceptual (Understand) modules are slides-based and have no demo or exercise. The `module-#` prefix on each folder reflects the module's position in the full course sequence (which is why the numbering skips even positions: those are the paired Understand modules).
 
-As you build the exercises, the module and exercise folder names should be changed to reflect the content e.g.,
+The 10 Implementation modules in this course are:
 
-- python-basics/simple-calculator-starter
-- object-oriented/classes-vs-instances-starter
-- web-development/simple-api-starter
-- error-handling/try-catch-practice-starter
-- ai-agents/fact-checker-agent-starter
+| # | Folder | Module Title |
+| -- | ------ | ------------ |
+| 3 | `module-3-apply-ai-red-teaming` | Apply AI Red Teaming |
+| 5 | `module-5-apply-llm-assisted-vulnerability-discovery` | Apply LLM-Assisted Vulnerability Discovery |
+| 7 | `module-7-apply-evasion-attacks` | Apply Evasion Attacks |
+| 9 | `module-9-apply-data-poisoning` | Apply Data Poisoning |
+| 11 | `module-11-apply-prompt-injection` | Apply Prompt Injection |
+| 13 | `module-13-apply-vector-database-attacks` | Apply Vector Database Attacks |
+| 15 | `module-15-apply-model-inversion` | Apply Model Inversion |
+| 17 | `module-17-apply-ai-red-teaming-with-microsoft-counterfit` | Apply AI Red Teaming with Microsoft Counterfit |
+| 19 | `module-19-apply-quantitative-robustness-testing` | Apply Quantitative Robustness Testing |
+| 21 | `module-21-apply-ai-supply-chain-vulnerability-scanning` | Apply AI Supply Chain Vulnerability Scanning |
 
 > ⚠️ **DO NOT NUMBER the exercises!**
-> Our modular content may be used in more than one program where the order and number of exercises may differ from the order and number in the primary build.
+> Module folders are numbered to mirror course position, but the exercise folders inside (`exercise/starter/`, `exercise/solution/`) are not — our modular content may be used in more than one program where the order and number of exercises may differ from the order and number in the primary build.
 
 ## Resources for Building Exercises
 
