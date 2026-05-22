@@ -1,0 +1,22 @@
+# Local Python environments
+.venv/
+venv/
+env/
+
+# Runtime caches created by notebook execution
+.art/
+.matplotlib/
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+data/
+art_data/*
+!art_data/README.md
+
+# Downloaded model files
+downloads/gtsrb_model/*
+!downloads/gtsrb_model/README.md
+
+# Generated notebook outputs
+results/*
+!results/README.md

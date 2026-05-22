@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "SupportSentiment Inference API",
+    "version": "0.9.0",
+    "description": "Pre-production REST API for classifying customer-support ticket sentiment."
+  },
+  "servers": [
+    {
+      "url": "https://api.preprod.example.com/v1",
+      "description": "Pre-production public API gateway"
+    }
+  ],
+  "paths": {
+    "/sentiment": {
+      "post": {
+        "summary": "Classify a support ticket as positive, neutral, or negative.",
+        "operationId": "classifySentiment",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SentimentRequest"
+              },
+              "examples": {
+                "basicTicket": {
+                  "value": {
+                    "ticket_id": "TCK-10422",
+                    "customer_id": "C-55201",
+                    "text": "I have been waiting for a refund for two weeks and nobody has responded.",
+                    "metadata": {
+                      "channel": "email",
+                      "locale": "en-US"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sentiment classification result.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SentimentResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request body."
+          },
+          "401": {
+            "description": "Missing or invalid API key."
+          },
+          "429": {
+            "description": "Rate limit exceeded."
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Return service health and selected model metadata.",
+        "operationId": "getHealth",
+        "responses": {
+          "200": {
+            "description": "Health check response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "ok"
+                    },
+                    "model_version": {
+                      "type": "string",
+                      "example": "distilbert-support-sentiment-0.9.0"
+                    },
+                    "framework": {
+                      "type": "string",
+                      "example": "transformers"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
+      }
+    },
+    "schemas": {
+      "SentimentRequest": {
+        "type": "object",
+        "required": [
+          "ticket_id",
+          "customer_id",
+          "text"
+        ],
+        "properties": {
+          "ticket_id": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "customer_id": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 4096
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+              "channel": {
+                "type": "string",
+                "enum": [
+                  "email",
+                  "chat",
+                  "phone_transcript",
+                  "social"
+                ]
+              },
+              "locale": {
+                "type": "string",
+                "default": "en-US"
+              }
+            }
+          }
+        }
+      },
+      "SentimentResponse": {
+        "type": "object",
+        "properties": {
+          "ticket_id": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string",
+            "enum": [
+              "positive",
+              "neutral",
+              "negative"
+            ]
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "model_version": {
+            "type": "string"
+          },
+          "latency_ms": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

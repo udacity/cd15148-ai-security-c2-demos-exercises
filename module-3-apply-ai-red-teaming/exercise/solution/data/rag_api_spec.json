@@ -1,0 +1,169 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "EnterpriseSummarizer RAG API",
+    "version": "0.8.0",
+    "description": "Limited-deployment internal API for document summarization with retrieval-augmented generation."
+  },
+  "servers": [
+    {
+      "url": "https://summarizer.internal.example.com/v1",
+      "description": "Internal enterprise API gateway"
+    }
+  ],
+  "paths": {
+    "/summaries": {
+      "post": {
+        "summary": "Generate a summary from retrieved enterprise documents.",
+        "operationId": "createSummary",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SummaryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated summary response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SummaryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed request."
+          },
+          "401": {
+            "description": "Missing or invalid bearer token."
+          },
+          "403": {
+            "description": "User is not authorized to access requested document scope."
+          },
+          "429": {
+            "description": "Rate limit exceeded."
+          }
+        }
+      }
+    },
+    "/tools/export": {
+      "post": {
+        "summary": "Export a generated summary to an approved workspace location.",
+        "operationId": "exportSummary",
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Export accepted."
+          },
+          "403": {
+            "description": "Export destination is not authorized."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "SummaryRequest": {
+        "type": "object",
+        "required": [
+          "user_id",
+          "department",
+          "query",
+          "document_scope"
+        ],
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "department": {
+            "type": "string",
+            "enum": [
+              "hr",
+              "finance",
+              "engineering",
+              "operations"
+            ]
+          },
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 6000
+          },
+          "document_scope": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "items": {
+              "type": "string"
+            }
+          },
+          "include_citations": {
+            "type": "boolean",
+            "default": true
+          },
+          "metadata": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "SummaryResponse": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string"
+          },
+          "citations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "doc_id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "classification": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "retrieval_count": {
+            "type": "integer"
+          },
+          "model_version": {
+            "type": "string"
+          },
+          "latency_ms": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  }
+}

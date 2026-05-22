@@ -1,0 +1,15 @@
+.venv/
+venv/
+env/
+.art/
+.matplotlib/
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+data/generated/
+data/cifar10/
+models/*.pt
+art_data/*
+!art_data/README.md
+results/*
+!results/README.md

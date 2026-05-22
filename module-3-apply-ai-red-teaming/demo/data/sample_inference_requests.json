@@ -1,0 +1,82 @@
+[
+  {
+    "request": {
+      "ticket_id": "TCK-10001",
+      "customer_id": "C-81391",
+      "text": "Your agent fixed my billing issue in five minutes. Thank you!",
+      "metadata": {
+        "channel": "chat",
+        "locale": "en-US"
+      }
+    },
+    "response": {
+      "label": "positive",
+      "confidence": 0.97,
+      "latency_ms": 183
+    }
+  },
+  {
+    "request": {
+      "ticket_id": "TCK-10002",
+      "customer_id": "C-44120",
+      "text": "I need to update the shipping address on my current order.",
+      "metadata": {
+        "channel": "email",
+        "locale": "en-US"
+      }
+    },
+    "response": {
+      "label": "neutral",
+      "confidence": 0.91,
+      "latency_ms": 211
+    }
+  },
+  {
+    "request": {
+      "ticket_id": "TCK-10003",
+      "customer_id": "C-19044",
+      "text": "This is the third time my account has been locked and support keeps closing the case.",
+      "metadata": {
+        "channel": "email",
+        "locale": "en-US"
+      }
+    },
+    "response": {
+      "label": "negative",
+      "confidence": 0.94,
+      "latency_ms": 226
+    }
+  },
+  {
+    "request": {
+      "ticket_id": "TCK-10004",
+      "customer_id": "C-72531",
+      "text": "I am furious about the outage, but Maya was extremely helpful once I reached her.",
+      "metadata": {
+        "channel": "phone_transcript",
+        "locale": "en-US"
+      }
+    },
+    "response": {
+      "label": "positive",
+      "confidence": 0.62,
+      "latency_ms": 239
+    }
+  },
+  {
+    "request": {
+      "ticket_id": "TCK-10005",
+      "customer_id": "C-67108",
+      "text": "Great, another password reset that does not work. Exactly what I needed today.",
+      "metadata": {
+        "channel": "social",
+        "locale": "en-US"
+      }
+    },
+    "response": {
+      "label": "positive",
+      "confidence": 0.58,
+      "latency_ms": 248
+    }
+  }
+]

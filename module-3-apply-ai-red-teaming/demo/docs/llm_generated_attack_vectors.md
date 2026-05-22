@@ -1,0 +1,25 @@
+# LLM-Generated Attack Vector Candidates
+
+The table below is a sample output from a context-rich LLM prompt. These are proposed vulnerabilities for red team planning, not confirmed findings.
+
+| # | Attack Vector | Targeted Component | Supporting Evidence | Example Pre-Production Test | Expected Impact If Confirmed | Confidence |
+|---|---------------|--------------------|---------------------|-----------------------------|------------------------------|------------|
+| 1 | Adversarial phrasing causes sentiment misclassification | Model runtime | Model card says sarcasm and mixed sentiment are known limitations; sample requests show sarcastic text labeled positive with low confidence | Send controlled variants of negative tickets with sarcasm, praise-then-complaint structure, homoglyphs, spacing changes, and emotional contrast | Incorrect queue priority or downstream routing once automation is enabled | High |
+| 2 | Long input truncation hides negative content | Tokenizer and preprocessing layer | API accepts up to 4096 characters; model card says long ticket histories may be truncated | Place neutral filler before a negative complaint and compare labels as complaint position moves beyond tokenizer limits | Attackers or noisy clients could suppress severe complaint sentiment | High |
+| 3 | Resource exhaustion through maximum-length requests | Public API and inference service | Endpoint is public-facing; every request invokes Transformer inference; max text length is relatively large | Load test authenticated pre-production keys with bursts of 4096-character requests under agreed limits | Elevated latency or degraded availability for support workflows | Medium |
+| 4 | Sensitive ticket metadata exposure in centralized logs | Inference service and observability pipeline | Architecture notes logs include `ticket_id`, `customer_id`, labels, confidence, and error messages | Trigger validation errors with sensitive-looking text and inspect whether raw text or metadata appears in logs | Privacy risk and expanded blast radius if logs are broadly accessible | Medium |
+| 5 | Health endpoint leaks model metadata useful for targeted attacks | Unauthenticated `/health` endpoint | API spec says `/health` returns model version and framework without authentication | Query `/health` externally and verify whether model version, framework, or environment details are exposed | Easier reconnaissance for model-specific adversarial testing or dependency targeting | Medium |
+| 6 | Permissive metadata schema enables log injection or parser confusion | API validation and logging | API schema permits `metadata.additionalProperties: true` | Submit nested metadata keys, unusually long values, newline characters, and conflicting locale/channel fields in pre-production | Corrupted logs, alert bypass, or downstream parsing errors | Medium |
+| 7 | Non-English inputs produce unreliable confidence | Model behavior | Model card says locale handling is limited and non-English tickets route through the same model | Compare labeled English tickets with Spanish, French, and code-switched equivalents | Misrouting for multilingual customers and unreliable sentiment analytics | Medium |
+| 8 | Uncalibrated confidence scores may create unsafe automation thresholds | Downstream workflow design | Model card says confidence values are not calibrated for automated decision-making | Evaluate whether low-confidence or mixed-sentiment outputs would meet proposed automation thresholds | Premature automation could escalate, suppress, or misroute tickets | High |
+| 9 | Dependency or model artifact supply chain weakness | CI/CD and container registry | Architecture shows weekly image rebuilds from pinned Python base image and `requirements.txt`; model artifacts are stored in image | Run container dependency scanning and verify artifact provenance, hashes, and registry access controls | Compromised dependency or model image could alter predictions at scale | Medium |
+| 10 | Rate limit policy may not match inference cost | API gateway and rate limiting | API gateway enforces per-key rate limits, but no cost-based limits are described | Compare request volume limits for short and maximum-length text payloads | A valid key could consume disproportionate compute with expensive requests | Medium |
+
+## Rejected or Low-Confidence Ideas
+
+| Candidate | Reason to Reject or Defer |
+|-----------|---------------------------|
+| Prompt injection against the classifier | This is a traditional text classifier, not an instruction-following generative model. Treat text manipulation as adversarial input testing instead. |
+| Direct model weight extraction from labels alone | The API returns only three labels and confidence scores. Extraction is possible in theory but too speculative for a 12-minute planning demo. |
+| Training data poisoning of the deployed model | No live retraining path is described. Keep supply chain and artifact provenance in scope instead. |
+| Credential theft through the API | The materials do not describe login flows, token exchange, or credential handling. |
