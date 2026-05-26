@@ -1,0 +1,3 @@
+model,clean_accuracy,source_class_accuracy,targeted_misclassification_rate,mean_confidence,notes
+clean_baseline,0.7667,0.8667,0.0,0.6194,trained_on_clean_labels
+label_flipped_model,0.7222,0.0,0.8,0.7194,75%_of_source_labels_flipped_to_target
