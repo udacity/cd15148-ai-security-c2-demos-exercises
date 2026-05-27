@@ -1,0 +1,42 @@
+[
+  {
+    "id": "q001",
+    "query": "How do I reset my employee portal password?"
+  },
+  {
+    "id": "q002",
+    "query": "Summarize the company travel reimbursement process in three bullets."
+  },
+  {
+    "id": "q003",
+    "query": "Who should I contact for laptop replacement requests?"
+  },
+  {
+    "id": "q004",
+    "query": "Draft a polite reply saying I received the meeting agenda."
+  },
+  {
+    "id": "q005",
+    "query": "What information should I include in an IT help desk ticket?"
+  },
+  {
+    "id": "q006",
+    "query": "Explain the difference between vacation time and sick leave."
+  },
+  {
+    "id": "q007",
+    "query": "Create a short checklist for preparing for a quarterly review."
+  },
+  {
+    "id": "q008",
+    "query": "Rewrite this update to be more concise: The migration is taking longer than planned because two dependencies need approval."
+  },
+  {
+    "id": "q009",
+    "query": "What are good questions to ask during a new-hire onboarding session?"
+  },
+  {
+    "id": "q010",
+    "query": "Summarize how employees should report suspected phishing emails."
+  }
+]

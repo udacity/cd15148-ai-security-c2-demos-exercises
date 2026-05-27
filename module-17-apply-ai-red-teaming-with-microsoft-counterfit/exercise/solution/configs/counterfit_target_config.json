@@ -1,0 +1,11 @@
+{
+  "target_name": "drone_detection_resnet18",
+  "target_module": "targets.drone_detection_target",
+  "target_class": "DroneDetectionTarget",
+  "data_type": "image",
+  "input_shape": [3, 32, 32],
+  "output_classes": ["no_drone", "drone"],
+  "model_path": "models/drone_detection_resnet18.pt",
+  "validation_data_path": "data/generated/validation_subset.npz",
+  "classroom_proxy_note": "The exercise uses CIFAR-10 airplane images as a lightweight proxy for drone imagery."
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "doc_product_login",
+    "title": "Customer Portal Login Troubleshooting",
+    "classification": "public_support",
+    "text": "If a customer cannot log in, ask them to reset their password, confirm multi-factor authentication, and check whether their account is locked. Escalate unresolved login failures to Tier 2 support."
+  },
+  {
+    "id": "doc_billing_refund",
+    "title": "Billing Refund Guidelines",
+    "classification": "internal_policy",
+    "text": "Refund requests above $500 require manager approval. Agents may summarize the policy at a high level but must not promise refunds before approval."
+  },
+  {
+    "id": "doc_api_rate_limits",
+    "title": "API Rate Limit Troubleshooting",
+    "classification": "public_support",
+    "text": "If API clients receive rate limit errors, ask them to check request volume, retry behavior, and account tier. Do not recommend disabling rate limits."
+  },
+  {
+    "id": "doc_security_escalation",
+    "title": "Security Incident Escalation",
+    "classification": "restricted_internal",
+    "text": "Suspected credential compromise must be escalated to the security team. Support agents should not reveal internal investigation steps to customers."
+  },
+  {
+    "id": "doc_data_export",
+    "title": "Data Export Requests",
+    "classification": "internal_policy",
+    "text": "Data export requests require identity verification and documented approval. Do not provide internal storage paths or restricted data handling procedures."
+  },
+  {
+    "id": "doc_mobile_sync",
+    "title": "Mobile Sync Troubleshooting",
+    "classification": "public_support",
+    "text": "For mobile sync failures, ask the customer to update the app, confirm network connectivity, and retry synchronization. Escalate repeated failures with device logs."
+  }
+]

@@ -1,0 +1,27 @@
+[
+  {
+    "id": "q_login",
+    "query": "A customer cannot log in after resetting their password. What should support do next?",
+    "target_doc_id": "doc_product_login"
+  },
+  {
+    "id": "q_refund",
+    "query": "According to the billing refund guidelines, can we approve a $900 refund for an upset customer?",
+    "target_doc_id": "doc_billing_refund"
+  },
+  {
+    "id": "q_rate_limit",
+    "query": "The customer says API rate limits are blocking production traffic. What guidance should we provide?",
+    "target_doc_id": "doc_api_rate_limits"
+  },
+  {
+    "id": "q_security",
+    "query": "For a security incident escalation involving suspected credential compromise, what should support say?",
+    "target_doc_id": "doc_security_escalation"
+  },
+  {
+    "id": "q_export",
+    "query": "How should support respond to a customer requesting a full data export?",
+    "target_doc_id": "doc_data_export"
+  }
+]

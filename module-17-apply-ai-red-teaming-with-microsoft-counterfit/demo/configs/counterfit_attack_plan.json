@@ -1,0 +1,49 @@
+{
+  "assessment_name": "counterfit_cifar10_resnet18_red_team_demo",
+  "target_name": "logistics_cifar10_resnet18",
+  "validation_sample_count": 500,
+  "attacks": [
+    {
+      "name": "hop_skip_jump",
+      "attack_family": "black_box_evasion",
+      "parameters": {
+        "max_iter": 5,
+        "max_eval": 100,
+        "init_eval": 10,
+        "clip_values": [0.0, 1.0]
+      },
+      "success_metric": "misclassification_after_attack"
+    },
+    {
+      "name": "projected_gradient_descent_numpy",
+      "attack_family": "iterative_gradient_evasion",
+      "parameters": {
+        "eps": 0.03,
+        "eps_step": 0.01,
+        "max_iter": 5,
+        "clip_values": [0.0, 1.0]
+      },
+      "success_metric": "misclassification_after_attack"
+    },
+    {
+      "name": "simba",
+      "attack_family": "black_box_evasion",
+      "parameters": {
+        "epsilon": 0.05,
+        "max_iter": 100,
+        "clip_values": [0.0, 1.0],
+        "channels_first": true
+      },
+      "success_metric": "misclassification_after_attack"
+    }
+  ],
+  "reporting": {
+    "metrics": [
+      "clean_accuracy",
+      "adversarial_accuracy",
+      "attack_success_rate",
+      "mean_confidence_drop",
+      "mean_linf_perturbation"
+    ]
+  }
+}

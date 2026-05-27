@@ -1,0 +1,4 @@
+attack,attack_id,sample_count,success_count,attack_success_rate,adversarial_accuracy,mean_confidence_drop,drone_false_negative_rate,true_labels,initial_labels,final_labels,elapsed_time_sec,queries,operational_risk
+hop_skip_jump,reference_hsj,1,1,1.0,0.0,0.22,1.0,drone,drone,no_drone,12.5,110,high
+projected_gradient_descent_numpy,reference_pgd,1,1,1.0,0.0,0.31,1.0,drone,drone,no_drone,4.1,15,high
+simba,reference_simba,1,0,0.0,1.0,0.08,0.0,drone,drone,drone,8.9,100,low
