@@ -1,0 +1,21 @@
+{
+  "scenario": "Autonomous warehouse robotics image classification robustness evaluation",
+  "validation_subset": "100 balanced CIFAR-10 images per class, 1,000 images total",
+  "operational_thresholds": {
+    "minimum_stressed_accuracy": 0.70,
+    "maximum_confidence_drop": 0.15,
+    "maximum_attack_success_rate": 0.20,
+    "minimum_robustness_score": 75.0
+  },
+  "environmental_conditions": [
+    {"name": "gaussian_noise_sigma_0.08", "type": "sensor_noise"},
+    {"name": "gaussian_blur_radius_1.0", "type": "camera_blur"},
+    {"name": "jpeg_quality_35", "type": "compression_artifact"}
+  ],
+  "art_attacks": [
+    {"name": "FastGradientMethod", "eps": 0.02},
+    {"name": "FastGradientMethod", "eps": 0.04},
+    {"name": "FastGradientMethod", "eps": 0.08},
+    {"name": "ProjectedGradientDescent", "eps": 0.04, "eps_step": 0.01, "max_iter": 5}
+  ]
+}

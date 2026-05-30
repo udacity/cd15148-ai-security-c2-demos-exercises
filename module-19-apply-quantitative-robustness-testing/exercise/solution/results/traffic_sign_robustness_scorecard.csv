@@ -1,0 +1,8 @@
+condition,condition_type,accuracy,mean_confidence,confidence_drop,attack_success_rate,perturbation_linf,risk_level
+clean,baseline,0.4583,0.8668,0.0,0.0,0.0,high
+gaussian_noise_sigma_0.08,environmental,0.4667,0.8893,-0.0225,0.0909,0.3152,high
+gaussian_blur_radius_1.0,environmental,0.4583,0.867,-0.0002,0.0,0.1664,high
+jpeg_quality_35,environmental,0.4583,0.8617,0.0051,0.0182,0.1939,high
+art_fgsm_eps_0.01,adversarial,0.425,0.8248,0.042,0.2,0.01,high
+art_fgsm_eps_0.03,adversarial,0.3333,0.8638,0.0029,0.5273,0.03,high
+art_fgsm_eps_0.06,adversarial,0.2333,0.9273,-0.0605,0.8182,0.06,high

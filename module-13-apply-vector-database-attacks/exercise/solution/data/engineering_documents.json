@@ -1,0 +1,602 @@
+[
+  {
+    "doc_id": "mfg-001",
+    "title": "Hydraulic Press Maintenance Procedure 01",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-002",
+    "title": "Robotic Welding Maintenance Procedure 02",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-003",
+    "title": "Conveyor Safety Maintenance Procedure 03",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-004",
+    "title": "PLC Controls Maintenance Procedure 04",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-005",
+    "title": "Quality Inspection Maintenance Procedure 05",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-006",
+    "title": "Thermal Oven Maintenance Procedure 06",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-007",
+    "title": "CNC Machining Maintenance Procedure 07",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-008",
+    "title": "Facility Power Maintenance Procedure 08",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-009",
+    "title": "Sensor Calibration Maintenance Procedure 09",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-010",
+    "title": "Chemical Handling Maintenance Procedure 10",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-011",
+    "title": "Hydraulic Press Maintenance Procedure 11",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-012",
+    "title": "Robotic Welding Maintenance Procedure 12",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-013",
+    "title": "Conveyor Safety Maintenance Procedure 13",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-014",
+    "title": "PLC Controls Maintenance Procedure 14",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-015",
+    "title": "Quality Inspection Maintenance Procedure 15",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-016",
+    "title": "Thermal Oven Maintenance Procedure 16",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-017",
+    "title": "CNC Machining Maintenance Procedure 17",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-018",
+    "title": "Facility Power Maintenance Procedure 18",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-019",
+    "title": "Sensor Calibration Maintenance Procedure 19",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-020",
+    "title": "Chemical Handling Maintenance Procedure 20",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-021",
+    "title": "Hydraulic Press Maintenance Procedure 21",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-022",
+    "title": "Robotic Welding Maintenance Procedure 22",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-023",
+    "title": "Conveyor Safety Maintenance Procedure 23",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-024",
+    "title": "PLC Controls Maintenance Procedure 24",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-025",
+    "title": "Quality Inspection Maintenance Procedure 25",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-026",
+    "title": "Thermal Oven Maintenance Procedure 26",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-027",
+    "title": "CNC Machining Maintenance Procedure 27",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-028",
+    "title": "Facility Power Maintenance Procedure 28",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-029",
+    "title": "Sensor Calibration Maintenance Procedure 29",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-030",
+    "title": "Chemical Handling Maintenance Procedure 30",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-031",
+    "title": "Hydraulic Press Maintenance Procedure 31",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-032",
+    "title": "Robotic Welding Maintenance Procedure 32",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-033",
+    "title": "Conveyor Safety Maintenance Procedure 33",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-034",
+    "title": "PLC Controls Maintenance Procedure 34",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-035",
+    "title": "Quality Inspection Maintenance Procedure 35",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-036",
+    "title": "Thermal Oven Maintenance Procedure 36",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-037",
+    "title": "CNC Machining Maintenance Procedure 37",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-038",
+    "title": "Facility Power Maintenance Procedure 38",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-039",
+    "title": "Sensor Calibration Maintenance Procedure 39",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-040",
+    "title": "Chemical Handling Maintenance Procedure 40",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-041",
+    "title": "Hydraulic Press Maintenance Procedure 41",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-042",
+    "title": "Robotic Welding Maintenance Procedure 42",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-043",
+    "title": "Conveyor Safety Maintenance Procedure 43",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-044",
+    "title": "PLC Controls Maintenance Procedure 44",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-045",
+    "title": "Quality Inspection Maintenance Procedure 45",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-046",
+    "title": "Thermal Oven Maintenance Procedure 46",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-047",
+    "title": "CNC Machining Maintenance Procedure 47",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-048",
+    "title": "Facility Power Maintenance Procedure 48",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-049",
+    "title": "Sensor Calibration Maintenance Procedure 49",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-050",
+    "title": "Chemical Handling Maintenance Procedure 50",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-051",
+    "title": "Hydraulic Press Maintenance Procedure 51",
+    "text": "Hydraulic Press maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers hydraulic press diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "hydraulic-press",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-052",
+    "title": "Robotic Welding Maintenance Procedure 52",
+    "text": "Robotic Welding maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers robotic welding diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "robotic-welding",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-053",
+    "title": "Conveyor Safety Maintenance Procedure 53",
+    "text": "Conveyor Safety maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers conveyor safety diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "conveyor-safety",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-054",
+    "title": "PLC Controls Maintenance Procedure 54",
+    "text": "PLC Controls maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers plc controls diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "plc-controls",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-055",
+    "title": "Quality Inspection Maintenance Procedure 55",
+    "text": "Quality Inspection maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers quality inspection diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "quality-inspection",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-056",
+    "title": "Thermal Oven Maintenance Procedure 56",
+    "text": "Thermal Oven maintenance procedure. Follow lockout tagout, verify zero energy, and document supervisor approval before maintenance. This engineering reference covers thermal oven diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "thermal-oven",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-057",
+    "title": "CNC Machining Maintenance Procedure 57",
+    "text": "CNC Machining maintenance procedure. Use the approved troubleshooting checklist and stop work if guard interlocks or alarms fail. This engineering reference covers cnc machining diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "cnc-machining",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-058",
+    "title": "Facility Power Maintenance Procedure 58",
+    "text": "Facility Power maintenance procedure. Record calibration evidence, part numbers, and post-maintenance inspection results. This engineering reference covers facility power diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "facility-power",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-059",
+    "title": "Sensor Calibration Maintenance Procedure 59",
+    "text": "Sensor Calibration maintenance procedure. Escalate abnormal vibration, overheating, pressure deviation, or unsafe motion to the shift lead. This engineering reference covers sensor calibration diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "sensor-calibration",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  },
+  {
+    "doc_id": "mfg-060",
+    "title": "Chemical Handling Maintenance Procedure 60",
+    "text": "Chemical Handling maintenance procedure. Never bypass safety controls to restore production throughput. This engineering reference covers chemical handling diagnostics, safe shutdown, verification steps, restart criteria, and required maintenance logs. Technicians must use approved parts and cite the work order in the service record.",
+    "domain": "chemical-handling",
+    "provenance": "approved_engineering_repository",
+    "classification": "internal",
+    "source_type": "approved",
+    "target_query_id": null
+  }
+]

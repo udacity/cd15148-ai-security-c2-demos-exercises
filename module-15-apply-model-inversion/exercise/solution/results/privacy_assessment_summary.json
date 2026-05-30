@@ -1,0 +1,86 @@
+{
+  "baseline_model": {
+    "accuracy": 0.49171270718232046,
+    "mean_confidence": 0.8967112898826599,
+    "p95_confidence": 0.9998160004615784,
+    "mean_entropy": 0.24252285063266754
+  },
+  "art_status": {
+    "available": true,
+    "note": "ART is installed; this exercise uses a transparent PyTorch inversion loop."
+  },
+  "attack_metrics": [
+    {
+      "output_configuration": "full_probability",
+      "target_class": "negative",
+      "model_confidence": 0.999406,
+      "exposed_confidence": 0.999406,
+      "predicted_class": "negative",
+      "target_match": true,
+      "queries": 320,
+      "representative_mse": 0.140066,
+      "representative_cosine_similarity": 0.65272,
+      "privacy_leakage_score": 0.65272
+    },
+    {
+      "output_configuration": "full_probability",
+      "target_class": "positive",
+      "model_confidence": 1.0,
+      "exposed_confidence": 1.0,
+      "predicted_class": "positive",
+      "target_match": true,
+      "queries": 320,
+      "representative_mse": 0.008062,
+      "representative_cosine_similarity": 0.608639,
+      "privacy_leakage_score": 0.608639
+    },
+    {
+      "output_configuration": "rounded_confidence",
+      "target_class": "negative",
+      "model_confidence": 9.1e-05,
+      "exposed_confidence": 0.0,
+      "predicted_class": "positive",
+      "target_match": false,
+      "queries": 320,
+      "representative_mse": 0.004893,
+      "representative_cosine_similarity": 0.736904,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "output_configuration": "rounded_confidence",
+      "target_class": "positive",
+      "model_confidence": 0.999911,
+      "exposed_confidence": 1.0,
+      "predicted_class": "positive",
+      "target_match": true,
+      "queries": 320,
+      "representative_mse": 0.007484,
+      "representative_cosine_similarity": 0.627833,
+      "privacy_leakage_score": 0.627833
+    },
+    {
+      "output_configuration": "top1_label_only",
+      "target_class": "negative",
+      "model_confidence": 9.1e-05,
+      "exposed_confidence": 0.0,
+      "predicted_class": "positive",
+      "target_match": false,
+      "queries": 320,
+      "representative_mse": 0.004893,
+      "representative_cosine_similarity": 0.736904,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "output_configuration": "top1_label_only",
+      "target_class": "positive",
+      "model_confidence": 0.999911,
+      "exposed_confidence": 1.0,
+      "predicted_class": "positive",
+      "target_match": true,
+      "queries": 320,
+      "representative_mse": 0.007484,
+      "representative_cosine_similarity": 0.627833,
+      "privacy_leakage_score": 0.0
+    }
+  ]
+}
