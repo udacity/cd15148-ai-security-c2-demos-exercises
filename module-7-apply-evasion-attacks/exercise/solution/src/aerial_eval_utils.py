@@ -134,9 +134,18 @@ def train_or_load_model(model_path, data_dir, device="cpu", epochs=5, force_trai
     return model
 
 
-def predict(model, x_np, device="cpu"):
+def predict(model, x_np):
+    """Run forward inference on a numpy batch.
+
+    Builds the input tensor on the model's current device (queried via
+    next(model.parameters()).device) rather than accepting a caller-passed
+    device. ART's PyTorchClassifier has no MPS code path and silently moves
+    wrapped models to CPU on non-CUDA setups; trusting the model's actual
+    device makes this helper self-healing across ART attack calls.
+    """
     model.eval()
-    x = torch.tensor(x_np, dtype=torch.float32, device=device)
+    model_device = next(model.parameters()).device
+    x = torch.tensor(x_np, dtype=torch.float32, device=model_device)
     with torch.no_grad():
         logits = model(x)
         probs = torch.softmax(logits, dim=1)
@@ -144,8 +153,8 @@ def predict(model, x_np, device="cpu"):
     return pred.cpu().numpy(), confidence.cpu().numpy(), probs.cpu().numpy()
 
 
-def evaluate_numpy(model, images, labels, device="cpu"):
-    pred, conf, _ = predict(model, images, device=device)
+def evaluate_numpy(model, images, labels):
+    pred, conf, _ = predict(model, images)
     accuracy = float(np.mean(pred == labels))
     aerial_mask = labels == 1
     false_negative_rate = float(np.mean(pred[aerial_mask] == 0)) if np.any(aerial_mask) else 0.0

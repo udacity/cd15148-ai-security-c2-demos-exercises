@@ -103,9 +103,18 @@ def pil_to_raw_array(image, size=224):
     return np.expand_dims(array, axis=0)
 
 
-def predict_numpy(model, images, device="cpu"):
+def predict_numpy(model, images):
+    """Run forward inference on a numpy batch.
+
+    Builds the input tensor on the model's current device (queried via
+    next(model.parameters()).device) rather than accepting a caller-passed
+    device. ART's PyTorchClassifier has no MPS code path and silently moves
+    wrapped models to CPU on non-CUDA setups; trusting the model's actual
+    device makes this helper self-healing across ART attack calls.
+    """
     model.eval()
-    tensor = torch.tensor(images, dtype=torch.float32, device=device)
+    model_device = next(model.parameters()).device
+    tensor = torch.tensor(images, dtype=torch.float32, device=model_device)
     with torch.no_grad():
         logits = model(tensor)
         probs = torch.softmax(logits, dim=1)
