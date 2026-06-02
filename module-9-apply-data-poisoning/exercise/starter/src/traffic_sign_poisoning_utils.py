@@ -107,7 +107,7 @@ def build_traffic_sign_cnn():
     return TrafficSignCNN()
 
 
-def prepare_gtsrb_subsets(output_dir, download_root, train_per_class=80, val_per_class=30, image_size=64, seed=19):
+def prepare_gtsrb_subsets(output_dir, download_root, train_per_class=200, val_per_class=100, image_size=64, seed=19):
     output_dir = Path(output_dir)
     download_root = Path(download_root)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -175,7 +175,7 @@ def create_label_flip_poisoned_training_set(
     raise NotImplementedError("Complete create_label_flip_poisoned_training_set in the starter utility file.")
 
 
-def train_model(model, train_images, train_labels, device="cpu", epochs=4, batch_size=64, lr=0.001):
+def train_model(model, train_images, train_labels, device="cpu", epochs=8, batch_size=64, lr=0.001):
     dataset = NumpyImageDataset(train_images, train_labels)
     loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
     model = model.to(device)
@@ -196,7 +196,7 @@ def train_model(model, train_images, train_labels, device="cpu", epochs=4, batch
     return model
 
 
-def predict(model, images, device="cpu", batch_size=128):
+def predict(model, images, batch_size=128):
     model.eval()
     predictions = []
     confidences = []
@@ -206,7 +206,7 @@ def predict(model, images, device="cpu", batch_size=128):
 
     with torch.no_grad():
         for batch, _ in loader:
-            batch = batch.to(device)
+            batch = batch.to(next(model.parameters()).device)
             logits = model(batch)
             probs = torch.softmax(logits, dim=1)
             confidence, pred = torch.max(probs, dim=1)
@@ -217,8 +217,8 @@ def predict(model, images, device="cpu", batch_size=128):
     return np.concatenate(predictions), np.concatenate(confidences), np.concatenate(probs_out)
 
 
-def evaluate_clean(model, images, labels, device="cpu"):
-    pred, conf, _ = predict(model, images, device=device)
+def evaluate_clean(model, images, labels):
+    pred, conf, _ = predict(model, images)
     return {
         "accuracy": float(np.mean(pred == labels)),
         "mean_confidence": float(np.mean(conf)),
