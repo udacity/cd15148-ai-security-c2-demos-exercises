@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 import sys
 
@@ -10,10 +9,8 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "src"))
-os.environ.setdefault("ART_DATA_PATH", str(ROOT / "art_data"))
 
 from medical_inversion_utils import (  # noqa: E402
-    art_status,
     evaluate_model_outputs,
     inversion_metrics,
     output_configurations,
@@ -99,7 +96,6 @@ def main() -> None:
             "weekly_patient_images": 10000,
             "dataset": dataset.dataset_name,
             "baseline_model": baseline_metrics,
-            "art_status": art_status(),
             "attack_metrics": metric_rows,
         },
         results_dir / "privacy_assessment_summary.json",
@@ -114,7 +110,6 @@ def main() -> None:
 
     print(f"Dataset: {dataset.dataset_name}")
     print(f"Device: {device}")
-    print(f"ART status: {art_status()['note']}")
     print("\nBaseline model outputs")
     print(f"{'Metric':<24} {'Value':>10}")
     print("-" * 36)

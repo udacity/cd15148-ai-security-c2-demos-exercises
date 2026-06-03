@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import os
 from pathlib import Path
 import sys
 
@@ -10,11 +9,9 @@ import torch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "src"))
-os.environ.setdefault("ART_DATA_PATH", str(ROOT / "art_data"))
 
 from model_inversion_demo_utils import (  # noqa: E402
     AttackConfig,
-    art_status,
     class_prototypes,
     evaluate_predictions,
     invert_model_outputs,
@@ -68,7 +65,6 @@ def main() -> None:
     print(f"Source: {dataset.source}")
     print(f"Images: {len(dataset.train_images)} train images, {len(dataset.val_images)} validation queries")
     print(f"Device: {device}")
-    print(f"ART status: {art_status()['note']}")
 
     model = train_or_load_model(
         model_dir / "facility_face_cnn_overfit.pt",
@@ -143,7 +139,6 @@ def main() -> None:
             "training_images": int(len(dataset.train_images)),
             "validation_queries": int(len(dataset.val_images)),
             "baseline_model": baseline_metrics,
-            "art_status": art_status(),
             "attack_metrics": metric_rows,
             "mitigation_notes": [
                 "Return labels instead of full probability vectors when business requirements allow.",

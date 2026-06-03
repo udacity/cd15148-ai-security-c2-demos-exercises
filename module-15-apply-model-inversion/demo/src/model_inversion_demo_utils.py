@@ -586,12 +586,3 @@ def plot_leakage_comparison(rows: list[dict[str, object]], output_path: Path) ->
     fig.savefig(output_path, dpi=160, bbox_inches="tight")
     plt.close(fig)
     return output_path
-
-
-def art_status() -> dict[str, object]:
-    try:
-        import art  # noqa: F401
-
-        return {"available": True, "note": "ART is installed; this demo uses a transparent PyTorch inversion loop for teachability."}
-    except Exception as exc:
-        return {"available": False, "note": f"ART is not installed or not importable in this environment: {exc}"}

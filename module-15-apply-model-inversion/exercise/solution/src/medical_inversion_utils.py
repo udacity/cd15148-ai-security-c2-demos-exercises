@@ -529,12 +529,3 @@ def write_privacy_report(
     )
     path.write_text("\n".join(lines), encoding="utf-8")
     return path
-
-
-def art_status() -> dict[str, object]:
-    try:
-        import art  # noqa: F401
-
-        return {"available": True, "note": "ART is installed; this exercise uses a transparent PyTorch inversion loop."}
-    except Exception as exc:
-        return {"available": False, "note": f"ART is not installed or not importable in this environment: {exc}"}
