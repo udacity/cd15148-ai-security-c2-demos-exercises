@@ -1,4 +1,7 @@
 {
+  "scenario": "Brain tumor MRI screening model inversion privacy assessment",
+  "weekly_patient_images": 10000,
+  "dataset": "Ultralytics brain tumor MRI detection subset",
   "baseline_model": {
     "accuracy": 0.49171270718232046,
     "mean_confidence": 0.8966776728630066,

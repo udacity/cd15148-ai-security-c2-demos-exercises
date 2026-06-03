@@ -209,5 +209,11 @@
       "prototype_cosine_similarity": 0.984426,
       "privacy_leakage_score": 0.984426
     }
+  ],
+  "mitigation_notes": [
+    "Return labels instead of full probability vectors when business requirements allow.",
+    "Round or bucket confidence scores to reduce optimization signal.",
+    "Rate-limit repeated inference queries and monitor identity enumeration patterns.",
+    "Evaluate overfitting and consider privacy-preserving training where appropriate."
   ]
 }
