@@ -7,9 +7,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-import matplotlib
-
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -160,7 +157,11 @@ def _load_local_att_faces(root: Path, image_size: int) -> tuple[np.ndarray | Non
             labels.append(label)
     if not images:
         return None, None, f"No .pgm files found under local AT&T folder: {root}"
-    return np.asarray(images, dtype=np.float32)[:, None, :, :], np.asarray(labels, dtype=np.int64), str(root)
+    return (
+        np.asarray(images, dtype=np.float32)[:, None, :, :],
+        np.asarray(labels, dtype=np.int64),
+        "Local AT&T faces archive (data/att_faces/)",
+    )
 
 
 def _load_sklearn_att_faces(cache_dir: Path, download_if_missing: bool) -> tuple[np.ndarray, np.ndarray, str]:
@@ -174,7 +175,11 @@ def _load_sklearn_att_faces(cache_dir: Path, download_if_missing: bool) -> tuple
         shuffle=False,
         download_if_missing=download_if_missing,
     )
-    return faces.images.astype(np.float32)[:, None, :, :], faces.target.astype(np.int64), str(cache_dir)
+    return (
+        faces.images.astype(np.float32)[:, None, :, :],
+        faces.target.astype(np.int64),
+        "scikit-learn fetch_olivetti_faces (AT&T/Olivetti faces)",
+    )
 
 
 def _resize_images(images: np.ndarray, image_size: int) -> np.ndarray:

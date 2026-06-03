@@ -9,9 +9,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-import matplotlib
-
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -508,9 +505,9 @@ def write_privacy_report(
             "",
         "## Visual Evidence",
         "",
-        f"![Reconstruction comparison]({comparison_path.as_posix()})",
+        f"![Reconstruction comparison]({comparison_path.name})",
         "",
-        f"![Leakage scores]({chart_path.as_posix()})",
+        f"![Leakage scores]({chart_path.name})",
             "",
             "## Risk Assessment",
             "",

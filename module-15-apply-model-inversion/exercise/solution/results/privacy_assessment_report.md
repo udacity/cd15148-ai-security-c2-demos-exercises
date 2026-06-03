@@ -17,11 +17,9 @@
 
 ## Visual Evidence
 
-![Reconstruction comparison](C:/Users/joshd/OneDrive/Desktop/Udacity/Course/cd15148-ai-security-c2-demos-exercises/module-15-apply-model-inversion/exercise/solution/results/reconstructed_medical_features.png)
+![Reconstruction comparison](reconstructed_medical_features.png)
 
-The `recovered_mri_from_model_inversion.png` artifact compares a nearest validation MRI, a class prototype, and an MRI-prior reconstruction optimized from model confidence outputs.
-
-![Leakage scores](C:/Users/joshd/OneDrive/Desktop/Udacity/Course/cd15148-ai-security-c2-demos-exercises/module-15-apply-model-inversion/exercise/solution/results/privacy_leakage_by_output_config.png)
+![Leakage scores](privacy_leakage_by_output_config.png)
 
 ## Risk Assessment
 
