@@ -83,8 +83,8 @@ def seed_everything(seed: int = 42) -> None:
 def prepare_medical_dataset(
     data_dir: Path,
     *,
-    train_per_class: int = 300,
-    val_per_class: int = 100,
+    train_per_class: int = 120,
+    val_per_class: int = 60,
     image_size: int = 128,
     seed: int = 42,
 ) -> MedicalDataset:
@@ -208,7 +208,7 @@ def train_or_load_model(
     dataset: MedicalDataset,
     *,
     device: str,
-    epochs: int = 16,
+    epochs: int = 60,
     batch_size: int = 64,
 ) -> BrainTumorCNN:
     model_path.parent.mkdir(parents=True, exist_ok=True)

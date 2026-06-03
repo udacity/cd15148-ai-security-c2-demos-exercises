@@ -3,23 +3,23 @@
   "weekly_patient_images": 10000,
   "dataset": "Ultralytics brain tumor MRI detection subset",
   "baseline_model": {
-    "accuracy": 0.49171270718232046,
-    "mean_confidence": 0.8966776728630066,
-    "p95_confidence": 0.9998160004615784,
-    "mean_entropy": 0.24257402122020721
+    "accuracy": 0.6833333333333333,
+    "mean_confidence": 0.9393067955970764,
+    "p95_confidence": 0.9999561905860901,
+    "mean_entropy": 0.15346206724643707
   },
   "attack_metrics": [
     {
       "output_configuration": "full_probability",
       "target_class": "negative",
-      "model_confidence": 0.999879,
-      "exposed_confidence": 0.999879,
+      "model_confidence": 0.99884,
+      "exposed_confidence": 0.99884,
       "predicted_class": "negative",
       "target_match": true,
       "queries": 320,
-      "representative_mse": 0.143268,
-      "representative_cosine_similarity": 0.66012,
-      "privacy_leakage_score": 0.66012
+      "representative_mse": 0.144584,
+      "representative_cosine_similarity": 0.676631,
+      "privacy_leakage_score": 0.676631
     },
     {
       "output_configuration": "full_probability",
@@ -29,56 +29,56 @@
       "predicted_class": "positive",
       "target_match": true,
       "queries": 320,
-      "representative_mse": 0.009382,
-      "representative_cosine_similarity": 0.594682,
-      "privacy_leakage_score": 0.594682
+      "representative_mse": 0.008742,
+      "representative_cosine_similarity": 0.62107,
+      "privacy_leakage_score": 0.62107
     },
     {
       "output_configuration": "rounded_confidence",
       "target_class": "negative",
-      "model_confidence": 8.9e-05,
-      "exposed_confidence": 0.0,
-      "predicted_class": "positive",
-      "target_match": false,
+      "model_confidence": 0.80879,
+      "exposed_confidence": 0.8,
+      "predicted_class": "negative",
+      "target_match": true,
       "queries": 320,
-      "representative_mse": 0.004875,
-      "representative_cosine_similarity": 0.736812,
-      "privacy_leakage_score": 0.0
+      "representative_mse": 0.004683,
+      "representative_cosine_similarity": 0.744804,
+      "privacy_leakage_score": 0.744804
     },
     {
       "output_configuration": "rounded_confidence",
       "target_class": "positive",
-      "model_confidence": 0.999911,
-      "exposed_confidence": 1.0,
-      "predicted_class": "positive",
-      "target_match": true,
+      "model_confidence": 0.193808,
+      "exposed_confidence": 0.2,
+      "predicted_class": "negative",
+      "target_match": false,
       "queries": 320,
-      "representative_mse": 0.007492,
-      "representative_cosine_similarity": 0.628334,
-      "privacy_leakage_score": 0.628334
+      "representative_mse": 0.007271,
+      "representative_cosine_similarity": 0.634134,
+      "privacy_leakage_score": 0.0
     },
     {
       "output_configuration": "top1_label_only",
       "target_class": "negative",
-      "model_confidence": 8.9e-05,
-      "exposed_confidence": 0.0,
-      "predicted_class": "positive",
-      "target_match": false,
+      "model_confidence": 0.80879,
+      "exposed_confidence": 1.0,
+      "predicted_class": "negative",
+      "target_match": true,
       "queries": 320,
-      "representative_mse": 0.004875,
-      "representative_cosine_similarity": 0.736812,
+      "representative_mse": 0.004683,
+      "representative_cosine_similarity": 0.744804,
       "privacy_leakage_score": 0.0
     },
     {
       "output_configuration": "top1_label_only",
       "target_class": "positive",
-      "model_confidence": 0.999911,
-      "exposed_confidence": 1.0,
-      "predicted_class": "positive",
-      "target_match": true,
+      "model_confidence": 0.193808,
+      "exposed_confidence": 0.0,
+      "predicted_class": "negative",
+      "target_match": false,
       "queries": 320,
-      "representative_mse": 0.007492,
-      "representative_cosine_similarity": 0.628334,
+      "representative_mse": 0.007271,
+      "representative_cosine_similarity": 0.634134,
       "privacy_leakage_score": 0.0
     }
   ]

@@ -2,17 +2,17 @@
 
 ## Baseline Model Behavior
 
-- Validation accuracy: 49.17%
-- Mean confidence: 89.67%
-- P95 confidence: 99.98%
-- Mean output entropy: 0.2426
+- Validation accuracy: 68.33%
+- Mean confidence: 93.93%
+- P95 confidence: 100.00%
+- Mean output entropy: 0.1535
 
 ## Inversion Leakage Summary
 
 | Output configuration | Mean leakage score |
 |----------------------|--------------------|
-| full_probability | 0.627 |
-| rounded_confidence | 0.314 |
+| full_probability | 0.649 |
+| rounded_confidence | 0.372 |
 | top1_label_only | 0.000 |
 
 ## Visual Evidence
