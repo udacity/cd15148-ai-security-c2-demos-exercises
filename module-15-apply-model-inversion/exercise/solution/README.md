@@ -4,8 +4,17 @@ This solution completes the model inversion privacy assessment workflow for a br
 
 ## Run
 
+The canonical run path is the notebook `notebooks/medical_model_inversion_assessment.ipynb`:
+
 ```bash
 pip install -r requirements.txt
+```
+
+Then open and run the notebook end-to-end.
+
+`scripts/run_assessment.py` is provided as a non-interactive reproducibility entrypoint for instructors (same workflow, no notebook UI):
+
+```bash
 python scripts/run_assessment.py
 ```
 
@@ -21,6 +30,5 @@ python scripts/run_assessment.py --epochs 2 --train-per-class 30 --val-per-class
 - `results/model_inversion_privacy_metrics.csv`
 - `results/privacy_assessment_summary.json`
 - `results/reconstructed_medical_features.png`
-- `results/recovered_mri_from_model_inversion.png`
 - `results/privacy_leakage_by_output_config.png`
 - `results/privacy_assessment_report.md`

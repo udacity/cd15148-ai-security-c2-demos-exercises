@@ -17,13 +17,10 @@ from medical_inversion_utils import (  # noqa: E402
     evaluate_model_outputs,
     inversion_metrics,
     output_configurations,
-    nearest_reference_samples,
     plot_leakage_scores,
-    plot_recovered_mri_examples,
     plot_reconstruction_comparison,
     prepare_medical_dataset,
     representative_samples,
-    run_mri_prior_inversion_attack,
     run_inversion_attack,
     seed_everything,
     train_or_load_model,
@@ -40,7 +37,6 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--val-per-class", type=int, default=60)
     parser.add_argument("--attack-steps", type=int, default=160)
     parser.add_argument("--attack-restarts", type=int, default=2)
-    parser.add_argument("--prior-components", type=int, default=80)
     return parser.parse_args()
 
 
@@ -88,18 +84,6 @@ def main() -> None:
         )
         reconstruction_sets[config.name] = reconstructions
         metric_rows.extend(inversion_metrics(config.name, reconstructions, representatives, dataset.class_names))
-    prior_reconstructions = run_mri_prior_inversion_attack(
-        model,
-        target_classes,
-        dataset.val_images,
-        device=device,
-        image_size=int(dataset.train_images.shape[-1]),
-        steps=args.attack_steps,
-        restarts=args.attack_restarts,
-        n_components=args.prior_components,
-    )
-    metric_rows.extend(inversion_metrics("mri_prior_probability", prior_reconstructions, representatives, dataset.class_names))
-    nearest_samples = nearest_reference_samples(prior_reconstructions, dataset.val_images, dataset.val_labels)
 
     metrics_path = write_csv(metric_rows, results_dir / "model_inversion_privacy_metrics.csv")
     comparison_path = plot_reconstruction_comparison(
@@ -107,13 +91,6 @@ def main() -> None:
         representatives,
         dataset.class_names,
         results_dir / "reconstructed_medical_features.png",
-    )
-    recovered_mri_path = plot_recovered_mri_examples(
-        prior_reconstructions,
-        representatives,
-        nearest_samples,
-        dataset.class_names,
-        results_dir / "recovered_mri_from_model_inversion.png",
     )
     chart_path = plot_leakage_scores(metric_rows, results_dir / "privacy_leakage_by_output_config.png")
     summary_path = write_json(
@@ -163,7 +140,6 @@ def main() -> None:
     print(f"Privacy metrics: {metrics_path}")
     print(f"Summary JSON: {summary_path}")
     print(f"Visual comparison: {comparison_path}")
-    print(f"Recovered MRI examples: {recovered_mri_path}")
     print(f"Leakage chart: {chart_path}")
     print(f"Assessment report: {report_path}")
 

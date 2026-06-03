@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import csv
 import json
-import math
 import urllib.request
 import zipfile
 from dataclasses import dataclass
@@ -44,7 +43,7 @@ class OutputConfig:
 
 
 class BrainTumorCNN(nn.Module):
-    def __init__(self, num_classes: int = 3):
+    def __init__(self, num_classes: int = 2):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(1, 24, 3, padding=1),
@@ -323,37 +322,8 @@ def _total_variation(image: torch.Tensor) -> torch.Tensor:
     )
 
 
-def run_mri_prior_inversion_attack(
-    model: nn.Module,
-    target_classes: Iterable[int],
-    reference_images: np.ndarray,
-    *,
-    device: str,
-    image_size: int = 128,
-    steps: int = 180,
-    restarts: int = 2,
-    learning_rate: float = 0.06,
-    n_components: int = 80,
-) -> dict[int, dict[str, object]]:
-    """TODO: Optional extension.
-
-    Constrain inversion to a PCA prior learned from reference MRI images so
-    recovered images look more like plausible MRI scans.
-    """
-    raise NotImplementedError("TODO: implement MRI-prior inversion for recovered MRI examples.")
-
-
 def representative_samples(images: np.ndarray, labels: np.ndarray, target_classes: Iterable[int]) -> dict[int, np.ndarray]:
     return {target: images[labels == target].mean(axis=0)[0] for target in target_classes}
-
-
-def nearest_reference_samples(
-    reconstructions: dict[int, dict[str, object]],
-    images: np.ndarray,
-    labels: np.ndarray,
-) -> dict[int, np.ndarray]:
-    """TODO: Find the nearest validation sample for each reconstruction."""
-    raise NotImplementedError("TODO: find nearest reference MRI samples.")
 
 
 def inversion_metrics(
@@ -418,17 +388,6 @@ def plot_reconstruction_comparison(
     fig.savefig(output_path, dpi=160, bbox_inches="tight")
     plt.close(fig)
     return output_path
-
-
-def plot_recovered_mri_examples(
-    prior_reconstructions: dict[int, dict[str, object]],
-    representatives: dict[int, np.ndarray],
-    nearest_samples: dict[int, np.ndarray],
-    class_names: list[str],
-    output_path: Path,
-) -> Path:
-    """TODO: Plot nearest MRI, class prototype, and recovered MRI."""
-    raise NotImplementedError("TODO: plot recovered MRI examples.")
 
 
 def plot_leakage_scores(rows: list[dict[str, object]], output_path: Path) -> Path:

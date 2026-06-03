@@ -44,7 +44,7 @@ class OutputConfig:
 
 
 class BrainTumorCNN(nn.Module):
-    def __init__(self, num_classes: int = 3):
+    def __init__(self, num_classes: int = 2):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(1, 24, 3, padding=1),
@@ -370,98 +370,8 @@ def _total_variation(image: torch.Tensor) -> torch.Tensor:
     )
 
 
-def run_mri_prior_inversion_attack(
-    model: nn.Module,
-    target_classes: Iterable[int],
-    reference_images: np.ndarray,
-    *,
-    device: str,
-    image_size: int = 128,
-    steps: int = 180,
-    restarts: int = 2,
-    learning_rate: float = 0.06,
-    n_components: int = 80,
-) -> dict[int, dict[str, object]]:
-    """Recover MRI-like images by optimizing in a PCA image prior.
-
-    Raw-pixel inversion often creates texture artifacts. This variant constrains
-    the candidate to combinations of real validation MRI images, making the
-    reconstruction easier to interpret as recovered sensitive image structure.
-    """
-    try:
-        from sklearn.decomposition import PCA
-    except Exception as exc:
-        raise ImportError("scikit-learn is required for MRI-prior inversion.") from exc
-
-    model.eval()
-    flat_reference = reference_images.reshape(len(reference_images), -1)
-    component_count = min(n_components, len(flat_reference) - 1, flat_reference.shape[1])
-    pca = PCA(n_components=component_count, random_state=42)
-    pca.fit(flat_reference)
-    mean = torch.tensor(pca.mean_, dtype=torch.float32, device=device)
-    components = torch.tensor(pca.components_, dtype=torch.float32, device=device)
-    component_scale = torch.tensor(np.sqrt(pca.explained_variance_ + 1e-8), dtype=torch.float32, device=device)
-
-    results = {}
-    for target in target_classes:
-        best_loss = math.inf
-        best_image = None
-        for restart in range(restarts):
-            torch.manual_seed(2400 + target * 17 + restart)
-            coeffs = torch.zeros((1, component_count), device=device, requires_grad=True)
-            coeffs.data.normal_(0.0, 0.05)
-            optimizer = torch.optim.Adam([coeffs], lr=learning_rate)
-            target_tensor = torch.tensor([target], device=device)
-            for _ in range(steps):
-                optimizer.zero_grad(set_to_none=True)
-                flat = mean + coeffs @ components
-                candidate = flat.reshape(1, 1, image_size, image_size).clamp(0, 1)
-                logits = model(candidate)
-                loss = F.cross_entropy(logits, target_tensor)
-                loss = loss + 0.02 * torch.mean((coeffs / component_scale) ** 2) + 0.006 * _total_variation(candidate)
-                loss.backward()
-                optimizer.step()
-                with torch.no_grad():
-                    coeffs.clamp_(-3.0 * component_scale, 3.0 * component_scale)
-
-            with torch.no_grad():
-                flat = mean + coeffs @ components
-                candidate = flat.reshape(1, 1, image_size, image_size).clamp(0, 1)
-                final_loss = float(F.cross_entropy(model(candidate), target_tensor).cpu())
-                if final_loss < best_loss:
-                    best_loss = final_loss
-                    best_image = candidate.detach().cpu().numpy()[0, 0]
-
-        assert best_image is not None
-        with torch.no_grad():
-            image_t = torch.tensor(best_image[None, None, :, :], dtype=torch.float32, device=device)
-            output_probs = F.softmax(model(image_t), dim=1).cpu().numpy()[0]
-        results[target] = {
-            "image": best_image,
-            "model_confidence": float(output_probs[target]),
-            "exposed_confidence": float(output_probs[target]),
-            "predicted_class": int(output_probs.argmax()),
-            "queries": steps * restarts,
-        }
-    return results
-
-
 def representative_samples(images: np.ndarray, labels: np.ndarray, target_classes: Iterable[int]) -> dict[int, np.ndarray]:
     return {target: images[labels == target].mean(axis=0)[0] for target in target_classes}
-
-
-def nearest_reference_samples(
-    reconstructions: dict[int, dict[str, object]],
-    images: np.ndarray,
-    labels: np.ndarray,
-) -> dict[int, np.ndarray]:
-    nearest = {}
-    for target, result in reconstructions.items():
-        same_class = images[labels == target]
-        reconstruction = result["image"]
-        distances = np.mean((same_class[:, 0] - reconstruction) ** 2, axis=(1, 2))
-        nearest[target] = same_class[int(np.argmin(distances)), 0]
-    return nearest
 
 
 def inversion_metrics(
@@ -543,38 +453,6 @@ def plot_reconstruction_comparison(
     return output_path
 
 
-def plot_recovered_mri_examples(
-    prior_reconstructions: dict[int, dict[str, object]],
-    representatives: dict[int, np.ndarray],
-    nearest_samples: dict[int, np.ndarray],
-    class_names: list[str],
-    output_path: Path,
-) -> Path:
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    targets = list(prior_reconstructions.keys())
-    fig, axes = plt.subplots(len(targets), 3, figsize=(8, 2.8 * len(targets)))
-    if len(targets) == 1:
-        axes = np.asarray([axes])
-    for row_idx, target in enumerate(targets):
-        recovered = prior_reconstructions[target]["image"]
-        confidence = float(prior_reconstructions[target]["model_confidence"])
-        panels = [
-            ("Nearest validation MRI", nearest_samples[target]),
-            ("Class prototype", representatives[target]),
-            (f"Recovered via inversion\nconfidence={confidence:.3f}", recovered),
-        ]
-        for col_idx, (title, image) in enumerate(panels):
-            axes[row_idx, col_idx].imshow(image, cmap="gray", vmin=0, vmax=1)
-            axes[row_idx, col_idx].set_title(title, fontsize=9)
-            axes[row_idx, col_idx].axis("off")
-        axes[row_idx, 0].set_ylabel(class_names[target], rotation=0, labelpad=42, fontsize=9)
-    fig.suptitle("MRI-prior model inversion: recovered MRI-like examples", fontsize=12)
-    fig.tight_layout()
-    fig.savefig(output_path, dpi=170, bbox_inches="tight")
-    plt.close(fig)
-    return output_path
-
-
 def plot_leakage_scores(rows: list[dict[str, object]], output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     grouped: dict[str, list[float]] = {}
@@ -631,8 +509,6 @@ def write_privacy_report(
         "## Visual Evidence",
         "",
         f"![Reconstruction comparison]({comparison_path.as_posix()})",
-        "",
-        "The `recovered_mri_from_model_inversion.png` artifact compares a nearest validation MRI, a class prototype, and an MRI-prior reconstruction optimized from model confidence outputs.",
         "",
         f"![Leakage scores]({chart_path.as_posix()})",
             "",

@@ -23,17 +23,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Complete the TODOs in `src/medical_inversion_utils.py`, then run:
-
-```bash
-python scripts/run_assessment.py
-```
-
-For a faster development run:
-
-```bash
-python scripts/run_assessment.py --epochs 2 --train-per-class 30 --val-per-class 15 --attack-steps 20 --attack-restarts 1
-```
+Complete the TODOs in `src/medical_inversion_utils.py`, then open and run `notebooks/medical_model_inversion_assessment.ipynb` end-to-end. The notebook is the canonical deliverable for this exercise.
 
 ## Expected Outputs
 
@@ -41,6 +31,5 @@ python scripts/run_assessment.py --epochs 2 --train-per-class 30 --val-per-class
 - `results/model_inversion_privacy_metrics.csv`
 - `results/privacy_assessment_summary.json`
 - `results/reconstructed_medical_features.png`
-- `results/recovered_mri_from_model_inversion.png`
 - `results/privacy_leakage_by_output_config.png`
 - `results/privacy_assessment_report.md`
