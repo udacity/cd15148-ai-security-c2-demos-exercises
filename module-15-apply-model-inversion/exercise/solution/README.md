@@ -26,9 +26,16 @@ python scripts/run_assessment.py --epochs 2 --train-per-class 30 --val-per-class
 
 ## Outputs
 
-- `results/baseline_confidence_outputs.csv`
-- `results/model_inversion_privacy_metrics.csv`
-- `results/privacy_assessment_summary.json`
-- `results/reconstructed_medical_features.png`
-- `results/privacy_leakage_by_output_config.png`
-- `results/privacy_assessment_report.md`
+Committed reference outputs in `results/` use the `_baseline` suffix:
+
+- `results/confidence_outputs_baseline.csv`
+- `results/model_inversion_privacy_metrics_baseline.csv`
+- `results/privacy_assessment_summary_baseline.json`
+- `results/reconstructed_medical_features_baseline.png`
+- `results/privacy_leakage_by_output_config_baseline.png`
+- `results/privacy_assessment_report_baseline.md`
+
+Re-running the notebook or script produces fresh sibling files with a
+`_<YYYYMMDD_HHMMSS>` suffix (e.g. `confidence_outputs_20260603_182755.csv`).
+These runtime artifacts are gitignored so the committed baselines stay
+untouched on re-runs.

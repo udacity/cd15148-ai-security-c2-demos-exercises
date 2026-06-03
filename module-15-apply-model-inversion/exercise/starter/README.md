@@ -27,9 +27,16 @@ Complete the TODOs in `src/medical_inversion_utils.py`, then open and run `noteb
 
 ## Expected Outputs
 
-- `results/baseline_confidence_outputs.csv`
-- `results/model_inversion_privacy_metrics.csv`
-- `results/privacy_assessment_summary.json`
-- `results/reconstructed_medical_features.png`
-- `results/privacy_leakage_by_output_config.png`
-- `results/privacy_assessment_report.md`
+A successful run produces these files in `results/` with a `_<YYYYMMDD_HHMMSS>`
+suffix derived from the notebook's run timestamp (so re-runs accumulate
+side by side rather than overwriting each other):
+
+- `results/confidence_outputs_<timestamp>.csv`
+- `results/model_inversion_privacy_metrics_<timestamp>.csv`
+- `results/privacy_assessment_summary_<timestamp>.json`
+- `results/reconstructed_medical_features_<timestamp>.png`
+- `results/privacy_leakage_by_output_config_<timestamp>.png`
+- `results/privacy_assessment_report_<timestamp>.md`
+
+Compare your outputs against the reference results in `../solution/results/`,
+which are committed with a `_baseline` suffix.

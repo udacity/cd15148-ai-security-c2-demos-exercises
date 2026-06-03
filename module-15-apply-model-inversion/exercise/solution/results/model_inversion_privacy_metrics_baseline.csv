@@ -1,0 +1,7 @@
+output_configuration,target_class,model_confidence,exposed_confidence,predicted_class,target_match,queries,representative_mse,representative_cosine_similarity,privacy_leakage_score
+full_probability,negative,0.999879,0.999879,negative,True,320,0.143268,0.66012,0.66012
+full_probability,positive,1.0,1.0,positive,True,320,0.009382,0.594682,0.594682
+rounded_confidence,negative,8.9e-05,0.0,positive,False,320,0.004875,0.736812,0.0
+rounded_confidence,positive,0.999911,1.0,positive,True,320,0.007492,0.628334,0.628334
+top1_label_only,negative,8.9e-05,0.0,positive,False,320,0.004875,0.736812,0.0
+top1_label_only,positive,0.999911,1.0,positive,True,320,0.007492,0.628334,0.0

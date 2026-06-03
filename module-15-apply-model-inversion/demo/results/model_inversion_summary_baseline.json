@@ -2,84 +2,80 @@
   "scenario": "Controlled facility facial recognition privacy assessment",
   "daily_authentication_requests": 60000,
   "dataset": "AT&T/Olivetti faces from scikit-learn",
-  "source": "C:\\Users\\joshd\\OneDrive\\Desktop\\Udacity\\Course\\cd15148-ai-security-c2-demos-exercises\\module-15-apply-model-inversion\\demo\\data\\generated\\sklearn_cache",
+  "source": "scikit-learn fetch_olivetti_faces (AT&T/Olivetti faces)",
   "training_images": 280,
   "validation_queries": 500,
   "baseline_model": {
     "accuracy": 0.992,
-    "mean_confidence": 0.9677389860153198,
-    "p95_confidence": 0.999769389629364
-  },
-  "art_status": {
-    "available": true,
-    "note": "ART is installed; this demo uses a transparent PyTorch inversion loop for teachability."
+    "mean_confidence": 0.9677383303642273,
+    "p95_confidence": 0.9997692704200745
   },
   "attack_metrics": [
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_01",
-      "target_confidence": 0.999964,
+      "target_confidence": 0.999967,
       "predicted_identity": "subject_01",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.104416,
-      "prototype_cosine_similarity": 0.870594,
-      "privacy_leakage_score": 0.870594
+      "prototype_mse": 0.107876,
+      "prototype_cosine_similarity": 0.866964,
+      "privacy_leakage_score": 0.866964
     },
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_02",
-      "target_confidence": 0.999966,
+      "target_confidence": 0.999952,
       "predicted_identity": "subject_02",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.128567,
-      "prototype_cosine_similarity": 0.827643,
-      "privacy_leakage_score": 0.827643
+      "prototype_mse": 0.129027,
+      "prototype_cosine_similarity": 0.827151,
+      "privacy_leakage_score": 0.827151
     },
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_03",
-      "target_confidence": 0.999922,
+      "target_confidence": 0.999924,
       "predicted_identity": "subject_03",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.038624,
-      "prototype_cosine_similarity": 0.946286,
-      "privacy_leakage_score": 0.946286
+      "prototype_mse": 0.04594,
+      "prototype_cosine_similarity": 0.940239,
+      "privacy_leakage_score": 0.940239
     },
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_04",
-      "target_confidence": 0.99998,
+      "target_confidence": 0.999982,
       "predicted_identity": "subject_04",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.127777,
-      "prototype_cosine_similarity": 0.82798,
-      "privacy_leakage_score": 0.82798
+      "prototype_mse": 0.12889,
+      "prototype_cosine_similarity": 0.826858,
+      "privacy_leakage_score": 0.826858
     },
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_05",
-      "target_confidence": 0.999917,
+      "target_confidence": 0.999906,
       "predicted_identity": "subject_05",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.041028,
-      "prototype_cosine_similarity": 0.948992,
-      "privacy_leakage_score": 0.948992
+      "prototype_mse": 0.042631,
+      "prototype_cosine_similarity": 0.946247,
+      "privacy_leakage_score": 0.946247
     },
     {
       "attack_setting": "rich_probability",
       "target_identity": "subject_06",
-      "target_confidence": 0.999953,
+      "target_confidence": 0.999951,
       "predicted_identity": "subject_06",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.068252,
-      "prototype_cosine_similarity": 0.929695,
-      "privacy_leakage_score": 0.929695
+      "prototype_mse": 0.064351,
+      "prototype_cosine_similarity": 0.9337,
+      "privacy_leakage_score": 0.9337
     },
     {
       "attack_setting": "rounded_probability",
@@ -88,8 +84,8 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.376006,
-      "prototype_cosine_similarity": 0.878509,
+      "prototype_mse": 0.376356,
+      "prototype_cosine_similarity": 0.875352,
       "privacy_leakage_score": 0.0
     },
     {
@@ -99,8 +95,8 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.310369,
-      "prototype_cosine_similarity": 0.872311,
+      "prototype_mse": 0.310508,
+      "prototype_cosine_similarity": 0.869319,
       "privacy_leakage_score": 0.0
     },
     {
@@ -110,8 +106,8 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.303798,
-      "prototype_cosine_similarity": 0.860174,
+      "prototype_mse": 0.303734,
+      "prototype_cosine_similarity": 0.862618,
       "privacy_leakage_score": 0.0
     },
     {
@@ -121,8 +117,8 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.32377,
-      "prototype_cosine_similarity": 0.87473,
+      "prototype_mse": 0.32397,
+      "prototype_cosine_similarity": 0.868606,
       "privacy_leakage_score": 0.0
     },
     {
@@ -132,8 +128,8 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.323161,
-      "prototype_cosine_similarity": 0.873905,
+      "prototype_mse": 0.323273,
+      "prototype_cosine_similarity": 0.872621,
       "privacy_leakage_score": 0.0
     },
     {
@@ -143,75 +139,75 @@
       "predicted_identity": "subject_34",
       "target_match": false,
       "queries": 360,
-      "prototype_mse": 0.450442,
-      "prototype_cosine_similarity": 0.880852,
+      "prototype_mse": 0.450477,
+      "prototype_cosine_similarity": 0.882515,
       "privacy_leakage_score": 0.0
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_01",
-      "target_confidence": 0.996734,
+      "target_confidence": 0.995461,
       "predicted_identity": "subject_01",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.016117,
-      "prototype_cosine_similarity": 0.979711,
-      "privacy_leakage_score": 0.979711
+      "prototype_mse": 0.015224,
+      "prototype_cosine_similarity": 0.981163,
+      "privacy_leakage_score": 0.981163
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_02",
-      "target_confidence": 0.997973,
+      "target_confidence": 0.997798,
       "predicted_identity": "subject_02",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.018279,
-      "prototype_cosine_similarity": 0.971777,
-      "privacy_leakage_score": 0.971777
+      "prototype_mse": 0.015181,
+      "prototype_cosine_similarity": 0.97658,
+      "privacy_leakage_score": 0.97658
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_03",
-      "target_confidence": 0.999008,
+      "target_confidence": 0.999106,
       "predicted_identity": "subject_03",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.006288,
-      "prototype_cosine_similarity": 0.990698,
-      "privacy_leakage_score": 0.990698
+      "prototype_mse": 0.006478,
+      "prototype_cosine_similarity": 0.990455,
+      "privacy_leakage_score": 0.990455
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_04",
-      "target_confidence": 0.997485,
+      "target_confidence": 0.997628,
       "predicted_identity": "subject_04",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.009623,
-      "prototype_cosine_similarity": 0.986012,
-      "privacy_leakage_score": 0.986012
+      "prototype_mse": 0.009886,
+      "prototype_cosine_similarity": 0.985684,
+      "privacy_leakage_score": 0.985684
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_05",
-      "target_confidence": 0.999251,
+      "target_confidence": 0.999193,
       "predicted_identity": "subject_05",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.003645,
-      "prototype_cosine_similarity": 0.994668,
-      "privacy_leakage_score": 0.994668
+      "prototype_mse": 0.003562,
+      "prototype_cosine_similarity": 0.994775,
+      "privacy_leakage_score": 0.994775
     },
     {
       "attack_setting": "face_prior_probability",
       "target_identity": "subject_06",
-      "target_confidence": 0.998298,
+      "target_confidence": 0.998237,
       "predicted_identity": "subject_06",
       "target_match": true,
       "queries": 360,
-      "prototype_mse": 0.01956,
-      "prototype_cosine_similarity": 0.983266,
-      "privacy_leakage_score": 0.983266
+      "prototype_mse": 0.018509,
+      "prototype_cosine_similarity": 0.984426,
+      "privacy_leakage_score": 0.984426
     }
   ]
 }

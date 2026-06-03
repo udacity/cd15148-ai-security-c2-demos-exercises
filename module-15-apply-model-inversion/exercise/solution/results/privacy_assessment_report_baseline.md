@@ -5,21 +5,21 @@
 - Validation accuracy: 49.17%
 - Mean confidence: 89.67%
 - P95 confidence: 99.98%
-- Mean output entropy: 0.2425
+- Mean output entropy: 0.2426
 
 ## Inversion Leakage Summary
 
 | Output configuration | Mean leakage score |
 |----------------------|--------------------|
-| full_probability | 0.631 |
+| full_probability | 0.627 |
 | rounded_confidence | 0.314 |
 | top1_label_only | 0.000 |
 
 ## Visual Evidence
 
-![Reconstruction comparison](reconstructed_medical_features.png)
+![Reconstruction comparison](reconstructed_medical_features_baseline.png)
 
-![Leakage scores](privacy_leakage_by_output_config.png)
+![Leakage scores](privacy_leakage_by_output_config_baseline.png)
 
 ## Risk Assessment
 
