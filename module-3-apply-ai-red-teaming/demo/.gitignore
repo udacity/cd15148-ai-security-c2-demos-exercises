@@ -1,0 +1,14 @@
+# Local Python environments
+.venv/
+venv/
+env/
+
+# Runtime caches
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+
+# Notebook-generated outputs (timestamped); keep the committed baselines.
+outputs/*
+!outputs/*_baseline.md
+!outputs/README.md

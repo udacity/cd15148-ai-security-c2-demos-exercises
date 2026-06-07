@@ -22,8 +22,8 @@ A security review identified concerns about prompt injection, data leakage, inse
 1. Review the fictional RAG system materials in `docs/` and `data/`.
 2. Complete `prompts/structured_vulnerability_discovery_prompt.md`.
 3. Open `notebooks/rag_red_team_workflow_exercise.ipynb`.
-4. Run the first LLM request to generate proposed attacks and save `docs/llm_generated_attack_vectors.md`.
-5. Run the second LLM request to append the generated attacks to the context bundle and save `docs/red_team_charter.md`.
+4. Run the first LLM request. It writes the generated attack vectors to `outputs/llm_generated_attack_vectors_<YYYYMMDD_HHMMSS>.md`.
+5. Run the second LLM request. It appends the generated attacks to the context bundle and writes the charter to `outputs/red_team_charter_<YYYYMMDD_HHMMSS>.md`.
 6. Review both artifacts for false positives, unsupported assumptions, missing mitigations, and operational risk.
 
 ## Starter Materials
@@ -36,15 +36,17 @@ A security review identified concerns about prompt injection, data leakage, inse
 | `docs/model_card.md` | Model, retrieval, and data assumptions |
 | `docs/infrastructure_notes.md` | Fictional deployment and infrastructure configuration notes |
 | `docs/retrieval_access_policy.md` | Intended document-access rules |
+| `docs/attack_vectors_template.md` | Skeleton template the LLM is asked to follow when generating attack vectors |
+| `docs/red_team_charter_template.md` | Skeleton template the LLM is asked to follow when generating the charter |
 | `prompts/structured_vulnerability_discovery_prompt.md` | Prompt scaffold you must complete |
 | `notebooks/rag_red_team_workflow_exercise.ipynb` | Notebook scaffold for the two-request workflow |
 
 ## Required Outputs
 
-By the end of the exercise, your `starter/docs/` folder should contain:
+By the end of the exercise, your `starter/outputs/` folder should contain at least one timestamped pair:
 
-- `llm_generated_attack_vectors.md`
-- `red_team_charter.md`
+- `llm_generated_attack_vectors_<YYYYMMDD_HHMMSS>.md`
+- `red_team_charter_<YYYYMMDD_HHMMSS>.md`
 
 ## Key Takeaway
 
