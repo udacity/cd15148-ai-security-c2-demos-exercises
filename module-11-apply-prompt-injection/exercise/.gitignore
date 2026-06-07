@@ -1,0 +1,16 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.env
+
+starter/results/*
+!starter/results/README.md
+starter/vector_store/
+
+solution/vector_store/
+solution/results/*
+!solution/results/README.md
+!solution/results/solution_attack_results.csv
+!solution/results/solution_defended_results.csv

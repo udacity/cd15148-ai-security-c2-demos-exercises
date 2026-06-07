@@ -1,0 +1,4 @@
+attack,attack_id,sample_count,success_count,attack_success_rate,initial_labels,final_labels,elapsed_time_sec,queries,operational_risk
+hop_skip_jump,example01,1,1,1.0,truck,automobile,14.2,420,high
+projected_gradient_descent_numpy,example02,1,1,1.0,truck,ship,3.8,31,high
+simba,example03,1,0,0.0,truck,truck,9.6,100,low

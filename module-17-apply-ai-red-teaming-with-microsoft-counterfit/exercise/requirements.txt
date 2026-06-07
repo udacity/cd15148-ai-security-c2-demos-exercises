@@ -1,0 +1,10 @@
+# Microsoft Counterfit is preinstalled in the course environment.
+# For local WSL/Linux Python 3.8 testing only, install the official package with:
+# pip install git+https://github.com/Azure/counterfit.git
+torch
+torchvision
+numpy
+matplotlib
+pillow
+nbconvert
+ipykernel

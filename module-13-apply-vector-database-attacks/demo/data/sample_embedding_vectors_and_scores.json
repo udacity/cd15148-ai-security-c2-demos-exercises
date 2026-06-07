@@ -1,0 +1,9 @@
+{
+  "embedding_dimensions": 96,
+  "sample_vector_count": 60,
+  "first_three_vector_norms": [
+    1.0,
+    1.0,
+    1.0
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "target": "module19_logistics_cifar10_resnet18",
+  "note": "Optional Counterfit continuation from Module 17. Use in an environment where Microsoft Counterfit is installed.",
+  "attacks": [
+    {
+      "name": "art.FGSM",
+      "parameters": {
+        "sample_index": 0,
+        "eps": 0.04
+      }
+    },
+    {
+      "name": "art.PGD",
+      "parameters": {
+        "sample_index": 0,
+        "eps": 0.04,
+        "max_iter": 5
+      }
+    }
+  ]
+}

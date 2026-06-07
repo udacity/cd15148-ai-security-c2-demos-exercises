@@ -1,0 +1,74 @@
+[
+  {
+    "query_id": "mq01",
+    "text": "How should a technician troubleshoot hydraulic press pressure drift?",
+    "expected_domain": "hydraulic-press",
+    "expected_doc_hint": "Hydraulic Press"
+  },
+  {
+    "query_id": "mq02",
+    "text": "What steps are required before clearing a robotic welding cell fault?",
+    "expected_domain": "robotic-welding",
+    "expected_doc_hint": "Robotic Welding"
+  },
+  {
+    "query_id": "mq03",
+    "text": "How do we restart a conveyor after an emergency stop event?",
+    "expected_domain": "conveyor-safety",
+    "expected_doc_hint": "Conveyor Safety"
+  },
+  {
+    "query_id": "mq04",
+    "text": "What should engineers check before modifying PLC ladder logic?",
+    "expected_domain": "plc-controls",
+    "expected_doc_hint": "PLC Controls"
+  },
+  {
+    "query_id": "mq05",
+    "text": "How should failed quality inspection measurements be documented?",
+    "expected_domain": "quality-inspection",
+    "expected_doc_hint": "Quality Inspection"
+  },
+  {
+    "query_id": "mq06",
+    "text": "What is the safe response to a thermal oven over-temperature alarm?",
+    "expected_domain": "thermal-oven",
+    "expected_doc_hint": "Thermal Oven"
+  },
+  {
+    "query_id": "mq07",
+    "text": "How should CNC spindle vibration be handled during production?",
+    "expected_domain": "cnc-machining",
+    "expected_doc_hint": "CNC Machining"
+  },
+  {
+    "query_id": "mq08",
+    "text": "What is required before servicing a facility power panel?",
+    "expected_domain": "facility-power",
+    "expected_doc_hint": "Facility Power"
+  },
+  {
+    "query_id": "mq09",
+    "text": "How should proximity sensors be calibrated after replacement?",
+    "expected_domain": "sensor-calibration",
+    "expected_doc_hint": "Sensor Calibration"
+  },
+  {
+    "query_id": "mq10",
+    "text": "What controls apply to chemical transfer line maintenance?",
+    "expected_domain": "chemical-handling",
+    "expected_doc_hint": "Chemical Handling"
+  },
+  {
+    "query_id": "mq11",
+    "text": "How should teams document maintenance restart criteria?",
+    "expected_domain": "conveyor-safety",
+    "expected_doc_hint": "Conveyor Safety"
+  },
+  {
+    "query_id": "mq12",
+    "text": "What evidence is needed after replacing a robot end effector?",
+    "expected_domain": "robotic-welding",
+    "expected_doc_hint": "Robotic Welding"
+  }
+]

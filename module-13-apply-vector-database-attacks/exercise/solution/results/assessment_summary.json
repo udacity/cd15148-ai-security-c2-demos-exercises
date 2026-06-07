@@ -1,0 +1,15 @@
+{
+  "total_queries": 12,
+  "altered_ranking_queries": 8,
+  "downstream_compromised_queries": 8,
+  "high_operational_risk_queries": 7,
+  "attack_success_rate": 0.667,
+  "mean_score_delta": 0.3639,
+  "mitigations": [
+    "Require provenance validation and signed ingestion records for indexed documents.",
+    "Monitor retrieval ranking drift, source mix, and sudden similarity-score changes.",
+    "Filter or quarantine unverified documents before they enter production indexes.",
+    "Separate retrieved context from system instructions and reject instruction-like retrieved text.",
+    "Use human review for high-risk maintenance domains before expanding assistant coverage."
+  ]
+}

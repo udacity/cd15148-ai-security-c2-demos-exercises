@@ -1,0 +1,27 @@
+{
+  "target_name": "logistics_cifar10_resnet18",
+  "target_type": "pytorch_image_classifier",
+  "framework": "pytorch",
+  "dataset": "cifar10",
+  "model_architecture": "resnet18_cifar10",
+  "input_shape": [3, 32, 32],
+  "num_classes": 10,
+  "clip_values": [0.0, 1.0],
+  "class_names": [
+    "airplane",
+    "automobile",
+    "bird",
+    "cat",
+    "deer",
+    "dog",
+    "frog",
+    "horse",
+    "ship",
+    "truck"
+  ],
+  "operational_context": {
+    "environment": "high-volume distribution center",
+    "throughput": "250000 packages per day",
+    "risk": "misclassified labels or hazard indicators could affect routing and handling workflows"
+  }
+}

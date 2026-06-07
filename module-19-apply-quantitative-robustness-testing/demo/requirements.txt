@@ -1,0 +1,10 @@
+adversarial-robustness-toolbox
+matplotlib
+numpy
+pillow
+scikit-learn
+torch
+torchvision
+
+# Optional continuation from Module 17:
+# Microsoft Counterfit from https://github.com/Azure/counterfit

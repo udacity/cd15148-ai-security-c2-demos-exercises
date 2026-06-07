@@ -1,0 +1,14 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+.art/
+.matplotlib/
+data/cifar10/
+data/generated/
+models/*.pt
+results/*
+!results/README.md
+!results/sample_counterfit_attack_results.csv

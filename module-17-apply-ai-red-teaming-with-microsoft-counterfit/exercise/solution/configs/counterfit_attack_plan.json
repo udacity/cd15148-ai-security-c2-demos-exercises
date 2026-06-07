@@ -1,0 +1,34 @@
+{
+  "assessment_name": "counterfit_drone_detection_assessment",
+  "target_name": "drone_detection_resnet18",
+  "sample_index": 0,
+  "attacks": [
+    {
+      "name": "hop_skip_jump",
+      "parameters": {
+        "max_iter": 5,
+        "max_eval": 100,
+        "init_eval": 10,
+        "clip_values": [0.0, 1.0]
+      }
+    },
+    {
+      "name": "projected_gradient_descent_numpy",
+      "parameters": {
+        "eps": 0.03,
+        "eps_step": 0.01,
+        "max_iter": 5,
+        "clip_values": [0.0, 1.0]
+      }
+    },
+    {
+      "name": "simba",
+      "parameters": {
+        "epsilon": 0.05,
+        "max_iter": 100,
+        "clip_values": [0.0, 1.0],
+        "channels_first": true
+      }
+    }
+  ]
+}
