@@ -6,13 +6,12 @@ from pathlib import Path
 import sys
 
 import torch
+from datetime import datetime
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "src"))
 os.environ["ART_DATA_PATH"] = str(ROOT / "art_data")
-os.environ["USERPROFILE"] = str(ROOT)
-os.environ["HOME"] = str(ROOT)
 os.environ["MPLCONFIGDIR"] = str(ROOT / ".matplotlib")
 
 from traffic_sign_robustness_utils import (  # noqa: E402
@@ -54,6 +53,7 @@ def main() -> None:
     download_dir = ROOT / "data" / "gtsrb"
     model_path = ROOT / "models" / "traffic_sign_cnn.pt"
     results_dir = ROOT / "results"
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     prepare_gtsrb_subsets(data_dir, download_dir, args.train_per_class, args.val_per_class)
     train_images, train_labels = load_subset(data_dir, "train")
@@ -99,16 +99,16 @@ def main() -> None:
             if first_adversarial_set is None:
                 first_adversarial_set = (condition, adversarial_images)
 
-    write_scorecard(rows, results_dir / "traffic_sign_robustness_scorecard.csv")
-    plot_metric_bars(rows, results_dir / "traffic_sign_metric_comparison.png")
-    write_assessment_report(rows, results_dir / "traffic_sign_assessment_report.md")
+    write_scorecard(rows, results_dir / f"traffic_sign_robustness_scorecard_{run_timestamp}.csv")
+    plot_metric_bars(rows, results_dir / f"traffic_sign_metric_comparison_{run_timestamp}.png")
+    write_assessment_report(rows, results_dir / f"traffic_sign_assessment_report_{run_timestamp}.md")
 
     if first_degraded_set is not None:
         condition, degraded_images = first_degraded_set
         plot_clean_vs_degraded(
             val_images,
             degraded_images,
-            results_dir / "sample_environmental_degradation.png",
+            results_dir / f"sample_environmental_degradation_{run_timestamp}.png",
             title=f"Clean vs {condition}",
         )
     if first_adversarial_set is not None:
@@ -116,7 +116,7 @@ def main() -> None:
         plot_clean_vs_degraded(
             val_images,
             adversarial_images,
-            results_dir / "sample_adversarial_degradation.png",
+            results_dir / f"sample_adversarial_degradation_{run_timestamp}.png",
             title=f"Clean vs {condition}",
         )
 

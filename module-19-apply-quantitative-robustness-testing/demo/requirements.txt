@@ -1,7 +1,7 @@
-adversarial-robustness-toolbox
-matplotlib
-numpy
-pillow
-scikit-learn
-torch
-torchvision
+adversarial-robustness-toolbox==1.20.1
+matplotlib==3.10.9
+numpy==2.4.6
+pillow==12.2.0
+scikit-learn==1.8.0
+torch==2.5.1
+torchvision==0.20.1

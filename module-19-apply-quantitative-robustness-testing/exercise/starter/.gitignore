@@ -1,0 +1,20 @@
+# Generated dataset caches (downloaded/built at runtime)
+data/*
+!data/README.md
+art_data/*
+!art_data/README.md
+
+# Model checkpoints: keep shipped *.pt and the README, ignore other caches
+models/*
+!models/README.md
+!models/*.pt
+
+# Learner-generated outputs: keep committed baselines and scaffolding
+results/*
+!results/.gitkeep
+!results/README.md
+!results/*_baseline.*
+
+# Stray local caches
+.matplotlib/
+.art/

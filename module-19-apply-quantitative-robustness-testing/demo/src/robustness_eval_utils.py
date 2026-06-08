@@ -165,7 +165,7 @@ def train_or_load_model(
     model_path = Path(model_path)
     model = build_resnet18_cifar10().to(device)
     if not force_train and model_path.exists():
-        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
         model.eval()
         return model
 

@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 import torch
+from datetime import datetime
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,6 +50,7 @@ def main() -> None:
     download_dir = ROOT / "data" / "cifar10"
     model_dir = ROOT / "models"
     results_dir = ROOT / "results"
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     prepare_cifar10_assets(
         data_dir,
@@ -88,14 +90,14 @@ def main() -> None:
                 first_art_examples = (first_condition, art_examples[first_condition])
 
     scorecard = robustness_scorecard(all_rows)
-    csv_path = write_csv(scorecard, results_dir / "robustness_scorecard.csv")
-    chart_path = plot_scorecard(scorecard, results_dir / "robustness_scorecard.png")
+    csv_path = write_csv(scorecard, results_dir / f"robustness_scorecard_{run_timestamp}.csv")
+    chart_path = plot_scorecard(scorecard, results_dir / f"robustness_scorecard_{run_timestamp}.png")
     if first_art_examples is not None:
         condition, adversarial_images = first_art_examples
         plot_example_grid(
             val_images,
             adversarial_images,
-            results_dir / "sample_adversarial_examples.png",
+            results_dir / f"sample_adversarial_examples_{run_timestamp}.png",
             title=f"Sample adversarial examples: {condition}",
         )
 

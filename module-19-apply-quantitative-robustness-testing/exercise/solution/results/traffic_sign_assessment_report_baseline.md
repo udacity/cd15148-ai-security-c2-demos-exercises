@@ -2,7 +2,7 @@
 
 ## Summary
 
-The highest-risk condition was `art_fgsm_eps_0.06` with accuracy `0.2333`, confidence drop `-0.0605`, and attack success rate `0.8182`. This condition should be reviewed before expanding the shuttle fleet to new operating environments.
+The highest-risk condition was `art_fgsm_eps_0.06` with accuracy `0.2833`, confidence drop `0.0205`, and attack success rate `0.7265`. This condition should be reviewed before expanding the shuttle fleet to new operating environments.
 
 ## Operational Risk Analysis
 

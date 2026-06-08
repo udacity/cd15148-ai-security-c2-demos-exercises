@@ -204,7 +204,7 @@ def train_or_load_model(
     checkpoint_path = Path(checkpoint_path)
     model = build_traffic_sign_cnn().to(device)
     if not force_train and checkpoint_path.exists():
-        model.load_state_dict(torch.load(checkpoint_path, map_location=device))
+        model.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
         model.eval()
         return model
 
