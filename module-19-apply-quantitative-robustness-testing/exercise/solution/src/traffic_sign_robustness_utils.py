@@ -12,6 +12,7 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, transforms
+import torchvision.transforms.functional as TF
 
 
 GTSRB_CLASSES = [
@@ -66,15 +67,19 @@ ORIGINAL_TO_COMPACT = {original: compact for compact, original in enumerate(SELE
 
 
 class NumpyImageDataset(Dataset):
-    def __init__(self, images: np.ndarray, labels: np.ndarray):
+    def __init__(self, images: np.ndarray, labels: np.ndarray, augment=None):
         self.images = images.astype(np.float32)
         self.labels = labels.astype(np.int64)
+        self.augment = augment
 
     def __len__(self) -> int:
         return len(self.labels)
 
     def __getitem__(self, index: int) -> tuple[torch.Tensor, torch.Tensor]:
-        return torch.tensor(self.images[index]), torch.tensor(self.labels[index])
+        image = torch.tensor(self.images[index])
+        if self.augment is not None:
+            image = self.augment(image)
+        return image, torch.tensor(self.labels[index])
 
 
 class TrafficSignCNN(nn.Module):
@@ -95,7 +100,7 @@ class TrafficSignCNN(nn.Module):
             nn.Flatten(),
             nn.Linear(96 * 8 * 8, 128),
             nn.ReLU(),
-            nn.Dropout(0.2),
+            nn.Dropout(0.4),
             nn.Linear(128, num_classes),
         )
 
@@ -105,6 +110,21 @@ class TrafficSignCNN(nn.Module):
 
 def build_traffic_sign_cnn() -> nn.Module:
     return TrafficSignCNN()
+
+
+def _gtsrb_augmentation():
+    """Training augmentation for traffic signs: small affine jitter + brightness/contrast."""
+
+    def augment(image: torch.Tensor) -> torch.Tensor:
+        angle = float((torch.rand(1) * 2 - 1) * 15)
+        tx = float((torch.rand(1) * 2 - 1) * 6)
+        ty = float((torch.rand(1) * 2 - 1) * 6)
+        image = TF.affine(image, angle=angle, translate=[tx, ty], scale=1.0, shear=[0.0, 0.0])
+        image = TF.adjust_brightness(image, 0.75 + 0.5 * float(torch.rand(1)))
+        image = TF.adjust_contrast(image, 0.75 + 0.5 * float(torch.rand(1)))
+        return torch.clamp(image, 0.0, 1.0)
+
+    return augment
 
 
 def prepare_gtsrb_subsets(
@@ -177,18 +197,19 @@ def train_or_load_model(
     train_images: np.ndarray,
     train_labels: np.ndarray,
     device: str = "cpu",
-    epochs: int = 4,
+    epochs: int = 30,
     batch_size: int = 64,
+    force_train: bool = False,
 ) -> nn.Module:
     checkpoint_path = Path(checkpoint_path)
     model = build_traffic_sign_cnn().to(device)
-    if checkpoint_path.exists():
+    if not force_train and checkpoint_path.exists():
         model.load_state_dict(torch.load(checkpoint_path, map_location=device))
         model.eval()
         return model
 
-    loader = DataLoader(NumpyImageDataset(train_images, train_labels), batch_size=batch_size, shuffle=True)
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
+    loader = DataLoader(NumpyImageDataset(train_images, train_labels, augment=_gtsrb_augmentation()), batch_size=batch_size, shuffle=True)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=5e-4)
     loss_fn = nn.CrossEntropyLoss()
     model.train()
     for epoch in range(epochs):
