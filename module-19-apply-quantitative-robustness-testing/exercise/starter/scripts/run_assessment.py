@@ -32,9 +32,9 @@ from traffic_sign_robustness_utils import (  # noqa: E402
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the traffic sign robustness assessment starter.")
-    parser.add_argument("--train-per-class", type=int, default=80)
+    parser.add_argument("--train-per-class", type=int, default=400)
     parser.add_argument("--val-per-class", type=int, default=20)
-    parser.add_argument("--epochs", type=int, default=12)
+    parser.add_argument("--epochs", type=int, default=30)
     parser.add_argument("--max-eval", type=int, default=120)
     parser.add_argument("--skip-art", action="store_true", help="Skip adversarial tests while debugging metrics.")
     return parser.parse_args()

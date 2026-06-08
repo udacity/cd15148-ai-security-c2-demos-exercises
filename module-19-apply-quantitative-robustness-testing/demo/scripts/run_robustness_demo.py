@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the Module 19 robustness evaluation demo.")
     parser.add_argument("--train-per-class", type=int, default=150)
     parser.add_argument("--val-per-class", type=int, default=100)
-    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--epochs", type=int, default=8)
     parser.add_argument("--max-eval", type=int, default=1000)
     parser.add_argument("--skip-art", action="store_true", help="Run only clean and environmental tests.")
     return parser.parse_args()

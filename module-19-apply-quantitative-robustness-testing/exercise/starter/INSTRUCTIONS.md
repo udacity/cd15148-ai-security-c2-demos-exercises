@@ -42,7 +42,7 @@ python scripts/run_assessment.py --train-per-class 10 --val-per-class 5 --epochs
 ## Deliverables
 
 - Completed notebook.
-- `results/traffic_sign_robustness_scorecard.csv`
-- `results/traffic_sign_metric_comparison.png`
-- Clean-versus-degraded visualizations in `results/`
-- `results/traffic_sign_assessment_report.md`
+- A timestamped scorecard CSV (`results/traffic_sign_robustness_scorecard_<timestamp>.csv`).
+- A timestamped metric-comparison chart (`results/traffic_sign_metric_comparison_<timestamp>.png`).
+- Clean-versus-degraded visualizations in `results/`.
+- A timestamped assessment report (`results/traffic_sign_assessment_report_<timestamp>.md`).

@@ -19,6 +19,8 @@ python scripts/run_robustness_demo.py --train-per-class 10 --val-per-class 10 --
 
 ## Outputs
 
-- `results/robustness_scorecard.csv`: accessible scorecard table.
-- `results/robustness_scorecard.png`: visual comparison of robustness scores.
-- `results/sample_adversarial_examples.png`: clean and adversarial sample comparison when ART attacks run.
+Each run writes timestamped files to `results/`, so reruns don't overwrite each other:
+
+- `results/robustness_scorecard_<timestamp>.csv`: accessible scorecard table.
+- `results/robustness_scorecard_<timestamp>.png`: visual comparison of robustness scores.
+- `results/sample_adversarial_examples_<timestamp>.png`: clean and adversarial sample comparison when ART attacks run.
