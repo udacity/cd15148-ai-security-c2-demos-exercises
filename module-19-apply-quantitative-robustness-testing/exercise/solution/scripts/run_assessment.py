@@ -43,7 +43,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+    else:
+        device = "cpu"
     data_dir = ROOT / "data" / "generated"
     download_dir = ROOT / "data" / "gtsrb"
     model_path = ROOT / "models" / "traffic_sign_cnn.pt"

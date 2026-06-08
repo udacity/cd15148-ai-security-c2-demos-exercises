@@ -170,6 +170,7 @@ def train_or_load_model(
 
 def predict(model: nn.Module, images: np.ndarray, device: str = "cpu", batch_size: int = 256) -> dict[str, np.ndarray]:
     model.eval()
+    device = next(model.parameters()).device
     predictions: list[np.ndarray] = []
     confidences: list[np.ndarray] = []
     probabilities: list[np.ndarray] = []
