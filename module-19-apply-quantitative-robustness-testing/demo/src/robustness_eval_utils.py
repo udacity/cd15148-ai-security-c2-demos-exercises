@@ -364,55 +364,6 @@ def run_art_attack_suite(
     return rows, example_images
 
 
-def run_counterfit_example_if_available(target, attack_plan: dict) -> list[dict[str, float | str]]:
-    try:
-        from counterfit import Counterfit
-    except ImportError:
-        return [
-            {
-                "model": "counterfit_target",
-                "condition": "counterfit_optional",
-                "condition_type": "tooling",
-                "accuracy": "",
-                "mean_confidence": "",
-                "confidence_drop": "",
-                "attack_success_rate": "",
-                "perturbation_linf": "",
-                "operational_status": "Counterfit is not installed in this environment",
-            }
-        ]
-
-    rows = []
-    for attack_config in attack_plan.get("attacks", []):
-        attack_name = attack_config["name"]
-        cfattack = Counterfit.build_attack(target, attack_name)
-        if not cfattack:
-            continue
-        cfattack.options.update(attack_config.get("parameters", {}))
-        run_ok = Counterfit.run_attack(cfattack)
-        rows.append(
-            {
-                "model": "counterfit_target",
-                "condition": attack_name.split(".")[-1],
-                "condition_type": "counterfit",
-                "accuracy": "",
-                "mean_confidence": "",
-                "confidence_drop": "",
-                "attack_success_rate": _counterfit_success_rate(cfattack) if run_ok else "",
-                "perturbation_linf": "",
-                "operational_status": "executed" if run_ok else "failed",
-            }
-        )
-    return rows
-
-
-def _counterfit_success_rate(cfattack) -> float:
-    success_values = cfattack.success
-    if isinstance(success_values, (list, tuple, np.ndarray)):
-        return round(float(np.mean(success_values)), 4)
-    return round(float(bool(success_values)), 4)
-
-
 def perturbation_metrics(clean: np.ndarray, candidate: np.ndarray) -> dict[str, float]:
     delta = np.abs(candidate.astype(np.float32) - clean.astype(np.float32))
     return {

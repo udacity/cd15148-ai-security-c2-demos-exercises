@@ -22,7 +22,3 @@ python scripts/run_robustness_demo.py --train-per-class 10 --val-per-class 10 --
 - `results/robustness_scorecard.csv`: accessible scorecard table.
 - `results/robustness_scorecard.png`: visual comparison of robustness scores.
 - `results/sample_adversarial_examples.png`: clean and adversarial sample comparison when ART attacks run.
-
-## Counterfit Extension
-
-The `targets/` and `configs/counterfit_attack_plan.json` files extend the Module 17 Counterfit pattern. Microsoft Counterfit is optional here because it is typically installed in a supported Linux or WSL environment. The primary quantitative pipeline uses Adversarial Robustness Toolbox so the scorecard remains repeatable.
