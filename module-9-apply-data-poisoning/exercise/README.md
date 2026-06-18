@@ -11,7 +11,7 @@ The workflow extends the Module 9 data poisoning demo and reuses the traffic-sig
 
 ## Environment
 
-Use Python 3.11.
+Use Python 3.12.
 
 ```bash
 python -m venv .venv

@@ -1,0 +1,11 @@
+class_id,class_name,baseline_accuracy,backdoor_model_accuracy,label_flipped_model_accuracy
+0,airplane,0.925,0.76,0.77
+1,automobile,0.96,0.975,0.895
+2,bird,0.705,0.695,0.73
+3,cat,0.5,0.43,0.0
+4,deer,0.865,0.8,0.7
+5,dog,0.77,0.705,0.84
+6,frog,0.92,0.95,0.905
+7,horse,0.905,0.545,0.74
+8,ship,0.865,0.955,0.905
+9,truck,0.76,0.865,0.95

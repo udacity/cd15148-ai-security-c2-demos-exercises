@@ -1,0 +1,4 @@
+model,clean_accuracy,source_class_accuracy,targeted_misclassification_rate_clean_input,targeted_attack_success_rate_triggered_input,mean_confidence,notes
+clean_baseline,0.8175,0.5,0.0,0.0,0.8842,trained_on_clean_data
+backdoor_poisoned,0.768,0.43,0.175,0.985,0.8328,8%_of_dataset_triggered_and_relabeled
+label_flipped,0.7435,0.0,0.72,0.755,0.8372,75%_of_source_labels_flipped_to_target

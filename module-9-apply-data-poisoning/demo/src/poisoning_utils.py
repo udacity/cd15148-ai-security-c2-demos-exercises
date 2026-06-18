@@ -36,6 +36,22 @@ class NumpyImageDataset(Dataset):
         return torch.tensor(self.images[index]), torch.tensor(self.labels[index])
 
 
+class AugmentedNumpyImageDataset(NumpyImageDataset):
+    def __init__(self, images, labels, pad=4):
+        super().__init__(images, labels)
+        self._pad = pad
+
+    def __getitem__(self, index):
+        img = torch.tensor(self.images[index])
+        if torch.rand(1).item() < 0.5:
+            img = torch.flip(img, dims=[2])
+        padded = torch.nn.functional.pad(img, (self._pad,) * 4, mode="reflect")
+        top = torch.randint(0, 2 * self._pad + 1, (1,)).item()
+        left = torch.randint(0, 2 * self._pad + 1, (1,)).item()
+        img = padded[:, top : top + img.shape[1], left : left + img.shape[2]]
+        return img, torch.tensor(self.labels[index])
+
+
 def build_resnet18_cifar10():
     model = models.resnet18(weights=None)
     model.conv1 = nn.Conv2d(3, 64, kernel_size=3, stride=1, padding=1, bias=False)
@@ -44,7 +60,7 @@ def build_resnet18_cifar10():
     return model
 
 
-def prepare_cifar10_subsets(output_dir, download_root, train_per_class=500, val_per_class=100, seed=9):
+def prepare_cifar10_subsets(output_dir, download_root, train_per_class=2000, val_per_class=200, seed=9):
     output_dir = Path(output_dir)
     download_root = Path(download_root)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -113,8 +129,30 @@ def create_backdoor_poisoned_training_set(
     return poisoned_images, poisoned_labels, selected
 
 
-def train_model(model, train_images, train_labels, device="cpu", epochs=2, batch_size=128, lr=0.001):
-    dataset = NumpyImageDataset(train_images, train_labels)
+def create_label_flip_poisoned_training_set(
+    images,
+    labels,
+    source_class=3,
+    target_class=9,
+    poison_fraction=0.75,
+    seed=29,
+):
+    rng = np.random.default_rng(seed)
+    poisoned_images = images.copy()
+    poisoned_labels = labels.copy()
+
+    source_indices = np.where(labels == source_class)[0]
+    poison_count = max(1, int(len(source_indices) * poison_fraction))
+    poison_count = min(poison_count, len(source_indices))
+    selected = rng.choice(source_indices, size=poison_count, replace=False)
+
+    poisoned_labels[selected] = target_class
+    return poisoned_images, poisoned_labels, selected
+
+
+def train_model(model, train_images, train_labels, device="cpu", epochs=15, batch_size=128, lr=0.001, augment=True):
+    dataset_cls = AugmentedNumpyImageDataset if augment else NumpyImageDataset
+    dataset = dataset_cls(train_images, train_labels)
     loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
     model = model.to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
@@ -134,7 +172,7 @@ def train_model(model, train_images, train_labels, device="cpu", epochs=2, batch
     return model
 
 
-def predict(model, images, device="cpu", batch_size=256):
+def predict(model, images, batch_size=256):
     model.eval()
     predictions = []
     confidences = []
@@ -144,7 +182,7 @@ def predict(model, images, device="cpu", batch_size=256):
 
     with torch.no_grad():
         for batch, _ in loader:
-            batch = batch.to(device)
+            batch = batch.to(next(model.parameters()).device)
             logits = model(batch)
             probs = torch.softmax(logits, dim=1)
             confidence, pred = torch.max(probs, dim=1)
@@ -155,8 +193,8 @@ def predict(model, images, device="cpu", batch_size=256):
     return np.concatenate(predictions), np.concatenate(confidences), np.concatenate(probs_out)
 
 
-def evaluate_clean(model, images, labels, device="cpu"):
-    pred, conf, _ = predict(model, images, device=device)
+def evaluate_clean(model, images, labels):
+    pred, conf, _ = predict(model, images)
     return {
         "accuracy": float(np.mean(pred == labels)),
         "mean_confidence": float(np.mean(conf)),
@@ -165,11 +203,11 @@ def evaluate_clean(model, images, labels, device="cpu"):
     }
 
 
-def targeted_backdoor_success(model, images, labels, source_class, target_class, trigger_size=4, device="cpu"):
+def targeted_backdoor_success(model, images, labels, source_class, target_class, trigger_size=4):
     source_mask = labels == source_class
     source_images = images[source_mask]
     triggered = add_square_trigger(source_images, size=trigger_size)
-    pred, conf, _ = predict(model, triggered, device=device)
+    pred, conf, _ = predict(model, triggered)
     return {
         "attack_success_rate": float(np.mean(pred == target_class)),
         "mean_triggered_confidence": float(np.mean(conf)),
@@ -177,6 +215,29 @@ def targeted_backdoor_success(model, images, labels, source_class, target_class,
         "predictions": pred,
         "confidence": conf,
     }
+
+
+def class_accuracy_table(predictions, labels):
+    rows = []
+    for class_id, class_name in enumerate(CIFAR10_CLASSES):
+        mask = labels == class_id
+        accuracy = float(np.mean(predictions[mask] == labels[mask])) if np.any(mask) else 0.0
+        rows.append(
+            {
+                "class_id": class_id,
+                "class_name": class_name,
+                "sample_count": int(np.sum(mask)),
+                "accuracy": accuracy,
+            }
+        )
+    return rows
+
+
+def targeted_misclassification_rate(predictions, labels, source_class, target_class):
+    source_mask = labels == source_class
+    if not np.any(source_mask):
+        raise ValueError("No source-class samples were provided.")
+    return float(np.mean(predictions[source_mask] == target_class))
 
 
 def save_checkpoint(model, path):
@@ -215,10 +276,32 @@ def plot_poison_examples(clean_images, poisoned_images, output_path, count=6):
     return output_path
 
 
+def plot_label_flip_examples(images, clean_labels, poisoned_labels, selected_indices, output_path, count=6):
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    shown = selected_indices[: min(count, len(selected_indices))]
+    fig, axes = plt.subplots(1, len(shown), figsize=(2.2 * len(shown), 2.8))
+    if len(shown) == 1:
+        axes = [axes]
+
+    for axis, idx in zip(axes, shown):
+        image = np.transpose(np.clip(images[int(idx)], 0, 1), (1, 2, 0))
+        axis.imshow(image)
+        axis.set_title(
+            f"{CIFAR10_CLASSES[int(clean_labels[idx])]}\nlabel -> {CIFAR10_CLASSES[int(poisoned_labels[idx])]}"
+        )
+        axis.axis("off")
+
+    fig.tight_layout()
+    fig.savefig(output_path, dpi=160, bbox_inches="tight")
+    plt.show()
+    return output_path
+
+
 def write_results_table(rows, output_path):
     output_path = Path(output_path)
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    header = ["model", "clean_accuracy", "targeted_attack_success_rate", "mean_clean_confidence", "notes"]
+    header = list(rows[0].keys())
     lines = [",".join(header)]
     for row in rows:
         lines.append(",".join(str(row[key]) for key in header))

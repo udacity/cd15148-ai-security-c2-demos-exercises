@@ -1,7 +1,6 @@
 .venv/
 venv/
 env/
-.art/
 .matplotlib/
 .ipynb_checkpoints/
 __pycache__/
@@ -9,7 +8,7 @@ __pycache__/
 data/cifar10/
 data/generated/
 models/*.pt
-art_data/*
-!art_data/README.md
+!models/baseline_resnet18.pt
 results/*
 !results/README.md
+!results/*_baseline.*
