@@ -1,0 +1,219 @@
+{
+  "scenario": "Controlled facility facial recognition privacy assessment",
+  "daily_authentication_requests": 60000,
+  "dataset": "AT&T/Olivetti faces from scikit-learn",
+  "source": "scikit-learn fetch_olivetti_faces (AT&T/Olivetti faces)",
+  "training_images": 280,
+  "validation_queries": 500,
+  "baseline_model": {
+    "accuracy": 0.992,
+    "mean_confidence": 0.9677383303642273,
+    "p95_confidence": 0.9997692704200745
+  },
+  "attack_metrics": [
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_01",
+      "target_confidence": 0.999967,
+      "predicted_identity": "subject_01",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.107876,
+      "prototype_cosine_similarity": 0.866964,
+      "privacy_leakage_score": 0.866964
+    },
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_02",
+      "target_confidence": 0.999952,
+      "predicted_identity": "subject_02",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.129027,
+      "prototype_cosine_similarity": 0.827151,
+      "privacy_leakage_score": 0.827151
+    },
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_03",
+      "target_confidence": 0.999924,
+      "predicted_identity": "subject_03",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.04594,
+      "prototype_cosine_similarity": 0.940239,
+      "privacy_leakage_score": 0.940239
+    },
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_04",
+      "target_confidence": 0.999982,
+      "predicted_identity": "subject_04",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.12889,
+      "prototype_cosine_similarity": 0.826858,
+      "privacy_leakage_score": 0.826858
+    },
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_05",
+      "target_confidence": 0.999906,
+      "predicted_identity": "subject_05",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.042631,
+      "prototype_cosine_similarity": 0.946247,
+      "privacy_leakage_score": 0.946247
+    },
+    {
+      "attack_setting": "rich_probability",
+      "target_identity": "subject_06",
+      "target_confidence": 0.999951,
+      "predicted_identity": "subject_06",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.064351,
+      "prototype_cosine_similarity": 0.9337,
+      "privacy_leakage_score": 0.9337
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_01",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.376356,
+      "prototype_cosine_similarity": 0.875352,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_02",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.310508,
+      "prototype_cosine_similarity": 0.869319,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_03",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.303734,
+      "prototype_cosine_similarity": 0.862618,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_04",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.32397,
+      "prototype_cosine_similarity": 0.868606,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_05",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.323273,
+      "prototype_cosine_similarity": 0.872621,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "rounded_probability",
+      "target_identity": "subject_06",
+      "target_confidence": 0.0,
+      "predicted_identity": "subject_34",
+      "target_match": false,
+      "queries": 360,
+      "prototype_mse": 0.450477,
+      "prototype_cosine_similarity": 0.882515,
+      "privacy_leakage_score": 0.0
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_01",
+      "target_confidence": 0.995461,
+      "predicted_identity": "subject_01",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.015224,
+      "prototype_cosine_similarity": 0.981163,
+      "privacy_leakage_score": 0.981163
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_02",
+      "target_confidence": 0.997798,
+      "predicted_identity": "subject_02",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.015181,
+      "prototype_cosine_similarity": 0.97658,
+      "privacy_leakage_score": 0.97658
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_03",
+      "target_confidence": 0.999106,
+      "predicted_identity": "subject_03",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.006478,
+      "prototype_cosine_similarity": 0.990455,
+      "privacy_leakage_score": 0.990455
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_04",
+      "target_confidence": 0.997628,
+      "predicted_identity": "subject_04",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.009886,
+      "prototype_cosine_similarity": 0.985684,
+      "privacy_leakage_score": 0.985684
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_05",
+      "target_confidence": 0.999193,
+      "predicted_identity": "subject_05",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.003562,
+      "prototype_cosine_similarity": 0.994775,
+      "privacy_leakage_score": 0.994775
+    },
+    {
+      "attack_setting": "face_prior_probability",
+      "target_identity": "subject_06",
+      "target_confidence": 0.998237,
+      "predicted_identity": "subject_06",
+      "target_match": true,
+      "queries": 360,
+      "prototype_mse": 0.018509,
+      "prototype_cosine_similarity": 0.984426,
+      "privacy_leakage_score": 0.984426
+    }
+  ],
+  "mitigation_notes": [
+    "Return labels instead of full probability vectors when business requirements allow.",
+    "Round or bucket confidence scores to reduce optimization signal.",
+    "Rate-limit repeated inference queries and monitor identity enumeration patterns.",
+    "Evaluate overfitting and consider privacy-preserving training where appropriate."
+  ]
+}

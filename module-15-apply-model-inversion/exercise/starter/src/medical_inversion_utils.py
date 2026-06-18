@@ -2,16 +2,12 @@ from __future__ import annotations
 
 import csv
 import json
-import math
 import urllib.request
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-import matplotlib
-
-matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import torch
@@ -44,7 +40,7 @@ class OutputConfig:
 
 
 class BrainTumorCNN(nn.Module):
-    def __init__(self, num_classes: int = 3):
+    def __init__(self, num_classes: int = 2):
         super().__init__()
         self.features = nn.Sequential(
             nn.Conv2d(1, 24, 3, padding=1),
@@ -87,8 +83,8 @@ def seed_everything(seed: int = 42) -> None:
 def prepare_medical_dataset(
     data_dir: Path,
     *,
-    train_per_class: int = 300,
-    val_per_class: int = 100,
+    train_per_class: int = 120,
+    val_per_class: int = 60,
     image_size: int = 128,
     seed: int = 42,
 ) -> MedicalDataset:
@@ -212,7 +208,7 @@ def train_or_load_model(
     dataset: MedicalDataset,
     *,
     device: str,
-    epochs: int = 16,
+    epochs: int = 60,
     batch_size: int = 64,
 ) -> BrainTumorCNN:
     model_path.parent.mkdir(parents=True, exist_ok=True)
@@ -323,37 +319,8 @@ def _total_variation(image: torch.Tensor) -> torch.Tensor:
     )
 
 
-def run_mri_prior_inversion_attack(
-    model: nn.Module,
-    target_classes: Iterable[int],
-    reference_images: np.ndarray,
-    *,
-    device: str,
-    image_size: int = 128,
-    steps: int = 180,
-    restarts: int = 2,
-    learning_rate: float = 0.06,
-    n_components: int = 80,
-) -> dict[int, dict[str, object]]:
-    """TODO: Optional extension.
-
-    Constrain inversion to a PCA prior learned from reference MRI images so
-    recovered images look more like plausible MRI scans.
-    """
-    raise NotImplementedError("TODO: implement MRI-prior inversion for recovered MRI examples.")
-
-
 def representative_samples(images: np.ndarray, labels: np.ndarray, target_classes: Iterable[int]) -> dict[int, np.ndarray]:
     return {target: images[labels == target].mean(axis=0)[0] for target in target_classes}
-
-
-def nearest_reference_samples(
-    reconstructions: dict[int, dict[str, object]],
-    images: np.ndarray,
-    labels: np.ndarray,
-) -> dict[int, np.ndarray]:
-    """TODO: Find the nearest validation sample for each reconstruction."""
-    raise NotImplementedError("TODO: find nearest reference MRI samples.")
 
 
 def inversion_metrics(
@@ -420,17 +387,6 @@ def plot_reconstruction_comparison(
     return output_path
 
 
-def plot_recovered_mri_examples(
-    prior_reconstructions: dict[int, dict[str, object]],
-    representatives: dict[int, np.ndarray],
-    nearest_samples: dict[int, np.ndarray],
-    class_names: list[str],
-    output_path: Path,
-) -> Path:
-    """TODO: Plot nearest MRI, class prototype, and recovered MRI."""
-    raise NotImplementedError("TODO: plot recovered MRI examples.")
-
-
 def plot_leakage_scores(rows: list[dict[str, object]], output_path: Path) -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     grouped: dict[str, list[float]] = {}
@@ -469,12 +425,3 @@ def write_privacy_report(
       overfitting checks, and differential privacy
     """
     raise NotImplementedError("TODO: write the privacy assessment report.")
-
-
-def art_status() -> dict[str, object]:
-    try:
-        import art  # noqa: F401
-
-        return {"available": True, "note": "ART is installed; this exercise uses a transparent PyTorch inversion loop."}
-    except Exception as exc:
-        return {"available": False, "note": f"ART is not installed or not importable in this environment: {exc}"}

@@ -5,7 +5,6 @@
 - PyTorch is used for the face classifier and transparent inversion loop.
 - NumPy and Matplotlib are used for data processing and visualizations.
 - Scikit-learn provides `fetch_olivetti_faces`, a packaged copy of the AT&T Laboratories Cambridge face dataset.
-- Adversarial Robustness Toolbox is listed as an optional dependency. The runnable demo uses a compact PyTorch attack loop so learners can inspect every step.
 
 ## Dataset Note
 

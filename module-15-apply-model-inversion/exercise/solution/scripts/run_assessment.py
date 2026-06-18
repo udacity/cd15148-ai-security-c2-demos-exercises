@@ -2,28 +2,28 @@ from __future__ import annotations
 
 import argparse
 import os
-from pathlib import Path
 import sys
+from datetime import datetime
+from pathlib import Path
 
-import torch
+import matplotlib
+
+matplotlib.use("Agg")
+
+import torch  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "src"))
-os.environ.setdefault("ART_DATA_PATH", str(ROOT / "art_data"))
 
 from medical_inversion_utils import (  # noqa: E402
-    art_status,
     evaluate_model_outputs,
     inversion_metrics,
     output_configurations,
-    nearest_reference_samples,
     plot_leakage_scores,
-    plot_recovered_mri_examples,
     plot_reconstruction_comparison,
     prepare_medical_dataset,
     representative_samples,
-    run_mri_prior_inversion_attack,
     run_inversion_attack,
     seed_everything,
     train_or_load_model,
@@ -40,14 +40,20 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--val-per-class", type=int, default=60)
     parser.add_argument("--attack-steps", type=int, default=160)
     parser.add_argument("--attack-restarts", type=int, default=2)
-    parser.add_argument("--prior-components", type=int, default=80)
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     seed_everything(42)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+    else:
+        device = "cpu"
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     data_dir = ROOT / "data" / "generated"
     model_dir = ROOT / "models"
     results_dir = ROOT / "results"
@@ -70,7 +76,7 @@ def main() -> None:
         dataset.class_names,
         device=device,
     )
-    confidence_path = write_csv(confidence_rows, results_dir / "baseline_confidence_outputs.csv")
+    confidence_path = write_csv(confidence_rows, results_dir / f"confidence_outputs_{run_timestamp}.csv")
 
     target_classes = list(range(len(dataset.class_names)))
     representatives = representative_samples(dataset.val_images, dataset.val_labels, target_classes)
@@ -88,47 +94,27 @@ def main() -> None:
         )
         reconstruction_sets[config.name] = reconstructions
         metric_rows.extend(inversion_metrics(config.name, reconstructions, representatives, dataset.class_names))
-    prior_reconstructions = run_mri_prior_inversion_attack(
-        model,
-        target_classes,
-        dataset.val_images,
-        device=device,
-        image_size=int(dataset.train_images.shape[-1]),
-        steps=args.attack_steps,
-        restarts=args.attack_restarts,
-        n_components=args.prior_components,
-    )
-    metric_rows.extend(inversion_metrics("mri_prior_probability", prior_reconstructions, representatives, dataset.class_names))
-    nearest_samples = nearest_reference_samples(prior_reconstructions, dataset.val_images, dataset.val_labels)
 
-    metrics_path = write_csv(metric_rows, results_dir / "model_inversion_privacy_metrics.csv")
+    metrics_path = write_csv(metric_rows, results_dir / f"model_inversion_privacy_metrics_{run_timestamp}.csv")
     comparison_path = plot_reconstruction_comparison(
         reconstruction_sets,
         representatives,
         dataset.class_names,
-        results_dir / "reconstructed_medical_features.png",
+        results_dir / f"reconstructed_medical_features_{run_timestamp}.png",
     )
-    recovered_mri_path = plot_recovered_mri_examples(
-        prior_reconstructions,
-        representatives,
-        nearest_samples,
-        dataset.class_names,
-        results_dir / "recovered_mri_from_model_inversion.png",
-    )
-    chart_path = plot_leakage_scores(metric_rows, results_dir / "privacy_leakage_by_output_config.png")
+    chart_path = plot_leakage_scores(metric_rows, results_dir / f"privacy_leakage_by_output_config_{run_timestamp}.png")
     summary_path = write_json(
         {
             "scenario": "Brain tumor MRI screening model inversion privacy assessment",
             "weekly_patient_images": 10000,
             "dataset": dataset.dataset_name,
             "baseline_model": baseline_metrics,
-            "art_status": art_status(),
             "attack_metrics": metric_rows,
         },
-        results_dir / "privacy_assessment_summary.json",
+        results_dir / f"privacy_assessment_summary_{run_timestamp}.json",
     )
     report_path = write_privacy_report(
-        results_dir / "privacy_assessment_report.md",
+        results_dir / f"privacy_assessment_report_{run_timestamp}.md",
         baseline_metrics,
         metric_rows,
         chart_path,
@@ -137,7 +123,6 @@ def main() -> None:
 
     print(f"Dataset: {dataset.dataset_name}")
     print(f"Device: {device}")
-    print(f"ART status: {art_status()['note']}")
     print("\nBaseline model outputs")
     print(f"{'Metric':<24} {'Value':>10}")
     print("-" * 36)
@@ -163,7 +148,6 @@ def main() -> None:
     print(f"Privacy metrics: {metrics_path}")
     print(f"Summary JSON: {summary_path}")
     print(f"Visual comparison: {comparison_path}")
-    print(f"Recovered MRI examples: {recovered_mri_path}")
     print(f"Leakage chart: {chart_path}")
     print(f"Assessment report: {report_path}")
 

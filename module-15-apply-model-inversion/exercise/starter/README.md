@@ -23,24 +23,20 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Complete the TODOs in `src/medical_inversion_utils.py`, then run:
-
-```bash
-python scripts/run_assessment.py
-```
-
-For a faster development run:
-
-```bash
-python scripts/run_assessment.py --epochs 2 --train-per-class 30 --val-per-class 15 --attack-steps 20 --attack-restarts 1
-```
+Complete the TODOs in `src/medical_inversion_utils.py`, then open and run `notebooks/medical_model_inversion_assessment.ipynb` end-to-end. The notebook is the canonical deliverable for this exercise.
 
 ## Expected Outputs
 
-- `results/baseline_confidence_outputs.csv`
-- `results/model_inversion_privacy_metrics.csv`
-- `results/privacy_assessment_summary.json`
-- `results/reconstructed_medical_features.png`
-- `results/recovered_mri_from_model_inversion.png`
-- `results/privacy_leakage_by_output_config.png`
-- `results/privacy_assessment_report.md`
+A successful run produces these files in `results/` with a `_<YYYYMMDD_HHMMSS>`
+suffix derived from the notebook's run timestamp (so re-runs accumulate
+side by side rather than overwriting each other):
+
+- `results/confidence_outputs_<timestamp>.csv`
+- `results/model_inversion_privacy_metrics_<timestamp>.csv`
+- `results/privacy_assessment_summary_<timestamp>.json`
+- `results/reconstructed_medical_features_<timestamp>.png`
+- `results/privacy_leakage_by_output_config_<timestamp>.png`
+- `results/privacy_assessment_report_<timestamp>.md`
+
+Compare your outputs against the reference results in `../solution/results/`,
+which are committed with a `_baseline` suffix.

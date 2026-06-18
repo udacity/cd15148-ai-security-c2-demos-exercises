@@ -48,20 +48,26 @@ For a faster smoke test:
 python scripts/run_model_inversion_demo.py --train-per-identity 6 --val-per-identity 4 --validation-queries 80 --epochs 2 --attack-steps 20 --attack-restarts 1 --targets 2
 ```
 
-Execute the notebook:
+Or execute the notebook end-to-end:
 
 ```bash
-python -m nbconvert --to notebook --execute notebooks/model_inversion_facility_access_demo.ipynb --output executed_model_inversion_facility_access_demo.ipynb --output-dir results
+python -m nbconvert --to notebook --execute notebooks/model_inversion_facility_access_demo.ipynb --output /tmp/executed_demo.ipynb
 ```
 
 ## Outputs
 
-- `results/sample_confidence_outputs.csv`: sample labels, predictions, confidence scores, and top probability vectors.
-- `results/model_inversion_metrics.csv`: reconstruction confidence, query count, and prototype similarity metrics.
-- `results/model_inversion_summary.json`: scenario summary and mitigation notes.
-- `results/reconstructed_feature_approximations.png`: representative class prototypes compared with reconstructed approximations.
-- `results/recovered_faces_from_model_inversion.png`: nearest training image, class prototype, and face-prior model inversion recovery examples.
-- `results/confidence_leakage_comparison.png`: leakage comparison for rich versus rounded probability outputs.
+Committed reference outputs in `results/` use the `_baseline` suffix:
+
+- `results/sample_confidence_outputs_baseline.csv`: sample labels, predictions, confidence scores, and top probability vectors.
+- `results/model_inversion_metrics_baseline.csv`: reconstruction confidence, query count, and prototype similarity metrics.
+- `results/model_inversion_summary_baseline.json`: scenario summary and mitigation notes.
+- `results/reconstructed_feature_approximations_baseline.png`: representative class prototypes compared with reconstructed approximations.
+- `results/recovered_faces_from_model_inversion_baseline.png`: nearest training image, class prototype, and face-prior model inversion recovery examples.
+- `results/confidence_leakage_comparison_baseline.png`: leakage comparison for rich versus rounded probability outputs.
+
+Re-running the demo produces fresh sibling files with a `_<YYYYMMDD_HHMMSS>`
+suffix. These runtime artifacts are gitignored, so the committed baselines
+stay untouched on re-runs.
 
 ## Key Takeaway
 

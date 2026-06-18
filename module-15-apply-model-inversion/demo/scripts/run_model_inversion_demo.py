@@ -2,19 +2,22 @@ from __future__ import annotations
 
 import argparse
 import os
-from pathlib import Path
 import sys
+from datetime import datetime
+from pathlib import Path
 
-import torch
+import matplotlib
+
+matplotlib.use("Agg")
+
+import torch  # noqa: E402
 
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT / "src"))
-os.environ.setdefault("ART_DATA_PATH", str(ROOT / "art_data"))
 
 from model_inversion_demo_utils import (  # noqa: E402
     AttackConfig,
-    art_status,
     class_prototypes,
     evaluate_predictions,
     invert_model_outputs,
@@ -51,7 +54,14 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     seed_everything(7)
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+    else:
+        device = "cpu"
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     data_dir = ROOT / "data" / "generated"
     model_dir = ROOT / "models"
     results_dir = ROOT / "results"
@@ -68,7 +78,6 @@ def main() -> None:
     print(f"Source: {dataset.source}")
     print(f"Images: {len(dataset.train_images)} train images, {len(dataset.val_images)} validation queries")
     print(f"Device: {device}")
-    print(f"ART status: {art_status()['note']}")
 
     model = train_or_load_model(
         model_dir / "facility_face_cnn_overfit.pt",
@@ -85,7 +94,7 @@ def main() -> None:
         dataset.class_names,
         device=device,
     )
-    confidence_path = write_csv(probability_rows, results_dir / "sample_confidence_outputs.csv")
+    confidence_path = write_csv(probability_rows, results_dir / f"sample_confidence_outputs_{run_timestamp}.csv")
 
     target_classes = list(range(min(args.targets, len(dataset.class_names))))
     prototypes = class_prototypes(dataset.train_images, dataset.train_labels, target_classes)
@@ -133,7 +142,7 @@ def main() -> None:
     metric_rows.extend(reconstruction_metrics("rich_probability", rich_reconstructions, prototypes, dataset.class_names))
     metric_rows.extend(reconstruction_metrics("rounded_probability", rounded_reconstructions, prototypes, dataset.class_names))
     metric_rows.extend(reconstruction_metrics("face_prior_probability", prior_reconstructions, prototypes, dataset.class_names))
-    metrics_path = write_csv(metric_rows, results_dir / "model_inversion_metrics.csv")
+    metrics_path = write_csv(metric_rows, results_dir / f"model_inversion_metrics_{run_timestamp}.csv")
     json_path = write_json(
         {
             "scenario": "Controlled facility facial recognition privacy assessment",
@@ -143,7 +152,6 @@ def main() -> None:
             "training_images": int(len(dataset.train_images)),
             "validation_queries": int(len(dataset.val_images)),
             "baseline_model": baseline_metrics,
-            "art_status": art_status(),
             "attack_metrics": metric_rows,
             "mitigation_notes": [
                 "Return labels instead of full probability vectors when business requirements allow.",
@@ -152,23 +160,23 @@ def main() -> None:
                 "Evaluate overfitting and consider privacy-preserving training where appropriate.",
             ],
         },
-        results_dir / "model_inversion_summary.json",
+        results_dir / f"model_inversion_summary_{run_timestamp}.json",
     )
     grid_path = plot_reconstruction_grid(
         rich_reconstructions,
         rounded_reconstructions,
         prototypes,
         dataset.class_names,
-        results_dir / "reconstructed_feature_approximations.png",
+        results_dir / f"reconstructed_feature_approximations_{run_timestamp}.png",
     )
     face_recovery_path = plot_face_recovery_examples(
         prior_reconstructions,
         prototypes,
         nearest_examples,
         dataset.class_names,
-        results_dir / "recovered_faces_from_model_inversion.png",
+        results_dir / f"recovered_faces_from_model_inversion_{run_timestamp}.png",
     )
-    chart_path = plot_leakage_comparison(metric_rows, results_dir / "confidence_leakage_comparison.png")
+    chart_path = plot_leakage_comparison(metric_rows, results_dir / f"confidence_leakage_comparison_{run_timestamp}.png")
 
     print("\nBaseline model outputs")
     print(f"{'Metric':<24} {'Value':>10}")
