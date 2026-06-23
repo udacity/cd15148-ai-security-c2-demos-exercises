@@ -1,6 +1,6 @@
 # Instructor Notes
 
-This demo extends the Module 17 Counterfit workflow into a quantitative robustness evaluation pipeline. Counterfit remains available as an optional target interface, while ART provides the repeatable adversarial attack suite used in the scorecard.
+This demo is a quantitative robustness evaluation pipeline for image classifiers. ART (Adversarial Robustness Toolbox) provides the repeatable adversarial attack suite used in the scorecard.
 
 ## Suggested Flow
 

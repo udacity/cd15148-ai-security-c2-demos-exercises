@@ -13,6 +13,7 @@ from PIL import Image, ImageFilter
 from sklearn.metrics import accuracy_score
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 from torchvision import datasets, models, transforms
 
@@ -115,15 +116,38 @@ def load_npz_dataset(path: Path | str) -> tuple[np.ndarray, np.ndarray]:
     return data["images"].astype(np.float32), data["labels"].astype(np.int64)
 
 
-def _augmentation(noise_std: float) -> Callable[[torch.Tensor], torch.Tensor] | None:
-    if noise_std <= 0:
-        return None
+def load_cifar10_train_full(download_root: Path | str) -> tuple[np.ndarray, np.ndarray]:
+    """Full 50k CIFAR-10 training split as CHW float arrays in [0, 1].
+
+    Used by the from-scratch training path; the shipped checkpoints were trained on
+    this full set (with augmentation), so retraining reproduces comparable accuracy.
+    """
+    download_root = Path(download_root)
+    download_root.mkdir(parents=True, exist_ok=True)
+    source = datasets.CIFAR10(root=str(download_root), train=True, download=True)
+    images = (source.data.transpose(0, 3, 1, 2).astype(np.float32)) / 255.0
+    labels = np.array(source.targets, dtype=np.int64)
+    return images, labels
+
+
+def _augmentation(noise_std: float) -> Callable[[torch.Tensor], torch.Tensor]:
+    """Standard CIFAR training augmentation (reflect-pad + random crop + horizontal flip).
+
+    The noise-augmented model variant additionally injects Gaussian noise; that extra
+    term is the *only* difference between the two demo models' training, so their
+    robustness comparison is fair.
+    """
 
     def augment(image: torch.Tensor) -> torch.Tensor:
+        padded = F.pad(image.unsqueeze(0), (4, 4, 4, 4), mode="reflect").squeeze(0)
+        top = int(torch.randint(0, 9, (1,)))
+        left = int(torch.randint(0, 9, (1,)))
+        image = padded[:, top:top + 32, left:left + 32]
         if torch.rand(()) < 0.5:
             image = torch.flip(image, dims=[2])
-        noise = torch.randn_like(image) * noise_std
-        return torch.clamp(image + noise, 0.0, 1.0)
+        if noise_std > 0:
+            image = torch.clamp(image + torch.randn_like(image) * noise_std, 0.0, 1.0)
+        return image
 
     return augment
 
@@ -134,13 +158,14 @@ def train_or_load_model(
     train_labels: np.ndarray,
     spec: ModelSpec,
     device: str = "cpu",
-    epochs: int = 2,
+    epochs: int = 8,
     batch_size: int = 128,
+    force_train: bool = False,
 ) -> nn.Module:
     model_path = Path(model_path)
     model = build_resnet18_cifar10().to(device)
-    if model_path.exists():
-        model.load_state_dict(torch.load(model_path, map_location=device))
+    if not force_train and model_path.exists():
+        model.load_state_dict(torch.load(model_path, map_location=device, weights_only=True))
         model.eval()
         return model
 
@@ -170,6 +195,7 @@ def train_or_load_model(
 
 def predict(model: nn.Module, images: np.ndarray, device: str = "cpu", batch_size: int = 256) -> dict[str, np.ndarray]:
     model.eval()
+    device = next(model.parameters()).device
     predictions: list[np.ndarray] = []
     confidences: list[np.ndarray] = []
     probabilities: list[np.ndarray] = []
@@ -361,55 +387,6 @@ def run_art_attack_suite(
     rows.append(_metric_row(model_name, "art_pgd_eps_0.04", "adversarial", metrics, perturbation["linf_mean"]))
     example_images["art_pgd_eps_0.04"] = adversarial
     return rows, example_images
-
-
-def run_counterfit_example_if_available(target, attack_plan: dict) -> list[dict[str, float | str]]:
-    try:
-        from counterfit import Counterfit
-    except ImportError:
-        return [
-            {
-                "model": "counterfit_target",
-                "condition": "counterfit_optional",
-                "condition_type": "tooling",
-                "accuracy": "",
-                "mean_confidence": "",
-                "confidence_drop": "",
-                "attack_success_rate": "",
-                "perturbation_linf": "",
-                "operational_status": "Counterfit is not installed in this environment",
-            }
-        ]
-
-    rows = []
-    for attack_config in attack_plan.get("attacks", []):
-        attack_name = attack_config["name"]
-        cfattack = Counterfit.build_attack(target, attack_name)
-        if not cfattack:
-            continue
-        cfattack.options.update(attack_config.get("parameters", {}))
-        run_ok = Counterfit.run_attack(cfattack)
-        rows.append(
-            {
-                "model": "counterfit_target",
-                "condition": attack_name.split(".")[-1],
-                "condition_type": "counterfit",
-                "accuracy": "",
-                "mean_confidence": "",
-                "confidence_drop": "",
-                "attack_success_rate": _counterfit_success_rate(cfattack) if run_ok else "",
-                "perturbation_linf": "",
-                "operational_status": "executed" if run_ok else "failed",
-            }
-        )
-    return rows
-
-
-def _counterfit_success_rate(cfattack) -> float:
-    success_values = cfattack.success
-    if isinstance(success_values, (list, tuple, np.ndarray)):
-        return round(float(np.mean(success_values)), 4)
-    return round(float(bool(success_values)), 4)
 
 
 def perturbation_metrics(clean: np.ndarray, candidate: np.ndarray) -> dict[str, float]:

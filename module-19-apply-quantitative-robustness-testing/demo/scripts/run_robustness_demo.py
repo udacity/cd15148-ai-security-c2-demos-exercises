@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 
 import torch
+from datetime import datetime
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Run the Module 19 robustness evaluation demo.")
     parser.add_argument("--train-per-class", type=int, default=150)
     parser.add_argument("--val-per-class", type=int, default=100)
-    parser.add_argument("--epochs", type=int, default=2)
+    parser.add_argument("--epochs", type=int, default=8)
     parser.add_argument("--max-eval", type=int, default=1000)
     parser.add_argument("--skip-art", action="store_true", help="Run only clean and environmental tests.")
     return parser.parse_args()
@@ -38,11 +39,18 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+        os.environ.setdefault("PYTORCH_ENABLE_MPS_FALLBACK", "1")
+    else:
+        device = "cpu"
     data_dir = ROOT / "data" / "generated"
     download_dir = ROOT / "data" / "cifar10"
     model_dir = ROOT / "models"
     results_dir = ROOT / "results"
+    run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
     prepare_cifar10_assets(
         data_dir,
@@ -82,14 +90,14 @@ def main() -> None:
                 first_art_examples = (first_condition, art_examples[first_condition])
 
     scorecard = robustness_scorecard(all_rows)
-    csv_path = write_csv(scorecard, results_dir / "robustness_scorecard.csv")
-    chart_path = plot_scorecard(scorecard, results_dir / "robustness_scorecard.png")
+    csv_path = write_csv(scorecard, results_dir / f"robustness_scorecard_{run_timestamp}.csv")
+    chart_path = plot_scorecard(scorecard, results_dir / f"robustness_scorecard_{run_timestamp}.png")
     if first_art_examples is not None:
         condition, adversarial_images = first_art_examples
         plot_example_grid(
             val_images,
             adversarial_images,
-            results_dir / "sample_adversarial_examples.png",
+            results_dir / f"sample_adversarial_examples_{run_timestamp}.png",
             title=f"Sample adversarial examples: {condition}",
         )
 
