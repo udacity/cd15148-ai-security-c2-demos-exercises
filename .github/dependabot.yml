@@ -1,0 +1,24 @@
+# Dependabot configuration.
+#
+# The module-21 supply-chain-scanning exercise ships intentionally-vulnerable
+# dependency manifests as TEACHING FIXTURES (named *.sample.txt so the pip
+# detector ignores them). These entries are belt-and-suspenders: even if the
+# detector ever picked them up, automated updates must never "fix" the CVEs the
+# exercise exists to teach. See STYLE-009 and issue #50.
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/module-21-apply-ai-supply-chain-vulnerability-scanning/demo/data"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 0
+    ignore: [{ dependency-name: "*" }]
+  - package-ecosystem: "pip"
+    directory: "/module-21-apply-ai-supply-chain-vulnerability-scanning/exercise/starter/data"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 0
+    ignore: [{ dependency-name: "*" }]
+  - package-ecosystem: "pip"
+    directory: "/module-21-apply-ai-supply-chain-vulnerability-scanning/exercise/solution/data"
+    schedule: { interval: "weekly" }
+    open-pull-requests-limit: 0
+    ignore: [{ dependency-name: "*" }]
