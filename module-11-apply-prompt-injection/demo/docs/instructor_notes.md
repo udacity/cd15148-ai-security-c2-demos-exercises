@@ -1,6 +1,6 @@
 # Instructor Notes
 
-This demo is intentionally safe and deterministic by default. The mock assistant simulates common prompt-injection failure modes so the classroom result does not depend on live model variability or API availability.
+This demo uses a live OpenAI model by default. Learners should use the Vocareum OpenAI key from the classroom Cloud Resources tab; keys that start with `voc-` are routed to `https://openai.vocareum.com/v1`.
 
 ## Suggested Flow
 
@@ -16,5 +16,6 @@ This demo is intentionally safe and deterministic by default. The mock assistant
 - The same benign user query can produce different output when attacker-controlled text is nearby.
 - Conversation history is not inherently trustworthy.
 - System prompts are necessary but not sufficient.
-- Output validation can catch obvious compromise markers, but it is not a complete defense.
+- Output validation should check semantic indicators of unsafe behavior, not hardcoded success labels.
 - Stronger designs isolate untrusted content and constrain what the model is allowed to do with it.
+- The demo deliberately uses `gpt-4.1-mini` because the audit evidence showed observable attack behavior on this weaker target. Frontier models such as `gpt-4o` and `gpt-5-mini` resisted the same earlier payload set more often, so the lesson is not that every modern model fails by default.

@@ -27,4 +27,6 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-The notebooks use a FAISS-style RAG flow adapted from the project `rag_chatbot`: documents are embedded, vectors are added to an index, top-k chunks are retrieved, and retrieved context is passed to the assistant. The embedding and generation paths are deterministic by default so the exercise can run without API keys; if FAISS is installed, `faiss.IndexFlatL2` is used directly, otherwise the same vectors are searched with a NumPy fallback.
+The notebooks use a FAISS-style RAG flow adapted from the project `rag_chatbot`: documents are embedded with OpenAI `text-embedding-3-small`, vectors are added to an index, top-k chunks are retrieved, and retrieved context is passed to `gpt-4.1-mini`. If FAISS is installed, `faiss.IndexFlatIP` is used directly; otherwise the same OpenAI vectors are searched with a NumPy cosine-similarity fallback.
+
+Copy the appropriate `.env.example` to `.env` or paste the classroom key into the notebook setup cell. Vocareum-issued keys that start with `voc-` automatically use `https://openai.vocareum.com/v1`.

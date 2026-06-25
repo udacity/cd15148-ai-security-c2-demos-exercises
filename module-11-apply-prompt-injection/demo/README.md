@@ -4,7 +4,7 @@ Estimated time: 14 minutes
 
 ## Overview
 
-This demo shows how a basic chat assistant can be compromised by prompt injection. Learners test how malicious text embedded in a user message or prior conversation context can override intended assistant behavior.
+This demo shows how a basic chat assistant can be compromised by prompt injection. Learners test how malicious text embedded in a user message or prior conversation context can influence live OpenAI model behavior.
 
 The demo focuses on instruction handling rather than application code vulnerabilities. Students compare baseline chat behavior, direct prompt injection, conversation-history injection, and simple defensive controls.
 
@@ -48,16 +48,11 @@ Open:
 notebooks/prompt_injection_chat_assistant_demo.ipynb
 ```
 
-The notebook runs in deterministic mock mode by default, so no API key is required.
-
-## Optional OpenAI API Mode
-
-To run against a live OpenAI model, set:
+Copy `.env.example` to `.env` or paste the classroom key into the notebook setup cell. Vocareum-issued keys that start with `voc-` automatically use `https://openai.vocareum.com/v1`.
 
 ```bash
 export OPENAI_API_KEY="..."
+export OPENAI_BASE_URL="https://openai.vocareum.com/v1"
 ```
 
-Then change `USE_OPENAI = False` to `USE_OPENAI = True` in the notebook.
-
-The live API path uses the OpenAI Responses API with `client.responses.create(...)`, where the system instructions are passed through the `instructions` field and chat messages are passed as `input`.
+The notebook uses `gpt-4.1-mini` by default and calls `client.chat.completions.create(...)` for both unsafe and guarded prompt runs.

@@ -18,7 +18,7 @@ Security engineers want to determine whether malicious content embedded in index
 
 1. Review the RAG assistant architecture, retrieval flow, and system prompt.
 2. Review or create prompt injection payloads for retrieved documents.
-3. Insert injection content into indexed documents and rebuild the vector database.
+3. Insert injection content into indexed documents and rebuild the vector database with OpenAI embeddings.
 4. Execute support queries that retrieve poisoned content.
 5. Evaluate whether the assistant follows injected instructions.
 6. Calculate attack success rate across multiple payload styles.
@@ -38,7 +38,7 @@ Submit:
 ## Acceptance Criteria
 
 - The notebook executes injection attempts against the provided RAG system.
-- At least 3 injection payloads successfully alter assistant behavior.
+- At least 3 injection payloads alter assistant behavior when run against the chosen model, or the report explains why the model resisted the payloads.
 - Attack success rate is calculated correctly.
 - The final output identifies at least 3 mitigation strategies.
 - Results include operational risk and defensive recommendations.
@@ -49,3 +49,4 @@ Submit:
 - Embedded prompt injection is often more realistic than direct user-prompt attacks.
 - Separate system instructions from retrieved content whenever possible.
 - Output validation and retrieval filtering reduce risk but do not make prompt injection impossible.
+- `gpt-4.1-mini` is used as the default target because weaker models make the attack behavior easier to observe in a classroom setting.

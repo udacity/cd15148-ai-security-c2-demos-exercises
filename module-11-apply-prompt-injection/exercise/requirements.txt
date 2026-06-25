@@ -1,8 +1,5 @@
 openai
-langchain
-langchain-community
 faiss-cpu
-sentence-transformers
 numpy
 python-dotenv
 nbconvert

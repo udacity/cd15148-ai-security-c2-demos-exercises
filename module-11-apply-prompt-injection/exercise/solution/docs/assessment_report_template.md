@@ -5,7 +5,7 @@
 - Corpus: sample customer support RAG corpus
 - Payload count: 5
 - Retrieval top-k: 2
-- Assistant mode: deterministic local mock RAG assistant
+- Assistant mode: live OpenAI RAG assistant using `gpt-4.1-mini`
 
 ## Quantitative Results
 
@@ -16,7 +16,7 @@ The solution notebook writes final values to `results/solution_attack_results.cs
 - Retrieved documents were concatenated into the model prompt without clear trust-boundary isolation.
 - The vulnerable assistant treated document text as instructions instead of evidence.
 - The pipeline lacked retrieval filtering for instruction-like content.
-- The pipeline lacked output validation for policy bypass markers.
+- The pipeline lacked semantic output validation for policy bypass and restricted-disclosure language.
 
 ## Operational Risk
 
