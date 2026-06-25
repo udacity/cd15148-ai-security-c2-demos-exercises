@@ -2,7 +2,7 @@
 
 Estimated time: 45 minutes
 
-This exercise asks learners to assess vector database retrieval poisoning against a manufacturing engineering assistant. The starter contains guided TODOs; the solution contains a complete quantitative workflow and generated assessment artifacts.
+This exercise asks learners to assess vector database retrieval poisoning against a manufacturing engineering assistant. The workflow uses OpenAI `text-embedding-3-small` for semantic retrieval and `gpt-4o-mini` for vulnerable and guarded RAG responses. The starter contains guided TODOs; the solution contains a complete quantitative workflow.
 
 ## Structure
 
@@ -13,7 +13,9 @@ This exercise asks learners to assess vector database retrieval poisoning agains
 
 ```powershell
 cd module-13-apply-vector-database-attacks\exercise\solution
+$env:OPENAI_API_KEY="..."
 python run_assessment.py
 ```
 
 Use `--plot` to create the optional Matplotlib chart when the environment supports it.
+Vocareum-issued keys that start with `voc-` automatically use `https://openai.vocareum.com/v1`.

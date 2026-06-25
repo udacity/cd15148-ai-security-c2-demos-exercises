@@ -1,5 +1,6 @@
 {
-  "embedding_dimensions": 96,
+  "embedding_model": "text-embedding-3-small",
+  "embedding_dimensions": 1536,
   "sample_vector_count": 60,
   "first_three_vector_norms": [
     1.0,
