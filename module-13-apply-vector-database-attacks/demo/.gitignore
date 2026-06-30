@@ -1,0 +1,9 @@
+# Learner-generated assessment outputs; keep only committed *_baseline references
+results/*
+!results/*_baseline.*
+!results/README.md
+!results/.gitkeep
+
+# Vector stores / FAISS indexes are rebuilt from the corpus on each run
+data/*_vector_store.npz
+data/*_faiss.index
