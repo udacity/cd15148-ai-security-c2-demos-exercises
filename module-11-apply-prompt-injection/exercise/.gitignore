@@ -11,6 +11,5 @@ starter/vector_store/
 
 solution/vector_store/
 solution/results/*
+!solution/results/*_baseline.*
 !solution/results/README.md
-!solution/results/solution_attack_results.csv
-!solution/results/solution_defended_results.csv
