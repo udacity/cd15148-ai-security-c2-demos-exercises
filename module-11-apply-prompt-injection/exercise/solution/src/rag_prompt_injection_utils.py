@@ -109,8 +109,7 @@ def configure_openai_environment(api_key: str | None = None) -> None:
             "with 'voc-' automatically use https://openai.vocareum.com/v1."
         )
 
-    if "OPENAI_BASE_URL" not in os.environ:
-        os.environ["OPENAI_BASE_URL"] = VOCAREUM_BASE_URL if key.startswith("voc-") else OPENAI_BASE_URL
+    os.environ["OPENAI_BASE_URL"] = VOCAREUM_BASE_URL if key.startswith("voc-") else OPENAI_BASE_URL
 
 
 class OpenAIEmbeddingModel:
