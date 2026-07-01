@@ -4,7 +4,7 @@ Estimated time: 45 minutes
 
 ## Scenario
 
-A multinational manufacturing company uses a RAG-based engineering assistant to retrieve maintenance procedures, design specifications, and troubleshooting documentation from a centralized vector database. Security engineers need to assess whether poisoned documents or manipulated embeddings could alter retrieval rankings and produce unsafe operational guidance.
+A multinational manufacturing company uses a RAG-based engineering assistant to retrieve maintenance procedures, design specifications, and troubleshooting documentation from a centralized vector database. Security engineers need to assess whether poisoned documents with target-relevant content can alter semantic retrieval rankings and produce unsafe operational guidance.
 
 ## Tasks
 
@@ -13,7 +13,7 @@ A multinational manufacturing company uses a RAG-based engineering assistant to 
 3. Implement `create_poisoned_corpus`.
 4. Implement `compare_retrieval`.
 5. Implement `summarize_assessment`.
-6. Rebuild the poisoned vector index.
+6. Rebuild the poisoned vector index with OpenAI embeddings.
 7. Compare clean versus poisoned ranking behavior with similarity scores.
 8. Generate a short assessment report with operational risk and mitigations.
 
@@ -27,6 +27,6 @@ A multinational manufacturing company uses a RAG-based engineering assistant to 
 
 ## Expert Tips
 
-- Retrieval poisoning often succeeds by slightly outperforming legitimate embeddings.
+- Retrieval poisoning often succeeds by making attacker-controlled content semantically close to likely user questions.
 - Smaller chunks can reduce attack blast radius but may increase retrieval noise.
 - Monitor provenance and ranking drift to detect suspicious embedding behavior early.

@@ -4,9 +4,9 @@ Estimated time: 13 minutes
 
 ## Overview
 
-This demo shows how poisoned documents and manipulated embeddings can alter retrieval rankings in a Retrieval-Augmented Generation (RAG) assistant. Learners compare clean retrieval behavior against an attacked vector index, then observe how untrusted retrieved context can influence a downstream assistant.
+This demo shows how poisoned documents can alter retrieval rankings in a Retrieval-Augmented Generation (RAG) assistant. Learners compare clean retrieval behavior against an attacked vector index, then observe how untrusted retrieved context can influence a downstream assistant.
 
-The demo runs offline by default with deterministic hashing embeddings and a NumPy vector search fallback. If FAISS is installed, the same code writes a `prebuilt_faiss.index` artifact in `data/`.
+The demo uses OpenAI `text-embedding-3-small` for semantic retrieval and `gpt-4o-mini` for vulnerable and guarded RAG responses. If FAISS is installed, the same code writes a `prebuilt_faiss.index` artifact in `data/`; otherwise it uses a NumPy cosine-similarity fallback.
 
 ## Scenario
 
@@ -24,8 +24,11 @@ A financial services company operates an internal AI research assistant for oper
 
 ```powershell
 cd module-13-apply-vector-database-attacks\demo
+$env:OPENAI_API_KEY="..."
 python run_demo.py
 ```
+
+Vocareum-issued keys that start with `voc-` automatically use `https://openai.vocareum.com/v1`.
 
 The script creates:
 
@@ -53,8 +56,4 @@ Open:
 notebooks/malicious_embedding_retrieval_attack_demo.ipynb
 ```
 
-The notebook uses the same deterministic demo module, so no OpenAI API key or external model download is required for classroom execution.
-
-## Optional Live Integrations
-
-The requirements file includes OpenAI, LangChain, FAISS, and sentence-transformers for instructors who want to extend the lab with live embeddings or a full RAG chain. The shipped demo keeps those dependencies optional so the core attack workflow remains reproducible in restricted environments.
+The notebook includes a paste cell for OpenAI or Vocareum API keys and runs the same live embedding and LLM workflow as the script.
