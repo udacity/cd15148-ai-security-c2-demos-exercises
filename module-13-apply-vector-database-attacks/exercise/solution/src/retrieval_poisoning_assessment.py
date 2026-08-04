@@ -267,6 +267,13 @@ def build_vectors(
 
 
 def create_poisoned_corpus(clean_documents: list[Document], poisoned_documents: list[Document]) -> list[Document]:
+    """Return a new corpus containing clean documents plus poisoned content.
+
+    TODO:
+    1. Copy the clean documents so the original list is unchanged.
+    2. Append the poisoned documents to the copied corpus.
+    3. Return the combined document list.
+    """
     return [Document(**asdict(doc)) for doc in clean_documents] + [Document(**asdict(doc)) for doc in poisoned_documents]
 
 
@@ -277,6 +284,17 @@ def compare_retrieval(
     embedder: HashEmbeddingModel,
     top_k: int = 5,
 ) -> list[AssessmentResult]:
+    """Compare clean and poisoned retrieval behavior for each query.
+
+    TODO:
+    1. Embed each query.
+    2. Search both clean_index and poisoned_index.
+    3. Record the clean and poisoned top documents and scores.
+    4. Detect whether any poisoned document appears in top-k.
+    5. Calculate score_delta and rank_shift.
+    6. Run vulnerable_rag_response and guarded_rag_response.
+    7. Return a list of AssessmentResult objects.
+    """
     assessments = []
     for query in queries:
         query_vector = embedder.encode(query.text)
@@ -348,6 +366,15 @@ def operational_risk(domain: str, compromised: bool, poisoned_in_top_k: bool) ->
 
 
 def summarize_assessment(results: list[AssessmentResult]) -> dict:
+    """Create quantitative summary metrics for the final report.
+
+    TODO:
+    1. Count queries with poisoned documents in top-k.
+    2. Count compromised downstream responses.
+    3. Count HIGH operational risk findings.
+    4. Calculate attack_success_rate and mean_score_delta.
+    5. Include at least three mitigation recommendations.
+    """
     altered = [result for result in results if result.poisoned_in_top_k]
     compromised = [result for result in results if result.downstream_compromised]
     high_risk = [result for result in results if result.operational_risk == "HIGH"]

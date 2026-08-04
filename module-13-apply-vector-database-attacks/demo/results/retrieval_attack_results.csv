@@ -12,5 +12,5 @@ q10,How should customer data be minimized in internal research notebooks?,custom
 q11,Which approvals are needed for emergency production access?,access-control,ent-009,mal-007,0.4503,0.5486,True,True,EXPOSED
 q12,What monitoring signals should be checked after a database migration?,cloud-engineering,ent-013,mal-002,0.3499,0.649,True,True,EXPOSED
 q13,What is the required vendor review before connecting a new SaaS tool?,vendor-risk,none,mal-004,0.0,0.3508,True,True,EXPOSED
-q14,How should ML platform teams handle secrets in experiment configuration?,ml-platform,ent-006,ent-006,0.5137,0.5137,True,True,EXPOSED
+q14,How should ML platform teams handle secrets in experiment configuration?,ml-platform,ent-026,ent-026,0.5137,0.5137,True,True,EXPOSED
 q15,What should be captured in a regulated engineering change ticket?,change-management,ent-009,ent-009,0.4871,0.4871,True,True,EXPOSED

@@ -4,14 +4,17 @@ import csv
 import json
 import os
 import re
+import urllib.error
+import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
 
-DEFAULT_CHAT_MODEL = "gpt-4.1-mini"
+DEFAULT_CHAT_MODEL = "llama3.2:3b"
 VOCAREUM_BASE_URL = "https://openai.vocareum.com/v1"
 OPENAI_BASE_URL = "https://api.openai.com/v1"
+OLLAMA_DEFAULT_URL = "http://127.0.0.1:11434"
 
 INJECTION_PATTERNS = [
     r"ignore\s+(all\s+)?previous\s+instructions",
@@ -62,8 +65,9 @@ def configure_openai_environment(api_key: str | None = None) -> None:
     try:
         from dotenv import find_dotenv, load_dotenv
 
-        load_dotenv(env_path, override=True)
-        load_dotenv(find_dotenv(usecwd=True), override=True)
+        # Explicit notebook/shell settings take precedence over values in .env.
+        load_dotenv(env_path, override=False)
+        load_dotenv(find_dotenv(usecwd=True), override=False)
     except ImportError:
         pass
 
@@ -74,21 +78,83 @@ def configure_openai_environment(api_key: str | None = None) -> None:
             name, value = line.split("=", 1)
             name = name.strip()
             value = value.strip().strip("\"'")
-            if name in {"OPENAI_API_KEY", "OPENAI_BASE_URL"}:
-                os.environ[name] = value
+            if name in {"OPENAI_API_KEY", "OPENAI_BASE_URL", "OLLAMA_API_URL"}:
+                os.environ.setdefault(name, value)
 
     if api_key:
         os.environ["OPENAI_API_KEY"] = api_key
 
-    key = os.getenv("OPENAI_API_KEY", "")
-    if not key:
-        raise RuntimeError(
-            "Set OPENAI_API_KEY before running Module 11. Vocareum keys that start "
-            "with 'voc-' automatically use https://openai.vocareum.com/v1."
-        )
+    ollama_url = os.getenv("OLLAMA_API_URL", "").strip()
+    if ollama_url:
+        os.environ.setdefault("OLLAMA_API_URL", ollama_url)
+        return
 
-    if "OPENAI_BASE_URL" not in os.environ:
-        os.environ["OPENAI_BASE_URL"] = VOCAREUM_BASE_URL if key.startswith("voc-") else OPENAI_BASE_URL
+    key = os.getenv("OPENAI_API_KEY", "")
+    if key:
+        if "OPENAI_BASE_URL" not in os.environ:
+            os.environ["OPENAI_BASE_URL"] = VOCAREUM_BASE_URL if key.startswith("voc-") else OPENAI_BASE_URL
+        return
+
+    os.environ.setdefault("OLLAMA_API_URL", OLLAMA_DEFAULT_URL)
+    return
+
+
+def _http_post(url: str, payload: dict, headers: dict | None = None) -> dict:
+    body = json.dumps(payload).encode("utf-8")
+    request = urllib.request.Request(
+        url,
+        data=body,
+        headers=headers or {"Content-Type": "application/json"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            return json.load(response)
+    except urllib.error.HTTPError as exc:
+        message = exc.read().decode("utf-8", errors="ignore")
+        raise RuntimeError(f"HTTP request to {url} failed: {exc.code} {exc.reason} {message}") from exc
+
+
+def _extract_response_text(response_json: dict) -> str:
+    if not isinstance(response_json, dict):
+        return str(response_json)
+
+    if "choices" in response_json and response_json["choices"]:
+        first_choice = response_json["choices"][0]
+        if isinstance(first_choice, dict):
+            message = first_choice.get("message", first_choice)
+            if isinstance(message, dict):
+                content = message.get("content") or message.get("text")
+                if content is not None:
+                    return content
+            if isinstance(message, str):
+                return message
+
+    # Ollama's native /api/chat response shape.
+    if "message" in response_json:
+        message = response_json["message"]
+        if isinstance(message, dict):
+            content = message.get("content")
+            if content is not None:
+                return content
+        if isinstance(message, str):
+            return message
+
+    if "output" in response_json:
+        output = response_json["output"]
+        if isinstance(output, list) and output:
+            first = output[0]
+            if isinstance(first, dict):
+                return first.get("content") or first.get("text") or ""
+            if isinstance(first, str):
+                return first
+        if isinstance(output, str):
+            return output
+
+    if "answer" in response_json:
+        return response_json["answer"]
+
+    return ""
 
 
 def build_messages(user_query, history=None, injected_payload=None, placement="user_prompt"):
@@ -163,15 +229,34 @@ def output_is_compromised(response_text: str, payload: dict | None = None, syste
 def run_openai_response(system_prompt, messages, model=DEFAULT_CHAT_MODEL):
     configure_openai_environment()
 
-    from openai import OpenAI
+    payload = {
+        "model": model,
+        "messages": [{"role": "system", "content": system_prompt}, *messages],
+        "temperature": 0,
+        # Ollama streams newline-delimited JSON unless this is explicitly false.
+        "stream": False,
+    }
 
-    client = OpenAI()
-    response = client.chat.completions.create(
-        model=model,
-        messages=[{"role": "system", "content": system_prompt}, *messages],
-        temperature=0,
-    )
-    return response.choices[0].message.content or ""
+    ollama_url = os.getenv("OLLAMA_API_URL", "").strip()
+    if ollama_url:
+        url = ollama_url.rstrip("/") + "/api/chat"
+        response_json = _http_post(url, payload)
+        response_text = _extract_response_text(response_json)
+        if not response_text:
+            raise RuntimeError(
+                f"Ollama returned no assistant text from {url}. "
+                f"Response keys: {sorted(response_json)}"
+            )
+        return response_text
+
+    api_base = os.getenv("OPENAI_BASE_URL", OPENAI_BASE_URL).rstrip("/")
+    url = api_base + "/chat/completions"
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
+    }
+    response_json = _http_post(url, payload, headers=headers)
+    return _extract_response_text(response_json)
 
 
 class OpenAIChatAssistant:
