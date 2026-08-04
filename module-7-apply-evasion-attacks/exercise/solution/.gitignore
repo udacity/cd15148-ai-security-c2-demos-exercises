@@ -13,3 +13,6 @@ art_data/*
 !art_data/README.md
 results/*
 !results/README.md
+!results/adversarial_metrics.csv
+!results/executed_aerial_object_adversarial_evaluation_workflow.ipynb
+!results/metrics_assessment.md
