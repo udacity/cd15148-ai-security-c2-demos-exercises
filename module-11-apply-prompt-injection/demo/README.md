@@ -4,9 +4,9 @@ Estimated time: 14 minutes
 
 ## Overview
 
-This demo shows how a basic chat assistant can be compromised by prompt injection. Learners test how malicious text embedded in a user message or prior conversation context can influence live OpenAI model behavior.
+This demo shows how a basic chat assistant can be compromised by prompt injection. Learners test how malicious text embedded in a user message or prior conversation context can influence live model behavior.
 
-The demo focuses on instruction handling rather than application code vulnerabilities. Students compare baseline chat behavior, direct prompt injection, conversation-history injection, and simple defensive controls.
+The notebook is configured to target a local Ollama 3B chat model by default, so it can run on a laptop or lower-powered cloud asset. The demo still focuses on instruction handling rather than application code vulnerabilities, comparing baseline chat behavior, direct prompt injection, conversation-history injection, and simple defensive controls.
 
 ## Scenario
 
