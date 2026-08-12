@@ -1,0 +1,4 @@
+attack,epsilon,clean_accuracy,adversarial_accuracy,attack_success_rate,mean_clean_confidence,mean_adversarial_confidence,mean_linf,mean_l2
+pgd,0.01,0.7417,0.7083,0.0899,0.7586,0.723,0.01,0.5259
+pgd,0.03,0.7417,0.6917,0.2584,0.7586,0.6907,0.03,1.5436
+pgd,0.06,0.7417,0.6167,0.4494,0.7586,0.6861,0.06,3.0576
