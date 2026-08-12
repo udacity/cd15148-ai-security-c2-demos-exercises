@@ -172,15 +172,13 @@ def train_model(model, train_images, train_labels, device="cpu", epochs=15, batc
     return model
 
 
-def predict(model, images, batch_size=256, device=None):
+def predict(model, images, batch_size=256):
     model.eval()
     predictions = []
     confidences = []
     probs_out = []
     dataset = NumpyImageDataset(images, np.zeros(len(images)))
     loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=False)
-    if device is not None:
-        model = model.to(device)
 
     with torch.no_grad():
         for batch, _ in loader:
@@ -205,14 +203,14 @@ def evaluate_clean(model, images, labels):
     }
 
 
-def targeted_backdoor_success(model, images, labels, source_class, target_class, trigger_size=4, device=None):
+def targeted_backdoor_success(model, images, labels, source_class, target_class, trigger_size=4):
     labels = np.asarray(labels)
     source_mask = labels == source_class
     if not np.any(source_mask):
         raise ValueError("No source-class samples were provided.")
     source_images = images[source_mask]
     triggered = add_square_trigger(source_images, size=trigger_size)
-    pred, conf, _ = predict(model, triggered, device=device)
+    pred, conf, _ = predict(model, triggered)
     return {
         "attack_success_rate": float(np.mean(pred == target_class)),
         "mean_triggered_confidence": float(np.mean(conf)),
