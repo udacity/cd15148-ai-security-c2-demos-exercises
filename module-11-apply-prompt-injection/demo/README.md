@@ -6,7 +6,7 @@ Estimated time: 14 minutes
 
 This demo shows how a basic chat assistant can be compromised by prompt injection. Learners test how malicious text embedded in a user message or prior conversation context can influence live model behavior.
 
-The notebook is configured to target a local Ollama 3B chat model by default, so it can run on a laptop or lower-powered cloud asset. The demo still focuses on instruction handling rather than application code vulnerabilities, comparing baseline chat behavior, direct prompt injection, conversation-history injection, and simple defensive controls.
+The notebook runs against local [Ollama](https://ollama.com) models, so it needs no API key and runs on a laptop. It compares six small models side by side, each under a deliberately vulnerable system prompt and a hardened one, to show that model choice moves attack success rates and that prompt-level defenses remain probabilistic.
 
 ## Scenario
 
@@ -25,6 +25,48 @@ During a security review, the AI team tests whether malicious instructions in us
 - Direct injection is usually easier to spot than subtle context manipulation.
 - System prompts alone are not sufficient.
 - Output validation and instruction hierarchy checks reduce risk.
+
+## Prerequisite: Install Ollama and Pull the Models
+
+This demo sends every request to a local [Ollama](https://ollama.com) server. No API key
+and no cloud account are involved.
+
+1. **Install Ollama** for macOS, Windows, or Linux by following the official
+   instructions: <https://ollama.com/download>. The Ollama quickstart —
+   <https://github.com/ollama/ollama/blob/main/README.md#quickstart> — walks through the
+   install, the `ollama serve` background service, and running your first model. Model
+   pages such as <https://ollama.com/library/llama3.2> list the exact tags and their
+   download sizes.
+
+2. **Start the server** (the desktop app does this for you; on Linux run it yourself):
+
+   ```bash
+   ollama serve
+   ```
+
+3. **Pull the benchmark models before class**, so the notebook does not pause on
+   downloads. These are roughly 10 GB in total:
+
+   ```bash
+   ollama pull tinyllama:1.1b
+   ollama pull smollm2:1.7b
+   ollama pull qwen2.5:3b
+   ollama pull llama3.2:1b
+   ollama pull llama3.2:3b
+   ollama pull phi3:mini
+   ```
+
+   The notebook skips any model it cannot find, so you can run a subset — but the
+   comparison is more interesting with several.
+
+4. **Confirm it is reachable:**
+
+   ```bash
+   curl http://127.0.0.1:11434/api/tags
+   ```
+
+If Ollama listens somewhere other than `http://127.0.0.1:11434`, set `OLLAMA_API_URL` in
+your shell or copy `.env.example` to `.env` and set it there.
 
 ## Run the Demo
 
@@ -45,14 +87,9 @@ pip install -r requirements.txt
 Open:
 
 ```text
-notebooks/prompt_injection_chat_assistant_demo.ipynb
+notebooks/prompt_injection_chat_assistant_local_model.ipynb
 ```
 
-Copy `.env.example` to `.env` or paste the classroom key into the notebook setup cell. Vocareum-issued keys that start with `voc-` automatically use `https://openai.vocareum.com/v1`.
-
-```bash
-export OPENAI_API_KEY="..."
-export OPENAI_BASE_URL="https://openai.vocareum.com/v1"
-```
-
-The notebook uses `gpt-4.1-mini` by default and calls `client.chat.completions.create(...)` for both unsafe and guarded prompt runs.
+The notebook runs the same 11 injection payloads against each installed model twice —
+once under the deliberately vulnerable task-only system prompt, once under the hardened
+prompt — then writes per-model CSVs and a comparison chart to `results/`.
