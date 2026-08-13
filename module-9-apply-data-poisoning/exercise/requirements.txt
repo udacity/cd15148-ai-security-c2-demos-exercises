@@ -1,7 +1,7 @@
 torch==2.5.1
 torchvision==0.20.1
-numpy
-matplotlib
-pillow
-nbconvert
-ipykernel
+numpy==2.5.0
+matplotlib==3.11.0
+pillow==12.2.0
+nbconvert==7.17.1
+ipykernel==7.3.0

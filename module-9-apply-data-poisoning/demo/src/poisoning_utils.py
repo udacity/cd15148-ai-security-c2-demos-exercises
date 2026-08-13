@@ -204,7 +204,10 @@ def evaluate_clean(model, images, labels):
 
 
 def targeted_backdoor_success(model, images, labels, source_class, target_class, trigger_size=4):
+    labels = np.asarray(labels)
     source_mask = labels == source_class
+    if not np.any(source_mask):
+        raise ValueError("No source-class samples were provided.")
     source_images = images[source_mask]
     triggered = add_square_trigger(source_images, size=trigger_size)
     pred, conf, _ = predict(model, triggered)
