@@ -1,0 +1,15 @@
+# C2 workspace image: cpu-lite  (Python 3.13.0, NO GPU)
+# Serves modules: M3, M11, M13, M21  (demo + exercise).
+# Versions pinned to the set resolved + verified on 2026-07-01 (py3.13.0, macOS/arm64).
+# These pins supersede the per-module requirements.txt files; all four modules are verified
+# against this single resolved set.
+# No external datasets or model weights: M3/M13 make live OpenAI API calls and M21 runs offline,
+# so this image needs no asset-cache sidecar. (M11's Ollama models are pulled by the Ollama
+# server, not by Python — see scripts/build_asset_cache.py.)
+openai==2.44.0
+python-dotenv==1.2.2
+numpy==2.5.0
+matplotlib==3.11.0
+faiss-cpu==1.14.3
+nbconvert==7.17.1
+ipykernel==7.3.0

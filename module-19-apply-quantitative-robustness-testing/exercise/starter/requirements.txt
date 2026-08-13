@@ -5,3 +5,5 @@ pillow==12.2.0
 scikit-learn==1.8.0
 torch==2.5.1
 torchvision==0.20.1
+nbconvert==7.17.1
+ipykernel==7.3.0
