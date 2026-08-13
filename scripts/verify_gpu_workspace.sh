@@ -14,6 +14,11 @@
 #   bash scripts/verify_gpu_workspace.sh --skip-notebooks # checks 1-3 only, ~10 s
 #   bash scripts/verify_gpu_workspace.sh --only module-15 # one module
 #   bash scripts/verify_gpu_workspace.sh --timeout 3600   # per-notebook cap (default 2700 s)
+#   bash scripts/verify_gpu_workspace.sh --allow-missing-cache  # run notebooks even if the
+#                                                              # cache check failed (they will download)
+#
+# A failed cache check skips the notebook phase by default, because the modules
+# would download into the sidecar and mask the fault.
 #
 # Exits 0 only if every selected check passes. Per-notebook logs land in
 # $LOG_DIR (default: ./verify-logs).
@@ -25,14 +30,16 @@ PYTHON="${PYTHON:-python}"
 LOG_DIR="${LOG_DIR:-${REPO_ROOT}/verify-logs}"
 TIMEOUT_SECONDS=2700
 RUN_NOTEBOOKS=1
+ALLOW_MISSING_CACHE=0
 ONLY=""
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --skip-notebooks) RUN_NOTEBOOKS=0; shift ;;
+    --allow-missing-cache) ALLOW_MISSING_CACHE=1; shift ;;
     --only)           ONLY="$2"; shift 2 ;;
     --timeout)        TIMEOUT_SECONDS="$2"; shift 2 ;;
-    -h|--help)        sed -n '2,19p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help)        sed -n '2,24p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *)                echo "Unknown option: $1" >&2; exit 2 ;;
   esac
 done
@@ -130,14 +137,18 @@ PY
 
 head2 "2. External asset cache"
 
+CACHE_OK=0
 if [[ -z "${C2_ASSET_CACHE:-}" ]]; then
   fail "C2_ASSET_CACHE is not set — modules will download ~2.4 GB at run time"
 elif [[ ! -d "${C2_ASSET_CACHE}" ]]; then
   fail "C2_ASSET_CACHE points at a missing directory: ${C2_ASSET_CACHE}"
 else
   echo "  C2_ASSET_CACHE=${C2_ASSET_CACHE}"
+  # No --cache-dir: the builder defaults to $C2_ASSET_CACHE, so this exercises
+  # the same lookup the module code performs.
   if "${PYTHON}" "${REPO_ROOT}/scripts/build_asset_cache.py" --verify-only; then
     pass "Asset cache is complete"
+    CACHE_OK=1
   else
     fail "Asset cache is incomplete (see the manifest above)"
   fi
@@ -161,6 +172,12 @@ head2 "3. Module execution"
 
 if [[ ${RUN_NOTEBOOKS} -eq 0 ]]; then
   skip "Notebook execution (--skip-notebooks)"
+elif [[ ${CACHE_OK} -eq 0 && ${ALLOW_MISSING_CACHE} -eq 0 ]]; then
+  # Running anyway would be actively misleading: the module code points at the
+  # cache, so a broken cache means each notebook re-downloads into the sidecar --
+  # failing confusingly if it is read-only, or quietly pulling ~800 MB and then
+  # "passing" if it is writable, which hides the very fault we are testing for.
+  skip "Notebook execution — the asset cache check failed; fix that first, or pass --allow-missing-cache"
 else
   for target in "${TARGETS[@]}"; do
     IFS='|' read -r module_dir prep notebook <<<"${target}"

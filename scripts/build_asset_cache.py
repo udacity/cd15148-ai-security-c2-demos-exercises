@@ -72,30 +72,33 @@ PRUNABLE_ARCHIVES = (
     f"{BRAIN_TUMOR_DIR}/brain-tumor.zip",
 )
 
-# Paths each module's loader actually probes, checked by --verify-only. Keep this
-# list aligned with the loaders; a false PASS here means a classroom download.
+# Paths each module's loader actually probes, checked by --verify-only, with a
+# floor on the size measured from a real build. Existence alone is not enough:
+# a half-synced sidecar mount presents the right paths at the wrong sizes, and a
+# false PASS here means a classroom download. Keep this list aligned with the
+# loaders.
 EXPECTED = (
     # CIFAR10._check_integrity() md5-checks these six pickles.
-    (f"{TORCHVISION_DIR}/cifar-10-batches-py/data_batch_1", "file", "CIFAR-10 train batch 1"),
-    (f"{TORCHVISION_DIR}/cifar-10-batches-py/data_batch_5", "file", "CIFAR-10 train batch 5"),
-    (f"{TORCHVISION_DIR}/cifar-10-batches-py/test_batch", "file", "CIFAR-10 test batch"),
-    (f"{TORCHVISION_DIR}/cifar-10-batches-py/batches.meta", "file", "CIFAR-10 label names"),
+    (f"{TORCHVISION_DIR}/cifar-10-batches-py/data_batch_1", "file", "CIFAR-10 train batch 1", 25000000),
+    (f"{TORCHVISION_DIR}/cifar-10-batches-py/data_batch_5", "file", "CIFAR-10 train batch 5", 25000000),
+    (f"{TORCHVISION_DIR}/cifar-10-batches-py/test_batch", "file", "CIFAR-10 test batch", 25000000),
+    (f"{TORCHVISION_DIR}/cifar-10-batches-py/batches.meta", "file", "CIFAR-10 label names", 100),
     # GTSRB._check_exists() checks these directories; __init__ reads the CSV directly.
-    (f"{TORCHVISION_DIR}/gtsrb/GTSRB/Training", "dir", "GTSRB train images"),
-    (f"{TORCHVISION_DIR}/gtsrb/GTSRB/Final_Test/Images", "dir", "GTSRB test images"),
-    (f"{TORCHVISION_DIR}/gtsrb/GT-final_test.csv", "file", "GTSRB test ground truth"),
+    (f"{TORCHVISION_DIR}/gtsrb/GTSRB/Training", "dir", "GTSRB train images", 200000000),
+    (f"{TORCHVISION_DIR}/gtsrb/GTSRB/Final_Test/Images", "dir", "GTSRB test images", 100000000),
+    (f"{TORCHVISION_DIR}/gtsrb/GT-final_test.csv", "file", "GTSRB test ground truth", 300000),
     # load_gtsrb_vit() requires all three before calling from_pretrained().
-    (f"{GTSRB_VIT_DIR}/config.json", "file", "ViT config"),
-    (f"{GTSRB_VIT_DIR}/preprocessor_config.json", "file", "ViT preprocessor config"),
-    (f"{GTSRB_VIT_DIR}/model.safetensors", "file", "ViT weights"),
+    (f"{GTSRB_VIT_DIR}/config.json", "file", "ViT config", 1000),
+    (f"{GTSRB_VIT_DIR}/preprocessor_config.json", "file", "ViT preprocessor config", 200),
+    (f"{GTSRB_VIT_DIR}/model.safetensors", "file", "ViT weights", 300000000),
     # sklearn's _pkl_filepath() inserts the _py3 suffix; the raw .mat is deleted
     # by fetch_olivetti_faces itself.
-    (f"{SKLEARN_DIR}/olivetti_py3.pkz", "file", "Olivetti faces"),
+    (f"{SKLEARN_DIR}/olivetti_py3.pkz", "file", "Olivetti faces", 1000000),
     # _download_or_find_brain_tumor_dataset() short-circuits on images/train.
-    (f"{BRAIN_TUMOR_DIR}/brain-tumor/images/train", "dir", "Brain tumour train images"),
-    (f"{BRAIN_TUMOR_DIR}/brain-tumor/images/val", "dir", "Brain tumour val images"),
-    (f"{BRAIN_TUMOR_DIR}/brain-tumor/labels/train", "dir", "Brain tumour train labels"),
-    (f"{BRAIN_TUMOR_DIR}/brain-tumor/labels/val", "dir", "Brain tumour val labels"),
+    (f"{BRAIN_TUMOR_DIR}/brain-tumor/images/train", "dir", "Brain tumour train images", 3000000),
+    (f"{BRAIN_TUMOR_DIR}/brain-tumor/images/val", "dir", "Brain tumour val images", 700000),
+    (f"{BRAIN_TUMOR_DIR}/brain-tumor/labels/train", "dir", "Brain tumour train labels", 25000),
+    (f"{BRAIN_TUMOR_DIR}/brain-tumor/labels/val", "dir", "Brain tumour val labels", 6000),
 )
 
 
@@ -215,12 +218,20 @@ def prune_archives(cache_dir: Path) -> None:
 def verify(cache_dir: Path) -> bool:
     log(f"\nVerifying cache at {cache_dir}")
     ok = True
-    for relative, kind, label in EXPECTED:
+    for relative, kind, label, minimum in EXPECTED:
         path = cache_dir / relative
         present = path.is_dir() if kind == "dir" else path.is_file()
-        size = f"{human(tree_size(path)):>10}" if present else " " * 10
-        log(f"  {'PASS' if present else 'FAIL'}  {size}  {label:<28} {relative}")
-        ok = ok and present
+        actual = tree_size(path) if present else 0
+        good = present and actual >= minimum
+        size = f"{human(actual):>10}" if present else " " * 10
+        if not present:
+            note = "  missing"
+        elif not good:
+            note = f"  only {human(actual)}, expected >= {human(minimum)}"
+        else:
+            note = ""
+        log(f"  {'PASS' if good else 'FAIL'}  {size}  {label:<28} {relative}{note}")
+        ok = ok and good
     log(f"\n  total: {human(tree_size(cache_dir))}")
     log(f"  status: {'cache is complete' if ok else 'CACHE IS INCOMPLETE -- rerun without --verify-only'}")
     return ok
