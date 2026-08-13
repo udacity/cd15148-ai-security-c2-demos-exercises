@@ -47,7 +47,9 @@ def main() -> None:
     else:
         device = "cpu"
     data_dir = ROOT / "data" / "generated"
-    download_dir = ROOT / "data" / "cifar10"
+    # Shared workspace asset cache (C2_ASSET_CACHE); falls back to this module's data/ folder.
+    asset_cache = os.environ.get("C2_ASSET_CACHE")
+    download_dir = Path(asset_cache) / "torchvision" if asset_cache else ROOT / "data" / "cifar10"
     model_dir = ROOT / "models"
     results_dir = ROOT / "results"
     run_timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

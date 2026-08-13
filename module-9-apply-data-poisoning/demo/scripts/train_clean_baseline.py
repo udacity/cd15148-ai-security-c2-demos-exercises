@@ -5,6 +5,7 @@ to regenerate it (or after changing the training recipe). Students do not need
 to run this; it is for instructor / maintainer use.
 """
 
+import os
 import sys
 import time
 from pathlib import Path
@@ -41,7 +42,9 @@ def main():
     print(f"device: {device}", flush=True)
 
     generated_data_dir = DEMO_ROOT / "data" / "generated"
-    download_dir = DEMO_ROOT / "data" / "cifar10"
+    # Shared workspace asset cache (C2_ASSET_CACHE); falls back to this module's data/ folder.
+    asset_cache = os.environ.get("C2_ASSET_CACHE")
+    download_dir = Path(asset_cache) / "torchvision" if asset_cache else DEMO_ROOT / "data" / "cifar10"
     prepare_cifar10_subsets(generated_data_dir, download_dir, train_per_class=2000, val_per_class=200)
 
     train_images, train_labels = load_subset(generated_data_dir, "train_clean")

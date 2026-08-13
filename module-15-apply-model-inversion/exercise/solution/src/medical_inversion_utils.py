@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 import urllib.request
 import zipfile
 from dataclasses import dataclass
@@ -139,6 +140,13 @@ def prepare_medical_dataset(
 
 
 def _download_or_find_brain_tumor_dataset(data_dir: Path) -> Path:
+    # A classroom image can ship this pre-extracted in the shared asset cache;
+    # otherwise fall through and download into the module's own data/ folder.
+    asset_cache = os.environ.get("C2_ASSET_CACHE")
+    if asset_cache:
+        cached_root = Path(asset_cache) / "ultralytics" / "brain-tumor"
+        if (cached_root / "images" / "train").exists():
+            return cached_root
     root = data_dir / "brain-tumor"
     if (root / "images" / "train").exists():
         return root

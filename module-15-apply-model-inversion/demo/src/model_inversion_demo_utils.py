@@ -3,6 +3,7 @@ from __future__ import annotations
 import csv
 import json
 import math
+import os
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -110,7 +111,7 @@ def load_att_face_dataset(
     images, labels, source = _load_local_att_faces(local_att_dir, image_size)
     dataset_name = "AT&T/ORL face dataset"
     if images is None:
-        images, labels, source = _load_sklearn_att_faces(data_dir / "sklearn_cache", download_if_missing)
+        images, labels, source = _load_sklearn_att_faces(_sklearn_cache_dir(data_dir), download_if_missing)
         dataset_name = "AT&T/Olivetti faces from scikit-learn"
         if image_size != images.shape[-1]:
             images = _resize_images(images, image_size)
@@ -162,6 +163,18 @@ def _load_local_att_faces(root: Path, image_size: int) -> tuple[np.ndarray | Non
         np.asarray(labels, dtype=np.int64),
         "Local AT&T faces archive (data/att_faces/)",
     )
+
+
+def _sklearn_cache_dir(data_dir: Path) -> Path:
+    """scikit-learn's `data_home` for the AT&T/Olivetti download.
+
+    Prefers the shared workspace asset cache (C2_ASSET_CACHE) so a classroom image
+    can ship the dataset pre-downloaded; falls back to this module's own data/
+    folder for a plain git clone. Passing `data_home` explicitly is what overrides
+    scikit-learn's own SCIKIT_LEARN_DATA variable, so the redirect happens here.
+    """
+    asset_cache = os.environ.get("C2_ASSET_CACHE")
+    return Path(asset_cache) / "sklearn" if asset_cache else data_dir / "sklearn_cache"
 
 
 def _load_sklearn_att_faces(cache_dir: Path, download_if_missing: bool) -> tuple[np.ndarray, np.ndarray, str]:
