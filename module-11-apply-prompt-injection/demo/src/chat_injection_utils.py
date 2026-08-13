@@ -12,8 +12,6 @@ from typing import Iterable
 
 
 DEFAULT_CHAT_MODEL = "llama3.2:3b"
-VOCAREUM_BASE_URL = "https://openai.vocareum.com/v1"
-OPENAI_BASE_URL = "https://api.openai.com/v1"
 OLLAMA_DEFAULT_URL = "http://127.0.0.1:11434"
 
 INJECTION_PATTERNS = [
@@ -60,43 +58,29 @@ def load_text(path):
     return Path(path).read_text(encoding="utf-8")
 
 
-def configure_openai_environment(api_key: str | None = None) -> None:
+def configure_openai_environment() -> None:
+    """Resolve the Ollama endpoint into OLLAMA_API_URL.
+
+    Precedence: an already-set environment variable, then OLLAMA_API_URL in
+    demo/.env, then the local default. This demo talks only to Ollama; no API
+    key is involved.
+    """
+    if os.getenv("OLLAMA_API_URL", "").strip():
+        return
+
     env_path = Path(__file__).resolve().parents[1] / ".env"
-    try:
-        from dotenv import find_dotenv, load_dotenv
-
-        # Explicit notebook/shell settings take precedence over values in .env.
-        load_dotenv(env_path, override=False)
-        load_dotenv(find_dotenv(usecwd=True), override=False)
-    except ImportError:
-        pass
-
     if env_path.exists():
         for line in env_path.read_text(encoding="utf-8").splitlines():
             if not line.strip() or line.lstrip().startswith("#") or "=" not in line:
                 continue
             name, value = line.split("=", 1)
-            name = name.strip()
-            value = value.strip().strip("\"'")
-            if name in {"OPENAI_API_KEY", "OPENAI_BASE_URL", "OLLAMA_API_URL"}:
-                os.environ.setdefault(name, value)
+            if name.strip() == "OLLAMA_API_URL":
+                value = value.strip().strip("\"'")
+                if value:
+                    os.environ["OLLAMA_API_URL"] = value
+                    return
 
-    if api_key:
-        os.environ["OPENAI_API_KEY"] = api_key
-
-    ollama_url = os.getenv("OLLAMA_API_URL", "").strip()
-    if ollama_url:
-        os.environ.setdefault("OLLAMA_API_URL", ollama_url)
-        return
-
-    key = os.getenv("OPENAI_API_KEY", "")
-    if key:
-        if "OPENAI_BASE_URL" not in os.environ:
-            os.environ["OPENAI_BASE_URL"] = VOCAREUM_BASE_URL if key.startswith("voc-") else OPENAI_BASE_URL
-        return
-
-    os.environ.setdefault("OLLAMA_API_URL", OLLAMA_DEFAULT_URL)
-    return
+    os.environ["OLLAMA_API_URL"] = OLLAMA_DEFAULT_URL
 
 
 def _http_post(url: str, payload: dict, headers: dict | None = None) -> dict:
@@ -113,6 +97,11 @@ def _http_post(url: str, payload: dict, headers: dict | None = None) -> dict:
     except urllib.error.HTTPError as exc:
         message = exc.read().decode("utf-8", errors="ignore")
         raise RuntimeError(f"HTTP request to {url} failed: {exc.code} {exc.reason} {message}") from exc
+    except urllib.error.URLError as exc:
+        raise RuntimeError(
+            f"Cannot reach Ollama at {url} ({exc.reason}). Start it with `ollama serve`, "
+            "or point OLLAMA_API_URL at a running instance."
+        ) from exc
 
 
 def _extract_response_text(response_json: dict) -> str:
@@ -237,26 +226,15 @@ def run_openai_response(system_prompt, messages, model=DEFAULT_CHAT_MODEL):
         "stream": False,
     }
 
-    ollama_url = os.getenv("OLLAMA_API_URL", "").strip()
-    if ollama_url:
-        url = ollama_url.rstrip("/") + "/api/chat"
-        response_json = _http_post(url, payload)
-        response_text = _extract_response_text(response_json)
-        if not response_text:
-            raise RuntimeError(
-                f"Ollama returned no assistant text from {url}. "
-                f"Response keys: {sorted(response_json)}"
-            )
-        return response_text
-
-    api_base = os.getenv("OPENAI_BASE_URL", OPENAI_BASE_URL).rstrip("/")
-    url = api_base + "/chat/completions"
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}",
-    }
-    response_json = _http_post(url, payload, headers=headers)
-    return _extract_response_text(response_json)
+    url = os.environ["OLLAMA_API_URL"].rstrip("/") + "/api/chat"
+    response_json = _http_post(url, payload)
+    response_text = _extract_response_text(response_json)
+    if not response_text:
+        raise RuntimeError(
+            f"Ollama returned no assistant text from {url}. "
+            f"Response keys: {sorted(response_json)}"
+        )
+    return response_text
 
 
 class OpenAIChatAssistant:
