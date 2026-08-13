@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
     --skip-notebooks) RUN_NOTEBOOKS=0; shift ;;
     --only)           ONLY="$2"; shift 2 ;;
     --timeout)        TIMEOUT_SECONDS="$2"; shift 2 ;;
-    -h|--help)        sed -n '2,22p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
+    -h|--help)        sed -n '2,19p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; exit 0 ;;
     *)                echo "Unknown option: $1" >&2; exit 2 ;;
   esac
 done
@@ -70,28 +70,50 @@ sys.exit(0 if (major, minor) == (3, 12) else 1)
 PY
 [[ $? -eq 0 ]] && pass "Python 3.12" || fail "Python 3.12 (see version above; the GPU image pins 3.12.13)"
 
-"${PYTHON}" - <<'PY'
-import importlib, sys
-expected = {
-    "torch": "2.5.1", "torchvision": "0.20.1", "art": None, "transformers": "5.12.1",
-    "safetensors": "0.8.0", "sklearn": None, "numpy": None, "matplotlib": None,
-    "PIL": None, "nbconvert": None, "ipykernel": None,
+# Validate against requirements-gpu.txt itself, so this check cannot drift from
+# the file the workspace is built with.
+"${PYTHON}" - "${REPO_ROOT}/requirements-gpu.txt" <<'PY'
+import importlib, re, sys
+from pathlib import Path
+
+# Distribution name -> import name, where the two differ.
+IMPORT_NAME = {
+    "adversarial-robustness-toolbox": "art",
+    "scikit-learn": "sklearn",
+    "pillow": "PIL",
 }
-missing, wrong = [], []
-for name, want in expected.items():
-    try:
-        mod = importlib.import_module(name)
-    except Exception as exc:
-        missing.append(f"{name} ({exc.__class__.__name__})")
+
+requirements = Path(sys.argv[1])
+if not requirements.exists():
+    print(f"  {requirements} not found -- root files missing from this checkout?")
+    sys.exit(1)
+
+problems = []
+for line in requirements.read_text().splitlines():
+    line = line.split("#")[0].strip()
+    if not line:
         continue
-    got = getattr(mod, "__version__", "?")
-    print(f"  {name:<14} {got}")
-    if want and got != want:
-        wrong.append(f"{name} {got} != {want}")
-sys.exit(1 if (missing or wrong) else 0)
+    match = re.match(r"^([A-Za-z0-9_.\-]+)==([\w.]+)$", line)
+    if not match:
+        problems.append(f"unparsed requirement line: {line!r}")
+        continue
+    dist, want = match.groups()
+    module = IMPORT_NAME.get(dist.lower(), dist.replace("-", "_"))
+    try:
+        got = getattr(importlib.import_module(module), "__version__", "?")
+    except Exception as exc:
+        print(f"  {dist:<32} MISSING ({exc.__class__.__name__})")
+        problems.append(f"{dist} not importable")
+        continue
+    ok = got == want
+    print(f"  {dist:<32} {got:<10} {'' if ok else f'expected {want}'}")
+    if not ok:
+        problems.append(f"{dist} {got} != {want}")
+
+sys.exit(1 if problems else 0)
 PY
-[[ $? -eq 0 ]] && pass "All packages import at the pinned versions" \
-               || fail "Package import or version mismatch (see list above)"
+[[ $? -eq 0 ]] && pass "Every pin in requirements-gpu.txt is installed at that version" \
+               || fail "requirements-gpu.txt mismatch (see list above)"
 
 "${PYTHON}" - <<'PY'
 import sys, torch
