@@ -33,6 +33,10 @@ An autonomous warehouse robotics team deploys a vision model to classify navigat
 - The notebook uses the MIT-licensed Hugging Face model `kelvinandreas/vit-traffic-sign-GTSRB`, a ViT model fine-tuned for 43-class GTSRB traffic sign classification.
 - Downloaded model files are stored locally under `downloads/gtsrb_model/`.
 
+> **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
+> read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
+> everything downloads into this module's own folders exactly as described above.
+
 ## Setup
 
 From this demo folder, install dependencies:

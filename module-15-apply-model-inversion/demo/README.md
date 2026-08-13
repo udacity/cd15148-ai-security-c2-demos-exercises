@@ -8,6 +8,10 @@ This demo walks through a model inversion attack workflow against a facial recog
 
 The script first looks for the original AT&T/ORL folder layout at `data/att_faces/s1/1.pgm` through `data/att_faces/s40/10.pgm`. If that folder is not present, it uses `sklearn.datasets.fetch_olivetti_faces`, which provides the same AT&T/Olivetti face dataset and caches it under `data/generated/sklearn_cache`.
 
+> **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
+> read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
+> everything downloads into this module's own folders exactly as described above.
+
 ## Scenario
 
 A security technology company deploys a facial recognition system for controlled facility access across multiple office locations, processing approximately 60,000 authentication requests per day. During an internal privacy assessment, researchers test whether attackers can reconstruct sensitive facial characteristics from model outputs alone.

@@ -4,6 +4,10 @@ This demo evaluates CIFAR-10 ResNet-18 image classifiers under clean, environmen
 
 The first run downloads CIFAR-10, creates a balanced 1,000-image validation subset, and trains compact classroom checkpoints. Later runs reuse the checkpoints in `models/`.
 
+> **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
+> read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
+> everything downloads into this module's own folders exactly as described above.
+
 ## Run the Demo
 
 ```bash
