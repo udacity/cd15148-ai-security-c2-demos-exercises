@@ -15,6 +15,14 @@
 | Clean baseline | TODO | TODO | TODO |
 | Poisoned model | TODO | TODO | TODO |
 
+## Label-Flip Examples
+
+TODO: link the comparison image your run wrote to `results/`. Use a relative link
+to the file — do not paste an embedded/base64 image. Once this report lives in
+`results/` next to the PNG, the filename alone is the whole link:
+
+![Label-flip examples](label_flip_examples_YYYYMMDD_HHMMSS.png)
+
 ## Findings
 
 TODO: Summarize whether the label-flipping attack produced measurable class-specific behavior.

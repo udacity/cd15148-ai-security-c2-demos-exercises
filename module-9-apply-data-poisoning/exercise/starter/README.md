@@ -6,7 +6,7 @@ Your main work is in:
 
 - `notebooks/traffic_sign_label_flip_poisoning_assessment.ipynb`
 - `src/traffic_sign_poisoning_utils.py`
-- `docs/assessment_report_template.md`
+- `results/assessment_report.md` — your copy of `docs/assessment_report_template.md`
 
 The starter code provides dataset preparation, model construction, training, evaluation, and plotting helpers. You will complete the label-flipping implementation and the analysis cells.
 
@@ -17,7 +17,8 @@ The starter code provides dataset preparation, model construction, training, eva
 3. Run the setup and clean baseline sections.
 4. Complete the TODOs for label flipping and targeted metric calculation.
 5. Retrain the poisoned model.
-6. Complete the assessment report.
+6. Copy `docs/assessment_report_template.md` to `results/assessment_report.md` and complete it there.
+   Leave the template itself untouched so it stays reusable.
 
 The first run downloads GTSRB into `data/gtsrb/`.
 

@@ -20,6 +20,5 @@ solution/data/sweep_train*/
 solution/results/*
 !solution/results/README.md
 !solution/results/*_baseline.*
-!solution/results/assessment_report.md
 solution/src/__pycache__/
 solution/scripts/__pycache__/
