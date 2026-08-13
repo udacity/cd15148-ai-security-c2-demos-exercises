@@ -12,4 +12,5 @@ models/*.pt
 art_data/*
 !art_data/README.md
 results/*
+!results/*_baseline.*
 !results/README.md
