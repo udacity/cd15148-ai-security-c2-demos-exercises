@@ -1,6 +1,0 @@
-openai
-faiss-cpu
-numpy
-python-dotenv
-nbconvert
-ipykernel

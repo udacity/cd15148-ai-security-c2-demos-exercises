@@ -1,5 +1,4 @@
-openai
-python-dotenv
-numpy
-nbconvert
-ipykernel
+numpy==2.5.2
+matplotlib==3.11.1
+nbconvert==7.17.1
+ipykernel==7.3.0
