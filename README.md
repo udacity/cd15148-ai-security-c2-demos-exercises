@@ -25,25 +25,30 @@ module-#-<module-slug>/
 
 > **Note:** The `.gitkeep` files preserve empty directory structure in the repository. Remove a `.gitkeep` once real content is added to its folder.
 
-Only Implementation (Apply) modules live in this repo — Conceptual (Understand) modules are slides-based and have no demo or exercise. The `module-#` prefix on each folder reflects the module's position in the full course sequence (which is why the numbering skips even positions: those are the paired Understand modules).
+Only Implementation (Apply) modules live in this repo — Conceptual (Understand) modules are slides-based and have no demo or exercise.
 
-The 10 Implementation modules in this course are:
+**The `module-#` folder prefixes are historical and no longer match the classroom.** They record each module's position in the original 22-module sequence, where every Apply module followed its paired Understand module, which is why they are all odd. Two modules were later dropped and the course now ships 17, so the classroom numbers have shifted. The folder names were deliberately left as they are, because classroom pages link to these paths and renaming them would break those links. Read the folder number as an identifier, not a position.
 
-| # | Folder | Module Title |
-| -- | ------ | ------------ |
-| 3 | `module-3-apply-ai-red-teaming` | Apply AI Red Teaming |
-| 5 | `module-5-apply-llm-assisted-vulnerability-discovery` | Apply LLM-Assisted Vulnerability Discovery |
-| 7 | `module-7-apply-evasion-attacks` | Apply Evasion Attacks |
-| 9 | `module-9-apply-data-poisoning` | Apply Data Poisoning |
-| 11 | `module-11-apply-prompt-injection` | Apply Prompt Injection |
-| 13 | `module-13-apply-vector-database-attacks` | Apply Vector Database Attacks |
-| 15 | `module-15-apply-model-inversion` | Apply Model Inversion |
-| 17 | `module-17-apply-ai-red-teaming-with-microsoft-counterfit` | Apply AI Red Teaming with Microsoft Counterfit |
-| 19 | `module-19-apply-quantitative-robustness-testing` | Apply Quantitative Robustness Testing |
-| 21 | `module-21-apply-ai-supply-chain-vulnerability-scanning` | Apply AI Supply Chain Vulnerability Scanning |
+The 8 Implementation modules in this course are:
+
+| Folder | Module Title | Classroom module |
+| ------ | ------------ | ---------------- |
+| `module-3-apply-ai-red-teaming` | Apply AI Red Teaming | M3 |
+| `module-7-apply-evasion-attacks` | Apply Evasion Attacks | M5 |
+| `module-9-apply-data-poisoning` | Apply Data Poisoning | M7 |
+| `module-11-apply-prompt-injection` | Apply Prompt Injection | M9 |
+| `module-13-apply-vector-database-attacks` | Apply Vector Database Attacks | M11 |
+| `module-15-apply-model-inversion` | Apply Model Inversion | M13 |
+| `module-19-apply-quantitative-robustness-testing` | Apply Quantitative Robustness Testing | M15 |
+| `module-21-apply-ai-supply-chain-vulnerability-scanning` | Apply AI Supply Chain Vulnerability Scanning | M17 |
+
+Two modules that once lived here were dropped from the course and are not part of the build:
+
+- **Apply LLM-Assisted Vulnerability Discovery** — the `module-5-apply-llm-assisted-vulnerability-discovery/` folder is still in the tree but is unused, and nothing in the classroom links to it.
+- **Apply AI Red Teaming with Microsoft Counterfit** — the folder was removed, because Counterfit cannot be installed on Python 3.12 or Apple Silicon.
 
 > ⚠️ **DO NOT NUMBER the exercises!**
-> Module folders are numbered to mirror course position, but the exercise folders inside (`exercise/starter/`, `exercise/solution/`) are not — our modular content may be used in more than one program where the order and number of exercises may differ from the order and number in the primary build.
+> Module folders carry a number, for the historical reason above, but the exercise folders inside (`exercise/starter/`, `exercise/solution/`) do not — our modular content may be used in more than one program where the order and number of exercises may differ from the order and number in the primary build.
 
 ## Resources for Building Exercises
 
