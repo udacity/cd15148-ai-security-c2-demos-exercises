@@ -112,8 +112,14 @@ for line in requirements.read_text().splitlines():
         print(f"  {dist:<32} MISSING ({exc.__class__.__name__})")
         problems.append(f"{dist} not importable")
         continue
-    ok = got == want
-    print(f"  {dist:<32} {got:<10} {'' if ok else f'expected {want}'}")
+    # Compare only the public version. On the CUDA host torch and torchvision
+    # report a PEP 440 local version -- "2.5.1+cu121" -- where the "+cu121" label
+    # identifies the build, not the release; requirements-gpu.txt pins the release
+    # and says so in its own header. A raw `got == want` therefore fails on every
+    # correctly built GPU workspace, which makes this whole check unable to pass
+    # in the one environment it exists to validate.
+    ok = got.split("+", 1)[0] == want
+    print(f"  {dist:<32} {got:<14} {'' if ok else f'expected {want}'}")
     if not ok:
         problems.append(f"{dist} {got} != {want}")
 
