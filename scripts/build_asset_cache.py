@@ -215,6 +215,37 @@ def prune_archives(cache_dir: Path) -> None:
         log(f"    reclaimed {human(reclaimed)}")
 
 
+def check_no_sidecars(cache_dir: Path) -> bool:
+    """Fail on macOS metadata sidecars anywhere in the cache.
+
+    A tree copied or tarred through macOS onto another filesystem gains an
+    AppleDouble companion (``._<name>``) beside every real file. The companion
+    carries the same extension as the file it shadows, so every loader that
+    discovers inputs by globbing an extension picks it up as data: torchvision's
+    GTSRB `split="train"` calls make_dataset(extensions=(".ppm",)) and hands PIL a
+    ``._00000_00000.ppm``, and the M15 brain-tumor loader globs ``*.jpg`` and then
+    reads the matching ``._*.txt`` label as UTF-8. Loaders that read a manifest or
+    a named file instead -- CIFAR's pickles, GTSRB's test CSV, Olivetti's .pkz --
+    never see them, so contamination takes out some modules and not others.
+
+    The EXPECTED checks above cannot catch this: sidecars *inflate* the directory
+    totals, so junk makes the size floors easier to clear, not harder. A cache in
+    this state passes every check above and still fails 3 of the 8 notebooks.
+    """
+    patterns = ("._*", ".DS_Store", "__MACOSX")
+    found = [p for pattern in patterns for p in cache_dir.rglob(pattern)]
+    if not found:
+        return True
+    log(f"\n  FAIL  {len(found)} macOS metadata file(s) in the cache, e.g. {found[0].relative_to(cache_dir)}")
+    log("        Glob-based loaders will read these as data. Delete them where the")
+    log("        volume is writable (the classroom mount is read-only):")
+    log(f"          find {cache_dir} \\( -name '._*' -o -name '.DS_Store' \\) -delete")
+    log("        Better: rebuild the cache on a Linux host so the tree never")
+    log("        transits macOS. If it must be copied from a Mac, use")
+    log("        `rsync -a --exclude='._*'` or `COPYFILE_DISABLE=1 tar`.")
+    return False
+
+
 def verify(cache_dir: Path) -> bool:
     log(f"\nVerifying cache at {cache_dir}")
     ok = True
@@ -232,6 +263,7 @@ def verify(cache_dir: Path) -> bool:
             note = ""
         log(f"  {'PASS' if good else 'FAIL'}  {size}  {label:<28} {relative}{note}")
         ok = ok and good
+    ok = check_no_sidecars(cache_dir) and ok
     log(f"\n  total: {human(tree_size(cache_dir))}")
     log(f"  status: {'cache is complete' if ok else 'CACHE IS INCOMPLETE -- rerun without --verify-only'}")
     return ok
