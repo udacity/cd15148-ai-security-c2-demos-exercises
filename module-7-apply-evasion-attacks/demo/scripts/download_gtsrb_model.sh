@@ -3,7 +3,13 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEMO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-MODEL_DIR="${DEMO_ROOT}/downloads/gtsrb_model"
+# Shared workspace asset cache (C2_ASSET_CACHE); falls back to the module's own
+# downloads/ folder, so a plain git clone behaves exactly as before.
+if [[ -n "${C2_ASSET_CACHE:-}" ]]; then
+  MODEL_DIR="${C2_ASSET_CACHE}/hf/gtsrb_vit"
+else
+  MODEL_DIR="${DEMO_ROOT}/downloads/gtsrb_model"
+fi
 MODEL_REPO="kelvinandreas/vit-traffic-sign-GTSRB"
 BASE_URL="https://huggingface.co/${MODEL_REPO}/resolve/main"
 
@@ -13,6 +19,11 @@ download_file() {
   local filename="$1"
   local url="${BASE_URL}/${filename}"
   local output="${MODEL_DIR}/${filename}"
+
+  if [[ -s "${output}" ]]; then
+    echo "${filename} already present, skipping."
+    return
+  fi
 
   echo "Downloading ${filename}..."
   if command -v curl >/dev/null 2>&1; then

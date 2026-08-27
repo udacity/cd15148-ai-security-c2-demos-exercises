@@ -1,0 +1,19 @@
+# C2 workspace image: gpu-torch  (Python 3.12.13, GPU)
+# Serves modules: M7, M9, M15, M19  (demo + exercise), all from origin/main.
+# Anchors torch==2.5.1 / torchvision==0.20.1 fixed by the classroom GPU image; the rest pinned to
+# the set resolved + verified on 2026-07-01 (py3.12.13, MPS).
+# NOTE: on the CUDA host, torch/torchvision install the CUDA build of these SAME versions via the
+#       PyTorch CUDA index (e.g. --index-url https://download.pytorch.org/whl/cu124).
+# These pins supersede the per-module requirements.txt files; all four modules are verified
+# against this single resolved set.
+torch==2.5.1
+torchvision==0.20.1
+adversarial-robustness-toolbox==1.20.1
+transformers==5.12.1
+safetensors==0.8.0
+scikit-learn==1.9.0
+numpy==2.5.0
+matplotlib==3.11.0
+pillow==12.2.0
+nbconvert==7.17.1
+ipykernel==7.3.0

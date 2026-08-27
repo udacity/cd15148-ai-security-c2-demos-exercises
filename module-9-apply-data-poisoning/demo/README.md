@@ -50,6 +50,10 @@ python -m nbconvert --to notebook --execute notebooks/poisoned_image_classificat
 
 The notebook downloads CIFAR-10 through TorchVision if the dataset is not already present.
 
+> **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
+> read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
+> everything downloads into this module's own folders exactly as described above.
+
 To regenerate the clean baseline checkpoint:
 
 ```bash

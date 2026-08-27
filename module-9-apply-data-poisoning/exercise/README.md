@@ -31,4 +31,8 @@ pip install -r requirements.txt
 
 The notebooks download GTSRB through `torchvision.datasets.GTSRB` when run. The exercise uses a compact subset of six operationally relevant sign classes so the training loop remains practical in a classroom environment.
 
+> **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
+> read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
+> everything downloads into this module's own folders exactly as described above.
+
 Generated datasets, checkpoints, plots, and result tables are ignored by git.
