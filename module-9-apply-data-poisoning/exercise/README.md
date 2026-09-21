@@ -35,4 +35,4 @@ The notebooks download GTSRB through `torchvision.datasets.GTSRB` when run. The 
 > read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —
 > everything downloads into this module's own folders exactly as described above.
 
-Generated datasets, checkpoints, plots, and result tables are ignored by git.
+Generated datasets, plots, and result tables are ignored by git, as are the starter's checkpoints. The solution's two reference checkpoints and the `*_baseline.*` reference results are committed intentionally.
