@@ -24,7 +24,7 @@ An autonomous warehouse robotics team deploys a vision model to classify navigat
 | `requirements.txt` | Python package requirements |
 | `downloads/` | Local download target for the GTSRB traffic sign model |
 | `scripts/download_gtsrb_model.sh` | Shell script that downloads the Hugging Face model files |
-| `results/` | Attack comparison image and result table appear here when the notebook runs |
+| `results/` | Timestamped attack comparison image (`attack_comparison_<timestamp>.png`) appears here when the notebook runs. The result table is printed in the notebook, not saved. |
 
 ## Dataset and Model Notes
 

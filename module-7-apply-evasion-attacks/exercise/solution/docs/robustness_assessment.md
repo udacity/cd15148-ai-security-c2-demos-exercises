@@ -8,7 +8,7 @@ This solution uses Projected Gradient Descent (PGD), a white-box evasion attack 
 
 The workflow evaluates three epsilon values: `0.01`, `0.03`, and `0.06`. As epsilon increases, perturbation magnitude increases and adversarial accuracy is expected to decrease. Attack success rate is measured only on examples that the model classified correctly before attack, which avoids overstating attack effectiveness.
 
-Key metrics to review in `results/adversarial_metrics.csv`:
+Key metrics to review in your run's `results/adversarial_metrics_<timestamp>.csv` (compare against the committed `results/adversarial_metrics_baseline.csv`):
 
 - Clean accuracy versus adversarial accuracy
 - Attack success rate
