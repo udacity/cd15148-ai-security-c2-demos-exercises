@@ -208,8 +208,28 @@ def make_attack(attack_name, classifier, epsilon):
         return DeepFool(classifier=classifier, max_iter=20, epsilon=epsilon)
     if attack_name == "simba":
         from art.attacks.evasion import SimBA
+        from art.estimators.classification import PyTorchClassifier
 
-        return SimBA(classifier=classifier, attack="px", max_iter=100, epsilon=epsilon, batch_size=16)
+        # SimBA is a black-box attack: it steers on predicted probabilities rather than
+        # gradients, so ART requires a softmax head, and its implementation only supports
+        # batch_size=1. Wrap the model for this attack alone -- build_art_classifier stays
+        # on raw logits so the gradient attacks above keep their CrossEntropy loss surface.
+        class ProbabilityModel(nn.Module):
+            def __init__(self, base_model):
+                super().__init__()
+                self.base_model = base_model
+
+            def forward(self, x):
+                return torch.softmax(self.base_model(x), dim=1)
+
+        probability_classifier = PyTorchClassifier(
+            model=ProbabilityModel(classifier.model).eval(),
+            loss=nn.CrossEntropyLoss(),
+            input_shape=IMAGE_SHAPE,
+            nb_classes=len(CLASS_NAMES),
+            clip_values=(0.0, 1.0),
+        )
+        return SimBA(classifier=probability_classifier, attack="px", max_iter=100, epsilon=epsilon, batch_size=1)
     raise ValueError(f"Unsupported attack: {attack_name}")
 
 
