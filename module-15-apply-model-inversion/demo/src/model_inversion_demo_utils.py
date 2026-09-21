@@ -595,7 +595,7 @@ def plot_leakage_comparison(rows: list[dict[str, object]], output_path: Path) ->
     fig, ax = plt.subplots(figsize=(7, 4))
     ax.bar(labels, means, color=["#4062bb", "#59a14f"][: len(labels)])
     ax.set_ylim(0, 1)
-    ax.set_ylabel("Mean prototype similarity")
+    ax.set_ylabel("Mean privacy leakage score")
     ax.set_title("Output detail changes inversion effectiveness")
     ax.grid(axis="y", alpha=0.25)
     for idx, value in enumerate(means):
