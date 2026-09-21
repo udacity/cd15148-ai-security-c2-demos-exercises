@@ -4,7 +4,7 @@ You are assessing a brain tumor MRI screening model before broader external API 
 
 ## Tasks
 
-1. Load the provided brain tumor MRI classifier and evaluation dataset.
+1. Prepare the brain tumor MRI dataset and screening classifier. Neither is provided: the first run obtains the dataset and trains a checkpoint into `models/`, which later runs reload.
 2. Measure baseline confidence scores and output distributions.
 3. Implement a model inversion attack using repeated queries and prediction probabilities.
 4. Evaluate at least three output configurations:

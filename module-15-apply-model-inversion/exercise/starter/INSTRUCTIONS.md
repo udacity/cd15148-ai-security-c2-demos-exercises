@@ -6,7 +6,7 @@ A healthcare provider deploys an AI system that classifies brain MRI images for 
 
 ## Your Tasks
 
-- Load the provided model and evaluation dataset.
+- Prepare the evaluation dataset and the screening model. Neither is pre-shipped: the first run obtains the dataset and trains a checkpoint into `models/`.
 - Measure baseline prediction confidence and output distributions.
 - Implement repeated-query model inversion.
 - Evaluate at least three output configurations for privacy leakage impact.
@@ -15,7 +15,7 @@ A healthcare provider deploys an AI system that classifies brain MRI images for 
 
 ## Acceptance Criteria
 
-- The workflow performs repeated inference queries against the provided model.
+- The workflow performs repeated inference queries against the model prepared in the first task.
 - Reconstructed outputs are generated successfully.
 - At least three output configurations are evaluated.
 - Visual comparisons are included.
