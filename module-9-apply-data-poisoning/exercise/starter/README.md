@@ -24,7 +24,7 @@ The first run downloads GTSRB into `data/gtsrb/`.
 
 ## Optional Instructor Prep
 
-To pre-generate the compact dataset and clean baseline checkpoint before class, run:
+To pre-generate the compact traffic sign dataset before class, run:
 
 ```bash
 bash scripts/prepare_traffic_sign_assets.sh
