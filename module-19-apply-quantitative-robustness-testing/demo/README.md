@@ -2,7 +2,7 @@
 
 This demo evaluates CIFAR-10 ResNet-18 image classifiers under clean, environmental, and adversarial test conditions. It produces a comparative scorecard with accuracy, confidence degradation, perturbation tolerance, attack success rate, and an operational robustness score.
 
-The first run downloads CIFAR-10, creates a balanced 1,000-image validation subset, and trains compact classroom checkpoints. Later runs reuse the checkpoints in `models/`.
+The first run downloads CIFAR-10 and creates a balanced 1,000-image validation subset. Trained ResNet-18 classroom checkpoints ship in `models/` and are loaded on every run, so no run trains by default. Set `RUN_FROM_CHECKPOINT = False` in the notebook to retrain from scratch on the full 50,000-image CIFAR-10 train split. Retraining overwrites the checkpoints committed to git.
 
 > **Pre-cached in the classroom workspace.** When `C2_ASSET_CACHE` is set, this download is
 > read from that shared cache and nothing is fetched at run time. Unset — a plain `git clone` —

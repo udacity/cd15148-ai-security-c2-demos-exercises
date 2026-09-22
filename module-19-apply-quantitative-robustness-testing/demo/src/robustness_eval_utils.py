@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import csv
 import io
-import json
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Iterable
@@ -464,10 +463,6 @@ def write_csv(rows: list[dict[str, float | str]], output_path: Path | str) -> Pa
         for row in rows:
             writer.writerow(row)
     return output_path
-
-
-def load_json(path: Path | str) -> dict:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
 def plot_scorecard(rows: list[dict[str, float | str]], output_path: Path | str) -> Path:
