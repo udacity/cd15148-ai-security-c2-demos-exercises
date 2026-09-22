@@ -1,3 +1,3 @@
 # Models
 
-The solution script and notebook save the generated traffic sign recognition checkpoint here.
+A trained traffic sign recognition checkpoint ships here and is loaded on every run. The solution script and notebook overwrite it only if you retrain.

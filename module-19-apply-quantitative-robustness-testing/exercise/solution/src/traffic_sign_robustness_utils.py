@@ -420,7 +420,9 @@ def plot_metric_bars(rows: list[dict[str, float | str]], output_path: Path | str
     ax.bar(x, confidence_drop, width, label="Confidence drop")
     ax.bar(x + width, attack_success, width, label="Attack success rate")
     ax.axhline(0.70, color="#6f3a00", linestyle="--", linewidth=1.2, label="Minimum accuracy threshold")
-    ax.set_ylim(0, 1)
+    # Floor at 0 unless a metric actually goes negative -- confidence_drop does for
+    # strong attacks, and a hard floor would silently clip those bars to nothing.
+    ax.set_ylim(min(0.0, min(confidence_drop)), 1)
     ax.set_ylabel("Metric value")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, rotation=45, ha="right")
