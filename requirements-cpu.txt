@@ -11,5 +11,5 @@ python-dotenv==1.2.2
 numpy==2.5.0
 matplotlib==3.11.0
 faiss-cpu==1.14.3
-nbconvert==7.17.1
+nbconvert==7.17.2
 ipykernel==7.3.0

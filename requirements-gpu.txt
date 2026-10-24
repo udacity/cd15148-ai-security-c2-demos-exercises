@@ -15,5 +15,5 @@ scikit-learn==1.9.0
 numpy==2.5.0
 matplotlib==3.11.0
 pillow==12.2.0
-nbconvert==7.17.1
+nbconvert==7.17.2
 ipykernel==7.3.0
